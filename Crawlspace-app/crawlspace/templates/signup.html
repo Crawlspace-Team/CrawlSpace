@@ -1,21 +1,23 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-  <h2>Sign up</h2>
-  <form method="post">
-    {% csrf_token %}
-    {% for field in form %}
-      <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-        {% if field.help_text %}
-          <small style="color: grey">{{ field.help_text }}</small>
-        {% endif %}
-        {% for error in field.errors %}
-          <p style="color: red">{{ error }}</p>
-        {% endfor %}
-      </p>
-    {% endfor %}
-    <button type="submit">Sign up</button>
-  </form>
+  <section class="container--form">
+      <img class="logo" src="{% static 'images/CrawlSpace_Logo.svg' %}" alt="CrawlSpace Logo">
+      <h2>Sign Up</h2>
+      <form class="form--vertical" method="post">
+      {% csrf_token %}
+      {% for field in form %}
+        <p>
+          {{ field.label_tag }}
+          {{ field }}
+          {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+          {% endfor %}
+        </p>
+      {% endfor %}
+      <button class="button--large button--white" type="submit">Sign up</button>
+      <a class="button--large button--accent" href="{% url 'login' %}">Login</a>
+    </form>
+  </section>
 {% endblock %}

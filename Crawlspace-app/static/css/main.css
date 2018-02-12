@@ -14,10 +14,14 @@ header {
   background: #2699FB;
   width: 100%;
   color: white;
-  justify-content: center; }
+  justify-content: center;
+  font-family: 'Hind', sans-serif; }
   header h1 {
     margin: 0.2em 0;
-    font-size: 1.6em; }
+    font-size: 1.6em;
+    flex-grow: 1;
+    text-align: center;
+    font-weight: 600; }
 
 main {
   min-width: 100%;
@@ -28,21 +32,83 @@ main {
   align-items: center;
   justify-content: center; }
 
+#content {
+  margin: 1em; }
+
+.container--form {
+  display: flex;
+  flex-direction: column;
+  width: 17em;
+  align-items: center; }
+  .container--form h2 {
+    color: #222222; }
+
 .form--vertical {
   display: flex;
-  flex-direction: column; }
+  flex-direction: column;
+  width: 17em;
+  color: #2699FB; }
+  .form--vertical p, .form--vertical label, .form--vertical input {
+    width: 100%; }
+  .form--vertical span {
+    font-weight: 500;
+    font-size: 1em; }
+  .form--vertical input {
+    font-family: 'Open Sans', sans-serif;
+    box-sizing: border-box;
+    border: 2px solid #BCE0FD;
+    border-radius: 0.75em;
+    background: #F1F9FF;
+    padding: 0.7em 0;
+    margin-top: 0.3em;
+    text-decoration: none;
+    color: #2699FB;
+    font-size: 1em;
+    font-weight: 500;
+    text-indent: 1em; }
+  .form--vertical p {
+    display: flex;
+    flex-direction: column;
+    margin: 0.5em 0; }
 
 .button--large {
-  border: 2px solid blue;
+  border: 2px solid #2699FB;
   background: none;
   border-radius: 5em;
-  padding: 0.5em; }
+  padding: 0.7em 0;
+  text-decoration: none;
+  font-size: 1em;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 1em; }
+  .button--large:hover {
+    cursor: pointer; }
 
-.button--signup {
+.button--accent {
   background: #2699FB;
   color: white; }
 
-.button--login {
-  background: white; }
+.button--white {
+  background: white;
+  color: #2699FB; }
+
+.nav_button {
+  display: flex;
+  align-self: center;
+  text-decoration: none;
+  color: white;
+  margin: 0.3em; }
+
+.logo {
+  width: 5em; }
+
+@media screen and (max-width: 15em) {
+  html body main #content {
+    width: 100vw; }
+    html body main #content .form--login {
+      width: 100%; }
+    html body main #content .form--vertical {
+      width: 100%; } }
 
 /*# sourceMappingURL=main.css.map */

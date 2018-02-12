@@ -2,8 +2,14 @@ $white: white;
 $off-white: #F5F5F5;
 $dark: #222222;
 $accent: #2699FB;
+$accent-light: #BCE0FD;
+$accent-lighter: #F1F9FF;
 
 $h1-size: 1.6em;
+$button-size: 1em;
+
+$input-padding: 0.7em 0;
+$form-width: 17em;
 
 html {
     margin: 0;
@@ -24,9 +30,13 @@ header {
     width: 100%;
     color: $white;
     justify-content: center;
+    font-family: 'Hind', sans-serif;
     h1 {
         margin: 0.2em 0;
         font-size: $h1-size;
+        flex-grow: 1;
+        text-align: center;
+        font-weight: 600;
     }
 }
 
@@ -41,27 +51,102 @@ main {
 }
 
 #content {
+    margin: 1em;
+}
 
+.container--form  {
+    display: flex;
+    flex-direction: column;
+    width: $form-width;
+    align-items: center;
+    h2 {
+        color: $dark;
+    }
 }
 
 .form--vertical {
     display: flex;
     flex-direction: column;
+    width: $form-width;
+    color: $accent;
+    p, label, input {
+        width: 100%;
+    }
+    span {
+        font-weight: 500;
+        font-size: 1em;
+    }
+    input {
+        font-family: 'Open Sans', sans-serif;
+        box-sizing: border-box;
+        border: 2px solid $accent-light;
+        border-radius: 0.75em;
+        background: $accent-lighter;
+        padding: $input-padding;
+        margin-top: 0.3em;
+        text-decoration: none;
+        color: $accent;
+        font-size: 1em;
+        font-weight: 500;
+        text-indent: 1em;
+    }
+    p {
+        display: flex;
+        flex-direction: column;
+        margin: 0.5em 0;
+    }
 }
 
 .button--large {
-    border: 2px solid blue;
+    border: 2px solid $accent;
     background: none;
     border-radius: 5em;
-    padding: 0.5em;
-
+    padding: $input-padding;
+    text-decoration: none;
+    font-size: $button-size;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 1em;
+    &:hover {
+        cursor: pointer;
+    }
 }
 
-.button--signup {
+.button--accent {
     background: $accent;
-    color: white;
+    color: $white;
 }
 
-.button--login {
+.button--white {
     background: $white;
+    color: $accent;
+}
+
+.nav_button {
+    display: flex;
+    align-self: center;
+    text-decoration: none;
+    color: $white;
+    margin: 0.3em;
+}
+
+.logo {
+    width: 5em;
+}
+
+@media screen and (max-width: 15em) {
+  html body {
+    main {
+      #content {
+        width: 100vw;
+        .form--login  {
+            width: 100%;
+        }
+        .form--vertical {
+            width: 100%;
+        }
+      }
+    }
+  }
 }
