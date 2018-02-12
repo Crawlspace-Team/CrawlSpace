@@ -10,15 +10,17 @@
   <body>
     <header>
       <h1>CrawlSpace</h1>
-      {% if user.is_authenticated %}
+      <!--{% if user.is_authenticated %}
         <a href="{% url 'logout' %}">logout</a>
       {% else %}
         <a href="{% url 'login' %}">login</a> / <a href="{% url 'signup' %}">signup</a>
-      {% endif %}
+      {% endif %}-->
     </header>
     <main>
-      {% block content %}
-      {% endblock %}
+      <section id="content">
+        {% block content %}
+        {% endblock %}
+      </section>
     </main>
   </body>
 </html>

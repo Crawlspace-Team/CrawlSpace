@@ -1,3 +1,48 @@
+html {
+  margin: 0; }
+
 body {
-    font-family: 'Open Sans', sans-serif;
-}
+  display: flex;
+  flex-direction: column;
+  font-family: 'Open Sans', sans-serif;
+  min-width: 100vw;
+  min-height: 100vh;
+  margin: 0; }
+
+header {
+  display: flex;
+  background: #2699FB;
+  width: 100%;
+  color: white;
+  justify-content: center; }
+  header h1 {
+    margin: 0.2em 0;
+    font-size: 1.6em; }
+
+main {
+  min-width: 100%;
+  min-height: 100%;
+  background: #F5F5F5;
+  display: flex;
+  flex: auto;
+  align-items: center;
+  justify-content: center; }
+
+.form--vertical {
+  display: flex;
+  flex-direction: column; }
+
+.button--large {
+  border: 2px solid blue;
+  background: none;
+  border-radius: 5em;
+  padding: 0.5em; }
+
+.button--signup {
+  background: #2699FB;
+  color: white; }
+
+.button--login {
+  background: white; }
+
+/*# sourceMappingURL=main.css.map */

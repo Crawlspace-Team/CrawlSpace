@@ -1,0 +1,67 @@
+$white: white;
+$off-white: #F5F5F5;
+$dark: #222222;
+$accent: #2699FB;
+
+$h1-size: 1.6em;
+
+html {
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Open Sans', sans-serif;
+    min-width: 100vw;
+    min-height: 100vh;
+    margin: 0;
+}
+
+header {
+    display: flex;
+    background: $accent;
+    width: 100%;
+    color: $white;
+    justify-content: center;
+    h1 {
+        margin: 0.2em 0;
+        font-size: $h1-size;
+    }
+}
+
+main {
+    min-width: 100%;
+    min-height: 100%;
+    background: $off-white;
+    display: flex;
+    flex: auto;
+    align-items: center;
+    justify-content: center;
+}
+
+#content {
+
+}
+
+.form--vertical {
+    display: flex;
+    flex-direction: column;
+}
+
+.button--large {
+    border: 2px solid blue;
+    background: none;
+    border-radius: 5em;
+    padding: 0.5em;
+
+}
+
+.button--signup {
+    background: $accent;
+    color: white;
+}
+
+.button--login {
+    background: $white;
+}
