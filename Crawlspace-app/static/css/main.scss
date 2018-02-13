@@ -11,6 +11,8 @@ $button-size: 1em;
 $input-padding: 0.7em 0;
 $form-width: 17em;
 
+$logo-size: 5em;
+
 html {
     margin: 0;
 }
@@ -132,19 +134,44 @@ main {
 }
 
 .logo {
-    width: 5em;
+    width: $logo-size;
 }
 
-@media screen and (max-width: 15em) {
+.logo--mobile {
+    display: none;
+    width: 4em;
+    align-self: center;
+}
+
+@media screen and (max-width: 25em) {
   html body {
+    header {
+        flex-direction: column;
+        .logo--mobile {
+            display: flex;
+        }
+    }
     main {
       #content {
         width: 100vw;
+        .container--form {
+            width: 100%;
+        }
+        h2 {
+            font-size: $h1-size*0.75;
+        }
+        .logo {
+            width: $logo-size*0.85;
+            display: none;
+        }
         .form--login  {
             width: 100%;
         }
         .form--vertical {
             width: 100%;
+            input {
+                padding: 0.5em 0;
+            }
         }
       }
     }

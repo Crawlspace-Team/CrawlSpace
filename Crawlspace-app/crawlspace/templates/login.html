@@ -2,29 +2,40 @@
 {% load static %}
 
 {% block content %}
-  <section class="container--form">
-    <img class="logo" src="{% static 'images/CrawlSpace_Logo.svg' %}" alt="CrawlSpace Logo">
-    <h2>Login</h2>
-    {% if form.errors %}
-      <p style="color: red">Your username and password didn't match. Please try again.</p>
-    {% endif %}
-    <form class="form--vertical" method="post">
-      {% csrf_token %}
-      <input type="hidden" name="next" value="{{ next }}" />
-      {% for field in form %}
-        <p>
-          <span>{{ field.label }}</span>
-          {{ field }}
-          {% for error in field.errors %}
-            <p style="color: red">{{ error }}</p>
-          {% endfor %}
-          {% if field.help_text %}
-            <p><small style="color: grey">{{ field.help_text }}</small></p>
+    <header>
+      <img class="logo--mobile" src="{% static 'images/CrawlSpace_Logo.svg' %}" alt="CrawlSpace Logo">
+      <h1>CrawlSpace</h1>
+      {% if user.is_authenticated %}
+        <a class="nav_button" href="{% url 'logout' %}">logout</a>
+      {% endif %}
+    </header>
+    <main>
+      <section id="content">
+        <section class="container--form">
+          <img class="logo" src="{% static 'images/CrawlSpace_Logo.svg' %}" alt="CrawlSpace Logo">
+          <h2>Login</h2>
+          {% if form.errors %}
+            <p style="color: red">Your username and password didn't match. Please try again.</p>
           {% endif %}
-        </p>
-      {% endfor %}
-      <button class="button--large button--white" type="submit">Login</button>
-      <a class="button--large button--accent" href="{% url 'signup' %}">Sign Up</a>
-    </form>
-  </section>
+          <form class="form--vertical" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ next }}" />
+            {% for field in form %}
+              <p>
+                <span>{{ field.label }}</span>
+                {{ field }}
+                {% for error in field.errors %}
+                  <p style="color: red">{{ error }}</p>
+                {% endfor %}
+                {% if field.help_text %}
+                  <p><small style="color: grey">{{ field.help_text }}</small></p>
+                {% endif %}
+              </p>
+            {% endfor %}
+            <button class="button--large button--white" type="submit">Login</button>
+            <a class="button--large button--accent" href="{% url 'signup' %}">Sign Up</a>
+          </form>
+        </section>
+      </section>
+    </main>
 {% endblock %}

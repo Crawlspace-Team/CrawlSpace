@@ -2,22 +2,33 @@
 {% load static %}
 
 {% block content %}
-  <section class="container--form">
-      <img class="logo" src="{% static 'images/CrawlSpace_Logo.svg' %}" alt="CrawlSpace Logo">
-      <h2>Sign Up</h2>
-      <form class="form--vertical" method="post">
-      {% csrf_token %}
-      {% for field in form %}
-        <p>
-          {{ field.label_tag }}
-          {{ field }}
-          {% for error in field.errors %}
-            <p style="color: red">{{ error }}</p>
-          {% endfor %}
-        </p>
-      {% endfor %}
-      <button class="button--large button--white" type="submit">Sign up</button>
-      <a class="button--large button--accent" href="{% url 'login' %}">Login</a>
-    </form>
-  </section>
+    <header>
+      <img class="logo--mobile" src="{% static 'images/CrawlSpace_Logo.svg' %}" alt="CrawlSpace Logo">
+      <h1>CrawlSpace</h1>
+      {% if user.is_authenticated %}
+        <a class="nav_button" href="{% url 'logout' %}">logout</a>
+      {% endif %}
+    </header>
+    <main>
+      <section id="content">
+          <section class="container--form">
+              <img class="logo" src="{% static 'images/CrawlSpace_Logo.svg' %}" alt="CrawlSpace Logo">
+              <h2>Sign Up</h2>
+              <form class="form--vertical" method="post">
+              {% csrf_token %}
+              {% for field in form %}
+                <p>
+                  {{ field.label_tag }}
+                  {{ field }}
+                  {% for error in field.errors %}
+                    <p style="color: red">{{ error }}</p>
+                  {% endfor %}
+                </p>
+              {% endfor %}
+              <button class="button--large button--white" type="submit">Sign up</button>
+              <a class="button--large button--accent" href="{% url 'login' %}">Login</a>
+            </form>
+          </section>
+      </section>
+    </main>
 {% endblock %}

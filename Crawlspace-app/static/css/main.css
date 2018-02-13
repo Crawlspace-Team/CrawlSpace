@@ -103,12 +103,30 @@ main {
 .logo {
   width: 5em; }
 
-@media screen and (max-width: 15em) {
+.logo--mobile {
+  display: none;
+  width: 4em;
+  align-self: center; }
+
+@media screen and (max-width: 25em) {
+  html body header {
+    flex-direction: column; }
+    html body header .logo--mobile {
+      display: flex; }
   html body main #content {
     width: 100vw; }
+    html body main #content .container--form {
+      width: 100%; }
+    html body main #content h2 {
+      font-size: 1.2em; }
+    html body main #content .logo {
+      width: 4.25em;
+      display: none; }
     html body main #content .form--login {
       width: 100%; }
     html body main #content .form--vertical {
-      width: 100%; } }
+      width: 100%; }
+      html body main #content .form--vertical input {
+        padding: 0.5em 0; } }
 
 /*# sourceMappingURL=main.css.map */
