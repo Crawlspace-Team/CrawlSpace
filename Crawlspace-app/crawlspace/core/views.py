@@ -28,3 +28,16 @@ def signup(request):
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form})
+
+@login_required
+def newCrawl(request):
+    crawl = Crawls.objects.create(user=request.user,description="Crawl description",details="Crawl Details")
+    crawl.save()
+    return redirect('/')
+
+@login_required
+def deleteCrawl(request, pk):
+    crawl = Crawls.objects.get(id=pk)
+    if (crawl.user == request.user):
+        crawl.delete()
+    return redirect('/')

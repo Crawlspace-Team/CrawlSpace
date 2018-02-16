@@ -21,8 +21,12 @@
         <h2>Welcome, {{ user.get_full_name }} <small>{{ user.email }}</small>!</h2>
         <p>{{ status }}</p>
         {% for crawl in crawls %}
-          <li>{{ crawl.description }}</li>
+          <li>{{ crawl.description }} : <a href="/deletecrawl/{{ crawl.id }}/">Delete Crawl</a>   </li>
         {% endfor %}
+        <form action="/newcrawl/" method="post">
+          {% csrf_token %}
+          <button type="submit" name="button">Add New Crawl</button>
+        </form>
       </section>
     </main>
 {% endblock %}
