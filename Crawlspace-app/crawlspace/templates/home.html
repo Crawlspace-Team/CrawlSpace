@@ -1,16 +1,28 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
     <header>
-      <h1>CrawlSpace</h1>
-      {% if user.is_authenticated %}
-        <a class="nav_button" href="{% url 'logout' %}">logout</a>
-      {% endif %}
+       <section class="title--left">
+          <h1>CrawlSpace</h1>
+          <img class="logo--small" src="{% static 'images/CrawlSpace_Logo.svg' %}" alt="CrawlSpace Logo">
+       </section>
+       <section class="nav">
+          <h2 class="title--page">My Crawls</h2>
+          {% if user.is_authenticated %}
+            <a class="nav_button" href="{% url 'logout' %}">
+                 <img src="{% static 'images/person_icon.svg' %}" alt="Logout Icon">
+            </a>
+          {% endif %}
+       </section>
     </header>
     <main>
       <section id="content">
-        <h2>Welcome, {{ user.get_full_name }} <small>{{ user.username }}</small>!</h2>
-        <p></p>
+        <h2>Welcome, {{ user.get_full_name }} <small>{{ user.email }}</small>!</h2>
+        <p>{{ status }}</p>
+        {% for crawl in crawls %}
+          <li>{{ crawl.description }}</li>
+        {% endfor %}
       </section>
     </main>
 {% endblock %}

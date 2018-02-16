@@ -100,12 +100,40 @@ main {
   color: white;
   margin: 0.3em; }
 
+.title--left {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  margin: 0 0.5em; }
+  .title--left h1 {
+    margin: 0;
+    margin-left: 5%;
+    flex: 0; }
+  .title--left .logo--small {
+    margin: 0 0.5em; }
+
+.title--page {
+  font-size: 1.2em; }
+
+.nav {
+  display: flex;
+  flex: 3;
+  justify-content: space-around; }
+
+.nav_button img {
+  width: 1.5em;
+  height: 1.5em; }
+
 .logo {
   width: 5em; }
 
+.logo--small {
+  width: 1.25em; }
+
 .logo--mobile {
   display: none;
-  width: 4em;
+  width: 3.5em;
+  margin-top: 0.2em;
   align-self: center; }
 
 @media screen and (max-width: 25em) {

@@ -6,6 +6,7 @@ $accent-light: #BCE0FD;
 $accent-lighter: #F1F9FF;
 
 $h1-size: 1.6em;
+$h2-size: 1.2em;
 $button-size: 1em;
 
 $input-padding: 0.7em 0;
@@ -133,13 +134,50 @@ main {
     margin: 0.3em;
 }
 
+.title--left {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    margin: 0 0.5em;
+    h1 {
+        margin: 0;
+        margin-left: 5%;
+        flex: 0;
+    }
+    .logo--small {
+        margin: 0 0.5em;
+    }
+}
+
+.title--page {
+    font-size: $h2-size;
+}
+
+.nav {
+    display: flex;
+    flex: 3;
+    justify-content: space-around;
+}
+
+.nav_button {
+    img {
+        width: 1.5em;
+        height: 1.5em;
+    }
+}
+
 .logo {
     width: $logo-size;
 }
 
+.logo--small {
+    width: $logo-size*0.25;
+}
+
 .logo--mobile {
     display: none;
-    width: 4em;
+    width: 3.5em;
+    margin-top: 0.2em;
     align-self: center;
 }
 
