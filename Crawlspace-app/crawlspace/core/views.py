@@ -3,11 +3,11 @@ from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 
 from crawlspace.core.forms import SignUpForm
-from crawlspace.core.models import Crawls
+from crawlspace.core.models import Crawl
 
 @login_required
 def home(request):
-    crawls = Crawls.objects.filter(user=request.user)
+    crawls = Crawl.objects.filter(user=request.user)
     if (crawls.exists()):
         status = 'You have: ' + str(len(crawls)) + ' crawls'
         return render(request, 'home.html', {'crawls' : crawls, 'status' : status})
