@@ -31,13 +31,13 @@ def signup(request):
 
 @login_required
 def newCrawl(request):
-    crawl = Crawls.objects.create(user=request.user,description="Crawl description",details="Crawl Details")
+    crawl = Crawl.objects.create(user=request.user,Crawl_Name="Pub Crawl")
     crawl.save()
     return redirect('/')
 
 @login_required
 def deleteCrawl(request, pk):
-    crawl = Crawls.objects.get(id=pk)
+    crawl = Crawl.objects.get(id=pk)
     if (crawl.user == request.user):
         crawl.delete()
     return redirect('/')
