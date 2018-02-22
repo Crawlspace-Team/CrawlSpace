@@ -34,10 +34,9 @@ def newCrawl(request):
     if request.method == 'POST':
         form = NewCrawlForm(request.POST)
         if form.is_valid():
-            form.save()
-            crawl = Crawl.objects.get(id=pk)
             crawl = Crawl.objects.create(user=request.user,Crawl_Name=form.cleaned_data.get('name'),startdate=form.cleaned_data.get('crawlstartdate'))
             crawl.save()
+
     return redirect('/')
 
 @login_required
