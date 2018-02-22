@@ -26,12 +26,12 @@
         <p>{{ status }}</p>
         <ul class="crawlList">
         {% for crawl in crawls %}
-          <li>
-            <section>
+          <li class="crawl">
+            <section class="crawl_details">
               <p>{{ crawl.Crawl_Name }}</p>
               <p> {{ crawl.created.day }}/{{ crawl.created.month }}/{{ crawl.created.year }} </p>
             </section>
-            <section>
+            <section class="crawl_buttons">
               <a href="/deletecrawl/{{ crawl.id }}/">Delete Crawl</a>
             </section>
           </li>

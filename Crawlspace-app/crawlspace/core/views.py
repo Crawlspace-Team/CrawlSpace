@@ -30,7 +30,6 @@ def signup(request):
 
 @login_required
 def newCrawl(request):
-    crawl = Crawl.objects.get(id=pk)
     crawl = Crawl.objects.create(user=request.user,Crawl_Name="Pub Crawl")
     crawl.save()
     return redirect('/')

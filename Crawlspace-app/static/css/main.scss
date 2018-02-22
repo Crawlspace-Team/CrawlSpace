@@ -175,12 +175,22 @@ main {
     padding: 0;
     list-style: none;
     display: grid;
-    li {
+    .crawl {
       background: $white;
       color: $accent;
       display: flex;
       padding: 0.5em;
       margin: 0.5em;
+      .crawl_details {
+        display: flex;
+        flex: 3;
+        flex-direction: column;
+      }
+      .crawl_buttons {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+      }
       p, a {
         text-decoration: none;
         color: $accent;

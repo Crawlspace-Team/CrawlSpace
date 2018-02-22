@@ -133,13 +133,21 @@ main {
   padding: 0;
   list-style: none;
   display: grid; }
-  .crawlList li {
+  .crawlList .crawl {
     background: white;
     color: #2699FB;
     display: flex;
     padding: 0.5em;
     margin: 0.5em; }
-    .crawlList li p, .crawlList li a {
+    .crawlList .crawl .crawl_details {
+      display: flex;
+      flex: 3;
+      flex-direction: column; }
+    .crawlList .crawl .crawl_buttons {
+      display: flex;
+      flex: 1;
+      flex-direction: column; }
+    .crawlList .crawl p, .crawlList .crawl a {
       text-decoration: none;
       color: #2699FB;
       font-weight: bold; }
