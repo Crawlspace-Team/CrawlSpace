@@ -33,7 +33,8 @@ main {
   justify-content: center; }
 
 #content {
-  margin: 1em; }
+  margin: 1em;
+  width: 40em; }
 
 .container--form {
   display: flex;
@@ -124,10 +125,6 @@ main {
   justify-content: space-around;
   margin: 0 9em; }
 
-.nav_button img {
-  width: 1.5em;
-  height: 1.5em; }
-
 .crawlList {
   grid-template-columns: 1fr 1fr;
   padding: 0;
@@ -137,20 +134,37 @@ main {
     background: white;
     color: #2699FB;
     display: flex;
-    padding: 0.5em;
-    margin: 0.5em; }
-    .crawlList .crawl .crawl_details {
+    margin: 0.5em;
+    flex-direction: column; }
+    .crawlList .crawl .crawl_image {
+      width: 100%;
+      height: 10em;
+      background: #222222; }
+      .crawlList .crawl .crawl_image img {
+        width: 100%;
+        height: 100%; }
+    .crawlList .crawl .crawl_information {
       display: flex;
-      flex: 3;
-      flex-direction: column; }
-    .crawlList .crawl .crawl_buttons {
-      display: flex;
-      flex: 1;
-      flex-direction: column; }
-    .crawlList .crawl p, .crawlList .crawl a {
-      text-decoration: none;
-      color: #2699FB;
-      font-weight: bold; }
+      padding: 0.5em 1em; }
+      .crawlList .crawl .crawl_information .crawl_details {
+        display: flex;
+        flex: 3;
+        flex-direction: column; }
+        .crawlList .crawl .crawl_information .crawl_details .details_name {
+          font-weight: bold;
+          font-size: 1.2em; }
+        .crawlList .crawl .crawl_information .crawl_details .details_startDate {
+          font-weight: normal;
+          font-size: 1em; }
+      .crawlList .crawl .crawl_information .crawl_buttons {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: flex-end; }
+      .crawlList .crawl .crawl_information p, .crawlList .crawl .crawl_information a {
+        text-decoration: none;
+        color: #2699FB; }
 
 .logo {
   width: 5em; }
@@ -164,13 +178,19 @@ main {
   margin-top: 0.2em;
   align-self: center; }
 
+.icon {
+  width: 1.5em;
+  height: 1.5em; }
+
 @media screen and (max-width: 40em) {
+  html body .icon {
+    width: 2em;
+    height: 2em; }
   html body header .title--left {
     display: none; }
   html body header .nav {
     margin: 0; }
-
-  main .crawlList {
+  html body main .crawlList {
     grid-template-columns: 1fr; } }
 @media screen and (max-width: 25em) {
   html body header {
