@@ -47,6 +47,50 @@ main {
   .container--form h2 {
     color: #222222; }
 
+.newCrawlMenu {
+  display: none;
+  align-items: center;
+  justify-content: center; }
+  .newCrawlMenu .newCrawlForm {
+    z-index: 1;
+    background: white;
+    padding: 5em; }
+
+.menu--open {
+  display: flex;
+  top: 6.5%;
+  left: 0;
+  position: fixed;
+  height: calc(100vh - 6.5%);
+  width: 100vw; }
+  .menu--open .overlay {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: grey;
+    opacity: 0.2;
+    z-index: 0; }
+
+.button--createCrawl {
+  -webkit-appearance: none;
+  border: none;
+  background: #2699FB;
+  padding: 0.9em 1em;
+  border-radius: 50%;
+  position: fixed;
+  right: 15vw;
+  bottom: 10vw;
+  cursor: pointer;
+  z-index: 5; }
+
+.button--createCrawl.button--active img {
+  -webkit-transform: rotate(45deg);
+  /* to support Safari and Android browser */
+  -ms-transform: rotate(45deg);
+  /* to support IE 9 */
+  transform: rotate(45deg); }
+
 .form--vertical {
   display: flex;
   flex-direction: column;
@@ -185,6 +229,10 @@ main {
   width: 1.5em;
   height: 1.5em; }
 
+@media screen and (min-width: 40em) {
+  html body main .button--createCrawl {
+    right: 30vw;
+    bottom: 10vw; } }
 @media screen and (max-width: 40em) {
   html body .icon {
     width: 2em;

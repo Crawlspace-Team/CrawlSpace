@@ -23,6 +23,9 @@
     </header>
     <main>
       <section id="content">
+        <button class="button--createCrawl" type="button" name="createCrawl">
+          <img class="icon" src="{% static 'images/plus_icon.svg' %}" alt="Close Icon">
+        </button>
         <p>{{ status }}</p>
         <ul class="crawlList">
         {% for crawl in crawls %}
@@ -47,12 +50,16 @@
           </li>
         {% endfor %}
         </ul>
-        <form action="/newcrawl/" method="post">
-          {% csrf_token %}
-          <input type="text" name="name" placeholder="Crawl name" value="">
-          <input id="newCrawlDate" type="date" name="crawlstartdate" value="">
-          <button type="submit" name="button">Add New Crawl</button>
-        </form>
+        <section class="newCrawlMenu">
+          <form class="newCrawlForm" action="/newcrawl/" method="post">
+            {% csrf_token %}
+            <input type="text" name="name" placeholder="Crawl name" value="" required>
+            <input id="newCrawlDate" type="date" name="crawlstartdate" value="" required>
+            <button type="submit" name="addCrawl">Add Crawl</button>
+          </form>
+          <div class="overlay"></div>
+        </section>
       </section>
     </main>
+    <script src="{% static 'js/crawlSpace_home.js' %}"></script>
 {% endblock %}
