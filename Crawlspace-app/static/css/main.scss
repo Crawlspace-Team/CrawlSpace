@@ -139,6 +139,9 @@ main {
     flex: 1;
     align-items: center;
     margin: 0 0.5em;
+    position: absolute;
+    left: .5em;
+    top: 0.75em;
     h1 {
         margin: 0;
         margin-left: 5%;
@@ -157,12 +160,32 @@ main {
     display: flex;
     flex: 3;
     justify-content: space-around;
+    margin: 0 9em;
 }
 
 .nav_button {
     img {
         width: 1.5em;
         height: 1.5em;
+    }
+}
+
+.crawlList {
+    grid-template-columns: 1fr 1fr;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    li {
+      background: $white;
+      color: $accent;
+      display: flex;
+      padding: 0.5em;
+      margin: 0.5em;
+      p, a {
+        text-decoration: none;
+        color: $accent;
+        font-weight: bold;
+      }
     }
 }
 
@@ -179,6 +202,24 @@ main {
     width: 3.5em;
     margin-top: 0.2em;
     align-self: center;
+}
+
+@media screen and (max-width: 40em) {
+  html body {
+    header {
+      .title--left {
+        display: none;
+      }
+      .nav {
+        margin: 0;
+      }
+    }
+  }
+  main {
+    .crawlList {
+      grid-template-columns: 1fr;
+    }
+  }
 }
 
 @media screen and (max-width: 25em) {

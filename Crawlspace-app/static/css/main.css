@@ -104,7 +104,10 @@ main {
   display: flex;
   flex: 1;
   align-items: center;
-  margin: 0 0.5em; }
+  margin: 0 0.5em;
+  position: absolute;
+  left: .5em;
+  top: 0.75em; }
   .title--left h1 {
     margin: 0;
     margin-left: 5%;
@@ -118,11 +121,28 @@ main {
 .nav {
   display: flex;
   flex: 3;
-  justify-content: space-around; }
+  justify-content: space-around;
+  margin: 0 9em; }
 
 .nav_button img {
   width: 1.5em;
   height: 1.5em; }
+
+.crawlList {
+  grid-template-columns: 1fr 1fr;
+  padding: 0;
+  list-style: none;
+  display: grid; }
+  .crawlList li {
+    background: white;
+    color: #2699FB;
+    display: flex;
+    padding: 0.5em;
+    margin: 0.5em; }
+    .crawlList li p, .crawlList li a {
+      text-decoration: none;
+      color: #2699FB;
+      font-weight: bold; }
 
 .logo {
   width: 5em; }
@@ -136,6 +156,14 @@ main {
   margin-top: 0.2em;
   align-self: center; }
 
+@media screen and (max-width: 40em) {
+  html body header .title--left {
+    display: none; }
+  html body header .nav {
+    margin: 0; }
+
+  main .crawlList {
+    grid-template-columns: 1fr; } }
 @media screen and (max-width: 25em) {
   html body header {
     flex-direction: column; }

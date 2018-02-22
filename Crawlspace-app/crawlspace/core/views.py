@@ -9,8 +9,7 @@ from crawlspace.core.models import Crawl
 def home(request):
     crawls = Crawl.objects.filter(user=request.user)
     if (crawls.exists()):
-        status = 'You have: ' + str(len(crawls)) + ' crawls'
-        return render(request, 'home.html', {'crawls' : crawls, 'status' : status})
+        return render(request, 'home.html', {'crawls' : crawls, 'status' : ''})
     else:
         return render(request, 'home.html', {'crawls' : [], 'status' : 'No crawls'})
 
@@ -31,6 +30,7 @@ def signup(request):
 
 @login_required
 def newCrawl(request):
+    crawl = Crawl.objects.get(id=pk)
     crawl = Crawl.objects.create(user=request.user,Crawl_Name="Pub Crawl")
     crawl.save()
     return redirect('/')

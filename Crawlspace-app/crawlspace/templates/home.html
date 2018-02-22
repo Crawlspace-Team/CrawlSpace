@@ -8,6 +8,11 @@
           <img class="logo--small" src="{% static 'images/CrawlSpace_Logo.svg' %}" alt="CrawlSpace Logo">
        </section>
        <section class="nav">
+         {% if user.is_authenticated %}
+           <a class="nav_button" href="{% url 'logout' %}">
+                <img src="{% static 'images/arrow_left_icon.svg' %}" alt="Logout Icon">
+           </a>
+         {% endif %}
           <h2 class="title--page">My Crawls</h2>
           {% if user.is_authenticated %}
             <a class="nav_button" href="{% url 'logout' %}">
@@ -18,11 +23,20 @@
     </header>
     <main>
       <section id="content">
-        <h2>Welcome, {{ user.get_full_name }} <small>{{ user.email }}</small>!</h2>
         <p>{{ status }}</p>
+        <ul class="crawlList">
         {% for crawl in crawls %}
-          <li>{{ crawl.Crawl_Name }} : <a href="/deletecrawl/{{ crawl.id }}/">Delete Crawl</a>   </li>
+          <li>
+            <section>
+              <p>{{ crawl.Crawl_Name }}</p>
+              <p> {{ crawl.created.day }}/{{ crawl.created.month }}/{{ crawl.created.year }} </p>
+            </section>
+            <section>
+              <a href="/deletecrawl/{{ crawl.id }}/">Delete Crawl</a>
+            </section>
+          </li>
         {% endfor %}
+        </ul>
         <form action="/newcrawl/" method="post">
           {% csrf_token %}
           <button type="submit" name="button">Add New Crawl</button>
