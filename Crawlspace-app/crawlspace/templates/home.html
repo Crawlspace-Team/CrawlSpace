@@ -39,7 +39,7 @@
                 <p class="details_startDate"> {{ crawl.startdate.day }}/{{ crawl.startdate.month }}/{{ crawl.startdate.year }} </p>
               </section>
               <section class="crawl_buttons">
-                <a href="">
+                <a class="editCrawlButton" href="">
                   <img class="icon" src="{% static 'images/config_icon.svg' %}" alt="Close Icon">
                 </a>
                 <a href="/deletecrawl/{{ crawl.id }}/">
@@ -53,9 +53,20 @@
         <section class="newCrawlMenu">
           <form class="newCrawlForm" action="/newcrawl/" method="post">
             {% csrf_token %}
+            <h2>New Crawl</h2>
             <input type="text" name="name" placeholder="Crawl name" value="" required>
-            <input id="newCrawlDate" type="date" name="crawlstartdate" value="" required>
+            <input class="newCrawlDate inputDate" type="date" name="crawlstartdate" value="" required>
             <button type="submit" name="addCrawl">Add Crawl</button>
+          </form>
+          <div class="overlay"></div>
+        </section>
+        <section class="editCrawlMenu">
+          <form class="editCrawlForm" action="/editcrawl/" method="post">
+            {% csrf_token %}
+            <h2>Edit Crawl</h2>
+            <input class="editCrawlName" type="text" name="name" placeholder="Crawl name" value="" required>
+            <input class="editCrawlDate inputDate" type="date" name="crawlstartdate" value="" required>
+            <button type="submit" name="editCrawl">Update Crawl</button>
           </form>
           <div class="overlay"></div>
         </section>
