@@ -7,6 +7,7 @@ $accent-lighter: #F1F9FF;
 
 $h1-size: 1.6em;
 $h2-size: 1.2em;
+$p-size: 1em;
 $button-size: 1em;
 
 $input-padding: 0.7em 0;
@@ -55,6 +56,7 @@ main {
 
 #content {
     margin: 1em;
+    width: 40em;
 }
 
 .container--form  {
@@ -139,6 +141,9 @@ main {
     flex: 1;
     align-items: center;
     margin: 0 0.5em;
+    position: absolute;
+    left: .5em;
+    top: 0.75em;
     h1 {
         margin: 0;
         margin-left: 5%;
@@ -157,12 +162,57 @@ main {
     display: flex;
     flex: 3;
     justify-content: space-around;
+    margin: 0 9em;
 }
 
-.nav_button {
-    img {
-        width: 1.5em;
-        height: 1.5em;
+.crawlList {
+    grid-template-columns: 1fr 1fr;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    .crawl {
+      background: $white;
+      color: $accent;
+      display: flex;
+      margin: 0.5em;
+      flex-direction: column;
+      .crawl_image {
+        width: 100%;
+        height: 10em;
+        background: $dark;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .crawl_information {
+        display: flex;
+        padding: 0.5em 1em;
+        .crawl_details {
+          display: flex;
+          flex: 3;
+          flex-direction: column;
+          .details_name {
+            font-weight: bold;
+            font-size: $h2-size;
+          }
+          .details_startDate {
+            font-weight: normal;
+            font-size: $p-size;
+          }
+        }
+        .crawl_buttons {
+          display: flex;
+          flex: 1;
+          flex-direction: column;
+          justify-content: space-around;
+          align-items: flex-end;
+        }
+        p, a {
+          text-decoration: none;
+          color: $accent;
+        }
+      }
     }
 }
 
@@ -179,6 +229,33 @@ main {
     width: 3.5em;
     margin-top: 0.2em;
     align-self: center;
+}
+
+.icon {
+  width: 1.5em;
+  height: 1.5em;
+}
+
+@media screen and (max-width: 40em) {
+  html body {
+    .icon {
+      width: 2em;
+      height: 2em;
+    }
+    header {
+      .title--left {
+        display: none;
+      }
+      .nav {
+        margin: 0;
+      }
+    }
+    main {
+      .crawlList {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
 }
 
 @media screen and (max-width: 25em) {

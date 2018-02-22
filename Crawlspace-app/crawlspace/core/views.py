@@ -3,14 +3,14 @@ from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 
 from crawlspace.core.forms import SignUpForm
+from crawlspace.core.forms import NewCrawlForm
 from crawlspace.core.models import Crawl
 
 @login_required
 def home(request):
     crawls = Crawl.objects.filter(user=request.user)
     if (crawls.exists()):
-        status = 'You have: ' + str(len(crawls)) + ' crawls'
-        return render(request, 'home.html', {'crawls' : crawls, 'status' : status})
+        return render(request, 'home.html', {'crawls' : crawls, 'status' : ''})
     else:
         return render(request, 'home.html', {'crawls' : [], 'status' : 'No crawls'})
 
@@ -31,8 +31,12 @@ def signup(request):
 
 @login_required
 def newCrawl(request):
-    crawl = Crawl.objects.create(user=request.user,Crawl_Name="Pub Crawl")
-    crawl.save()
+    if request.method == 'POST':
+        form = NewCrawlForm(request.POST)
+        if form.is_valid():
+            crawl = Crawl.objects.create(user=request.user,Crawl_Name=form.cleaned_data.get('name'),startdate=form.cleaned_data.get('crawlstartdate'))
+            crawl.save()
+
     return redirect('/')
 
 @login_required

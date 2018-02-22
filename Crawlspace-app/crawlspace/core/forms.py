@@ -1,6 +1,9 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from .models import Crawl
+
+
 
 
 class SignUpForm(UserCreationForm):
@@ -9,3 +12,7 @@ class SignUpForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password1', 'password2', )
+
+class NewCrawlForm(forms.Form):
+    name = forms.CharField(max_length=50, help_text='Required. Input a valid Crawl Name')
+    crawlstartdate = forms.DateTimeField(help_text='Required. Input a valid start date and time')

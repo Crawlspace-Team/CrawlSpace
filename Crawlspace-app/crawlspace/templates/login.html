@@ -5,9 +5,6 @@
     <header>
       <img class="logo--mobile" src="{% static 'images/CrawlSpace_Logo.svg' %}" alt="CrawlSpace Logo">
       <h1>CrawlSpace</h1>
-      {% if user.is_authenticated %}
-        <a class="nav_button" href="{% url 'logout' %}">logout</a>
-      {% endif %}
     </header>
     <main>
       <section id="content">
