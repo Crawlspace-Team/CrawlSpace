@@ -3,6 +3,7 @@ from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 
 from crawlspace.core.forms import SignUpForm
+from crawlspace.core.forms import NewCrawlForm
 from crawlspace.core.models import Crawl
 
 @login_required
@@ -30,8 +31,13 @@ def signup(request):
 
 @login_required
 def newCrawl(request):
-    crawl = Crawl.objects.create(user=request.user,Crawl_Name="Pub Crawl")
-    crawl.save()
+    if request.method == 'POST':
+        form = NewCrawlForm(request.POST)
+        if form.is_valid():
+            form.save()
+            crawl = Crawl.objects.get(id=pk)
+            crawl = Crawl.objects.create(user=request.user,Crawl_Name=form.cleaned_data.get('name'),startdate=form.cleaned_data.get('crawlstartdate'))
+            crawl.save()
     return redirect('/')
 
 @login_required

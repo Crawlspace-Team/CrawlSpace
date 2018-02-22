@@ -9,6 +9,7 @@ class Crawl(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     Crawl_Name = models.CharField(max_length=50)
     created = models.DateTimeField(auto_now_add=True)
+    startdate = models.DateTimeField()
 
 class Pub(models.Model):
     Pub_Name = models.CharField(max_length=255)
