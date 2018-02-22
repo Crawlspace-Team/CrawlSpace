@@ -59,6 +59,10 @@ main {
     width: 40em;
 }
 
+#content--flex {
+    width: auto;
+}
+
 .container--form  {
     display: flex;
     flex-direction: column;
