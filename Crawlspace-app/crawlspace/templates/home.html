@@ -49,6 +49,8 @@
         </ul>
         <form action="/newcrawl/" method="post">
           {% csrf_token %}
+          <input type="text" name="name" placeholder="Crawl name" value="">
+          <input id="newCrawlDate" type="date" name="crawlstartdate" value="">
           <button type="submit" name="button">Add New Crawl</button>
         </form>
       </section>
