@@ -12,5 +12,6 @@ urlpatterns = [
     url(r'^logout/$', auth_views.logout, {'next_page': 'login'}, name='logout'),
     url(r'^signup/$', core_views.signup, name='signup'),
     url(r'^newcrawl/$', core_views.newCrawl, name='newCrawl'),
+    url(r'^editcrawl/$', core_views.editCrawl, name='editCrawl'),
     url(r'^deletecrawl/(?P<pk>\d+)/$', core_views.deleteCrawl, name='deleteCrawl'),
 ]

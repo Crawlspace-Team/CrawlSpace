@@ -2,8 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 
-from crawlspace.core.forms import SignUpForm
-from crawlspace.core.forms import NewCrawlForm
+from crawlspace.core.forms import *
 from crawlspace.core.models import Crawl
 
 @login_required
@@ -38,6 +37,21 @@ def newCrawl(request):
             crawl.save()
 
     return redirect('/')
+
+
+@login_required
+def editCrawl(request):
+    if request.method == 'POST':
+        form = EditCrawlForm(request.POST)
+        if form.is_valid():
+            crawl = Crawl.objects.get(id=form.cleaned_data.get('crawlid'))
+            print(crawl.Crawl_Name)
+            if (crawl.user == request.user):
+                crawl.Crawl_Name = form.cleaned_data.get('name')
+                crawl.startdate = form.cleaned_data.get('crawlstartdate')
+                crawl.save()
+    return redirect('/')
+
 
 @login_required
 def deleteCrawl(request, pk):

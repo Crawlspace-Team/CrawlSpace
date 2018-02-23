@@ -35,6 +35,7 @@
             </section>
             <section class="crawl_information">
               <section class="crawl_details">
+                <p class="details_id">{{ crawl.id }}</p>
                 <p class="details_name">{{ crawl.Crawl_Name }}</p>
                 <p class="details_startDate"> {{ crawl.startdate.day }}/{{ crawl.startdate.month }}/{{ crawl.startdate.year }} </p>
               </section>
@@ -64,6 +65,7 @@
           <form class="editCrawlForm" action="/editcrawl/" method="post">
             {% csrf_token %}
             <h2>Edit Crawl</h2>
+            <input class="editCrawlID" type="text" name="crawlid">
             <input class="editCrawlName" type="text" name="name" placeholder="Crawl name" value="" required>
             <input class="editCrawlDate inputDate" type="date" name="crawlstartdate" value="" required>
             <button type="submit" name="editCrawl">Update Crawl</button>

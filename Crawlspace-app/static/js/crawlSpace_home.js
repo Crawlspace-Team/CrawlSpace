@@ -35,9 +35,11 @@ function openEditCrawlMenu(e) {
   let crawlElement = e.target.parentNode.parentNode.parentNode
   let crawlNameElement = crawlElement.querySelector('.details_name')
   let crawlDateElement = crawlElement.querySelector('.details_startDate')
+  let crawlIDElement = crawlElement.querySelector('.details_id')
   const crawlName = crawlNameElement.innerHTML
   let editCrawlName = editCrawlMenu.querySelector('.editCrawlName')
   let editCrawlDate = editCrawlMenu.querySelector('.editCrawlDate')
+  let editCrawlID = editCrawlMenu.querySelector('.editCrawlID')
   let crawlDate = crawlDateElement.innerHTML.split('/')
   const crawlYear = crawlDate[2]
   const crawlMonth = (crawlDate[1]-1)
@@ -45,6 +47,7 @@ function openEditCrawlMenu(e) {
   crawlDate = new Date(crawlYear, crawlMonth, crawlDay);
   editCrawlName.setAttribute('value', crawlName)
   editCrawlDate.valueAsDate = crawlDate
+  editCrawlID.setAttribute('value', crawlIDElement.innerHTML)
 
   editCrawlMenuOpen = !editCrawlMenuOpen
   editCrawlMenu.classList.toggle('menu--open')

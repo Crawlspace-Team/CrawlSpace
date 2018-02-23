@@ -17,20 +17,20 @@
     flex-direction: column; }
     html body header .logo--mobile {
       display: flex; }
-  html body main #content {
+  html body main #content, html body main #content--flex {
     width: 100vw; }
-    html body main #content .container--form {
+    html body main #content .container--form, html body main #content--flex .container--form {
       width: 100%; }
-    html body main #content h2 {
+    html body main #content h2, html body main #content--flex h2 {
       font-size: 1.2em; }
-    html body main #content .logo {
+    html body main #content .logo, html body main #content--flex .logo {
       width: 4.25em;
       display: none; }
-    html body main #content .form--login {
+    html body main #content .form--login, html body main #content--flex .form--login {
       width: 100%; }
-    html body main #content .form--vertical {
+    html body main #content .form--vertical, html body main #content--flex .form--vertical {
       width: 100%; }
-      html body main #content .form--vertical input {
+      html body main #content .form--vertical input, html body main #content--flex .form--vertical input {
         padding: 0.5em 0; } }
 .button--createCrawl {
   -webkit-box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.16);
@@ -237,6 +237,8 @@ main {
         display: flex;
         flex: 3;
         flex-direction: column; }
+        .crawlList .crawl .crawl_information .crawl_details .details_id {
+          display: none; }
         .crawlList .crawl .crawl_information .crawl_details .details_name {
           font-weight: bold;
           font-size: 1.2em; }
@@ -268,5 +270,8 @@ main {
 .icon {
   width: 1.5em;
   height: 1.5em; }
+
+.editCrawlID {
+  display: none; }
 
 /*# sourceMappingURL=main.css.map */
