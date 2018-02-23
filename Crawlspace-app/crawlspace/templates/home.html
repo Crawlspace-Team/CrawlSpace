@@ -30,24 +30,26 @@
         <ul class="crawlList">
         {% for crawl in crawls %}
           <li class="crawl">
-            <section class="crawl_image">
-              <img src="" alt="">
-            </section>
-            <section class="crawl_information">
-              <section class="crawl_details">
-                <p class="details_id">{{ crawl.id }}</p>
-                <p class="details_name">{{ crawl.Crawl_Name }}</p>
-                <p class="details_startDate"> {{ crawl.startdate.day }}/{{ crawl.startdate.month }}/{{ crawl.startdate.year }} </p>
+            <a href="crawl/{{ crawl.id }}/">
+              <section class="crawl_image">
+                <img src="" alt="">
               </section>
-              <section class="crawl_buttons">
-                <a class="editCrawlButton" href="">
-                  <img class="icon" src="{% static 'images/config_icon.svg' %}" alt="Close Icon">
-                </a>
-                <a href="/deletecrawl/{{ crawl.id }}/">
-                  <img class="icon" src="{% static 'images/close_icon.svg' %}" alt="Close Icon">
-                </a>
+              <section class="crawl_information">
+                <section class="crawl_details">
+                  <p class="details_id">{{ crawl.id }}</p>
+                  <p class="details_name">{{ crawl.Crawl_Name }}</p>
+                  <p class="details_startDate"> {{ crawl.startdate.day }}/{{ crawl.startdate.month }}/{{ crawl.startdate.year }} </p>
+                </section>
+                <section class="crawl_buttons">
+                  <a class="editCrawlButton" href="">
+                    <img class="icon" src="{% static 'images/config_icon.svg' %}" alt="Close Icon">
+                  </a>
+                  <a href="/deletecrawl/{{ crawl.id }}/">
+                    <img class="icon" src="{% static 'images/close_icon.svg' %}" alt="Close Icon">
+                  </a>
+                </section>
               </section>
-            </section>
+            </a>
           </li>
         {% endfor %}
         </ul>

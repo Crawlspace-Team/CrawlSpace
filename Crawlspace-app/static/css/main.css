@@ -18,7 +18,7 @@
     html body header .logo--mobile {
       display: flex; }
   html body main #content, html body main #content--flex {
-    width: 100vw; }
+    width: 90vw; }
     html body main #content .container--form, html body main #content--flex .container--form {
       width: 100%; }
     html body main #content h2, html body main #content--flex h2 {
