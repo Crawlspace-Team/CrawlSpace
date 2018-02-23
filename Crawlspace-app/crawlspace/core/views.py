@@ -34,9 +34,7 @@ def newCrawl(request):
         if form.is_valid():
             crawl = Crawl.objects.create(user=request.user,Crawl_Name=form.cleaned_data.get('name'),startdate=form.cleaned_data.get('crawlstartdate'))
             crawl.save()
-
     return redirect('/')
-
 
 @login_required
 def editCrawl(request):
@@ -50,7 +48,6 @@ def editCrawl(request):
                 crawl.save()
     return redirect('/')
 
-
 @login_required
 def deleteCrawl(request, pk):
     crawl = Crawl.objects.get(id=pk)
@@ -62,6 +59,9 @@ def deleteCrawl(request, pk):
 def viewCrawl(request, pk):
     crawl = Crawl.objects.get(id=pk)
     if (crawl.user == request.user):
-        pubs = Pub_On_Crawl.objects.get(crawl=pk)
-        return render(request, 'crawl.html', {'crawls': pubs})
-    return redirect('/')
+        pubs = Pub_On_Crawl.objects.filter(crawl=crawl)
+        pubList = Pub.objects.filter()
+        if (pubs.exists()):
+            return render(request, 'crawl.html', {'status' : '', 'crawl_name' : crawl.Crawl_Name, 'pubs': pubs})
+        else:
+            return render(request, 'crawl.html', {'status' : 'No Pubs in crawl', 'crawl_name' : crawl.Crawl_Name, 'pubs': []})

@@ -9,11 +9,11 @@
        </section>
        <section class="nav">
          {% if user.is_authenticated %}
-           <a class="nav_button" href="{% url 'logout' %}">
+           <a class="nav_button" href="{% url 'home' %}">
                 <img class="icon" src="{% static 'images/arrow_left_icon.svg' %}" alt="Logout Icon">
            </a>
          {% endif %}
-          <h2 class="title--page">My Crawls</h2>
+          <h2 class="title--page">{{ crawl_name }}</h2>
           {% if user.is_authenticated %}
             <a class="nav_button" href="{% url 'logout' %}">
                  <img class="icon" src="{% static 'images/person_icon.svg' %}" alt="Logout Icon">
@@ -23,19 +23,16 @@
     </header>
     <main>
       <section id="content">
-        <button class="button--createCrawl" type="button" name="createCrawl">
-          <img class="icon" src="{% static 'images/plus_icon.svg' %}" alt="Close Icon">
-        </button>
+        <p class="status">{{ status }}</p>
         <ul class="crawlList">
         {% for pub in pubs %}
-          <li class="crawl">
-            <a href="crawl/{{ crawl.id }}">
-              <p>{{ pub }}</p>
-            </a>
+          <li class="pub">
+            <p>{{ pub.pub.Pub_Name }} : <a href="
+https://maps.googleapis.com/maps/api/place/details/json?placeid={{ pub.pub.Places_ID }}&key=AIzaSyDw2YcCGEW97S5zIoTwv13fEjIzc118CjY
+">Places Data</a></p>
           </li>
         {% endfor %}
         </ul>
       </section>
     </main>
-    <script src="{% static 'js/crawlSpace_home.js' %}"></script>
 {% endblock %}

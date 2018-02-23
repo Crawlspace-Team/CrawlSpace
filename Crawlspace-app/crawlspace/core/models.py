@@ -4,7 +4,6 @@ from django.db import models
 from django.contrib.auth.models import User
 import datetime
 
-# Create your models here.
 class Crawl(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     Crawl_Name = models.CharField(max_length=50)
@@ -13,7 +12,7 @@ class Crawl(models.Model):
 
 class Pub(models.Model):
     Pub_Name = models.CharField(max_length=255)
-    Places_ID = models.TextField
+    Places_ID = models.TextField(default=1,max_length=50)
 
 
 class Pub_On_Crawl(models.Model):

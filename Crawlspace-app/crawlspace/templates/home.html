@@ -26,7 +26,7 @@
         <button class="button--createCrawl" type="button" name="createCrawl">
           <img class="icon" src="{% static 'images/plus_icon.svg' %}" alt="Close Icon">
         </button>
-        <p>{{ status }}</p>
+        <p class="status">{{ status }}</p>
         <ul class="crawlList">
         {% for crawl in crawls %}
           <li class="crawl">
