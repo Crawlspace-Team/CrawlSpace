@@ -15,6 +15,10 @@ $form-width: 17em;
 
 $logo-size: 5em;
 
+@import 'partials/mixins';
+@import 'partials/media-queries';
+@import 'partials/inputs';
+
 html {
     margin: 0;
 }
@@ -73,71 +77,34 @@ main {
     }
 }
 
-.form--vertical {
-    display: flex;
-    flex-direction: column;
-    width: $form-width;
-    color: $accent;
-    p, label, input {
-        width: 100%;
-    }
-    span {
-        font-weight: 500;
-        font-size: 1em;
-    }
-    input {
-        font-family: 'Open Sans', sans-serif;
-        box-sizing: border-box;
-        border: 2px solid $accent-light;
-        border-radius: 0.75em;
-        background: $accent-lighter;
-        padding: $input-padding;
-        margin-top: 0.3em;
-        text-decoration: none;
-        color: $accent;
-        font-size: 1em;
-        font-weight: 500;
-        text-indent: 1em;
-    }
-    p {
-        display: flex;
-        flex-direction: column;
-        margin: 0.5em 0;
-    }
+.editCrawlMenu, .newCrawlMenu {
+  @include box-shadow;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  .editCrawlForm, .newCrawlForm {
+    z-index: 1;
+    background: white;
+    padding: 5em;
+  }
 }
 
-.button--large {
-    border: 2px solid $accent;
-    background: none;
-    border-radius: 5em;
-    padding: $input-padding;
-    text-decoration: none;
-    font-size: $button-size;
-    text-transform: uppercase;
-    font-weight: bold;
-    text-align: center;
-    margin-top: 1em;
-    &:hover {
-        cursor: pointer;
-    }
-}
-
-.button--accent {
-    background: $accent;
-    color: $white;
-}
-
-.button--white {
-    background: $white;
-    color: $accent;
-}
-
-.nav_button {
-    display: flex;
-    align-self: center;
-    text-decoration: none;
-    color: $white;
-    margin: 0.3em;
+.menu--open {
+  display: flex;
+  top: 6.5%;
+  left: 0;
+  position: fixed;
+  height: calc(100vh - 6.5%);
+  width: 100vw;
+  .overlay {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: grey;
+    opacity: 0.2;
+    z-index: 0;
+  }
 }
 
 .title--left {
@@ -196,6 +163,9 @@ main {
           display: flex;
           flex: 3;
           flex-direction: column;
+          .details_id {
+            display: none;
+          }
           .details_name {
             font-weight: bold;
             font-size: $h2-size;
@@ -240,59 +210,6 @@ main {
   height: 1.5em;
 }
 
-@media screen and (max-width: 40em) {
-  html body {
-    .icon {
-      width: 2em;
-      height: 2em;
-    }
-    header {
-      .title--left {
-        display: none;
-      }
-      .nav {
-        margin: 0;
-      }
-    }
-    main {
-      .crawlList {
-        grid-template-columns: 1fr;
-      }
-    }
-  }
-}
-
-@media screen and (max-width: 25em) {
-  html body {
-    header {
-        flex-direction: column;
-        .logo--mobile {
-            display: flex;
-        }
-    }
-    main {
-      #content {
-        width: 100vw;
-        .container--form {
-            width: 100%;
-        }
-        h2 {
-            font-size: $h1-size*0.75;
-        }
-        .logo {
-            width: $logo-size*0.85;
-            display: none;
-        }
-        .form--login  {
-            width: 100%;
-        }
-        .form--vertical {
-            width: 100%;
-            input {
-                padding: 0.5em 0;
-            }
-        }
-      }
-    }
-  }
+.editCrawlID {
+  display: none;
 }

@@ -1,0 +1,67 @@
+@media screen and (min-width: 40em) {
+  html body {
+    main {
+      .button--createCrawl {
+        right: 30vw;
+        bottom: 10vw;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 40em) {
+  html body {
+    .icon {
+      width: 2em;
+      height: 2em;
+    }
+    header {
+      .title--left {
+        display: none;
+      }
+      .nav {
+        margin: 0;
+      }
+    }
+    main {
+      .crawlList {
+        grid-template-columns: 1fr;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 25em) {
+  html body {
+    header {
+        flex-direction: column;
+        .logo--mobile {
+            display: flex;
+        }
+    }
+    main {
+      #content, #content--flex {
+        width: 90vw;
+        .container--form {
+            width: 100%;
+        }
+        h2 {
+            font-size: $h1-size*0.75;
+        }
+        .logo {
+            width: $logo-size*0.85;
+            display: none;
+        }
+        .form--login  {
+            width: 100%;
+        }
+        .form--vertical {
+            width: 100%;
+            input {
+                padding: 0.5em 0;
+            }
+        }
+      }
+    }
+  }
+}

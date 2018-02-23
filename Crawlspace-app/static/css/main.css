@@ -1,3 +1,116 @@
+@media screen and (min-width: 40em) {
+  html body main .button--createCrawl {
+    right: 30vw;
+    bottom: 10vw; } }
+@media screen and (max-width: 40em) {
+  html body .icon {
+    width: 2em;
+    height: 2em; }
+  html body header .title--left {
+    display: none; }
+  html body header .nav {
+    margin: 0; }
+  html body main .crawlList {
+    grid-template-columns: 1fr; } }
+@media screen and (max-width: 25em) {
+  html body header {
+    flex-direction: column; }
+    html body header .logo--mobile {
+      display: flex; }
+  html body main #content, html body main #content--flex {
+    width: 90vw; }
+    html body main #content .container--form, html body main #content--flex .container--form {
+      width: 100%; }
+    html body main #content h2, html body main #content--flex h2 {
+      font-size: 1.2em; }
+    html body main #content .logo, html body main #content--flex .logo {
+      width: 4.25em;
+      display: none; }
+    html body main #content .form--login, html body main #content--flex .form--login {
+      width: 100%; }
+    html body main #content .form--vertical, html body main #content--flex .form--vertical {
+      width: 100%; }
+      html body main #content .form--vertical input, html body main #content--flex .form--vertical input {
+        padding: 0.5em 0; } }
+.button--createCrawl {
+  -webkit-box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.16);
+  -moz-box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.16);
+  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.16);
+  -webkit-appearance: none;
+  border: none;
+  background: #2699FB;
+  padding: 0.9em 1em;
+  border-radius: 50%;
+  position: fixed;
+  right: 15vw;
+  bottom: 10vw;
+  cursor: pointer;
+  z-index: 5; }
+
+.button--large {
+  border: 2px solid #2699FB;
+  background: none;
+  border-radius: 5em;
+  padding: 0.7em 0;
+  text-decoration: none;
+  font-size: 1em;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 1em; }
+  .button--large:hover {
+    cursor: pointer; }
+
+.button--accent {
+  background: #2699FB;
+  color: white; }
+
+.button--white {
+  background: white;
+  color: #2699FB; }
+
+.form--vertical {
+  display: flex;
+  flex-direction: column;
+  width: 17em;
+  color: #2699FB; }
+  .form--vertical p, .form--vertical label, .form--vertical input {
+    width: 100%; }
+  .form--vertical span {
+    font-weight: 500;
+    font-size: 1em; }
+  .form--vertical input {
+    font-family: 'Open Sans', sans-serif;
+    box-sizing: border-box;
+    border: 2px solid #BCE0FD;
+    border-radius: 0.75em;
+    background: #F1F9FF;
+    padding: 0.7em 0;
+    margin-top: 0.3em;
+    text-decoration: none;
+    color: #2699FB;
+    font-size: 1em;
+    font-weight: 500;
+    text-indent: 1em; }
+  .form--vertical p {
+    display: flex;
+    flex-direction: column;
+    margin: 0.5em 0; }
+
+.nav_button {
+  display: flex;
+  align-self: center;
+  text-decoration: none;
+  color: white;
+  margin: 0.3em; }
+
+.button--createCrawl.button--active img {
+  -webkit-transform: rotate(45deg);
+  /* to support Safari and Android browser */
+  -ms-transform: rotate(45deg);
+  /* to support IE 9 */
+  transform: rotate(45deg); }
+
 html {
   margin: 0; }
 
@@ -47,62 +160,33 @@ main {
   .container--form h2 {
     color: #222222; }
 
-.form--vertical {
+.editCrawlMenu, .newCrawlMenu {
+  -webkit-box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.16);
+  -moz-box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.16);
+  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.16);
+  display: none;
+  align-items: center;
+  justify-content: center; }
+  .editCrawlMenu .editCrawlForm, .editCrawlMenu .newCrawlForm, .newCrawlMenu .editCrawlForm, .newCrawlMenu .newCrawlForm {
+    z-index: 1;
+    background: white;
+    padding: 5em; }
+
+.menu--open {
   display: flex;
-  flex-direction: column;
-  width: 17em;
-  color: #2699FB; }
-  .form--vertical p, .form--vertical label, .form--vertical input {
-    width: 100%; }
-  .form--vertical span {
-    font-weight: 500;
-    font-size: 1em; }
-  .form--vertical input {
-    font-family: 'Open Sans', sans-serif;
-    box-sizing: border-box;
-    border: 2px solid #BCE0FD;
-    border-radius: 0.75em;
-    background: #F1F9FF;
-    padding: 0.7em 0;
-    margin-top: 0.3em;
-    text-decoration: none;
-    color: #2699FB;
-    font-size: 1em;
-    font-weight: 500;
-    text-indent: 1em; }
-  .form--vertical p {
-    display: flex;
-    flex-direction: column;
-    margin: 0.5em 0; }
-
-.button--large {
-  border: 2px solid #2699FB;
-  background: none;
-  border-radius: 5em;
-  padding: 0.7em 0;
-  text-decoration: none;
-  font-size: 1em;
-  text-transform: uppercase;
-  font-weight: bold;
-  text-align: center;
-  margin-top: 1em; }
-  .button--large:hover {
-    cursor: pointer; }
-
-.button--accent {
-  background: #2699FB;
-  color: white; }
-
-.button--white {
-  background: white;
-  color: #2699FB; }
-
-.nav_button {
-  display: flex;
-  align-self: center;
-  text-decoration: none;
-  color: white;
-  margin: 0.3em; }
+  top: 6.5%;
+  left: 0;
+  position: fixed;
+  height: calc(100vh - 6.5%);
+  width: 100vw; }
+  .menu--open .overlay {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: grey;
+    opacity: 0.2;
+    z-index: 0; }
 
 .title--left {
   display: flex;
@@ -153,6 +237,8 @@ main {
         display: flex;
         flex: 3;
         flex-direction: column; }
+        .crawlList .crawl .crawl_information .crawl_details .details_id {
+          display: none; }
         .crawlList .crawl .crawl_information .crawl_details .details_name {
           font-weight: bold;
           font-size: 1.2em; }
@@ -185,35 +271,7 @@ main {
   width: 1.5em;
   height: 1.5em; }
 
-@media screen and (max-width: 40em) {
-  html body .icon {
-    width: 2em;
-    height: 2em; }
-  html body header .title--left {
-    display: none; }
-  html body header .nav {
-    margin: 0; }
-  html body main .crawlList {
-    grid-template-columns: 1fr; } }
-@media screen and (max-width: 25em) {
-  html body header {
-    flex-direction: column; }
-    html body header .logo--mobile {
-      display: flex; }
-  html body main #content {
-    width: 100vw; }
-    html body main #content .container--form {
-      width: 100%; }
-    html body main #content h2 {
-      font-size: 1.2em; }
-    html body main #content .logo {
-      width: 4.25em;
-      display: none; }
-    html body main #content .form--login {
-      width: 100%; }
-    html body main #content .form--vertical {
-      width: 100%; }
-      html body main #content .form--vertical input {
-        padding: 0.5em 0; } }
+.editCrawlID {
+  display: none; }
 
 /*# sourceMappingURL=main.css.map */

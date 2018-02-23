@@ -23,36 +23,58 @@
     </header>
     <main>
       <section id="content">
+        <button class="button--createCrawl" type="button" name="createCrawl">
+          <img class="icon" src="{% static 'images/plus_icon.svg' %}" alt="Close Icon">
+        </button>
         <p>{{ status }}</p>
         <ul class="crawlList">
         {% for crawl in crawls %}
           <li class="crawl">
-            <section class="crawl_image">
-              <img src="" alt="">
-            </section>
-            <section class="crawl_information">
-              <section class="crawl_details">
-                <p class="details_name">{{ crawl.Crawl_Name }}</p>
-                <p class="details_startDate"> {{ crawl.startdate.day }}/{{ crawl.startdate.month }}/{{ crawl.startdate.year }} </p>
+            <a href="crawl/{{ crawl.id }}/">
+              <section class="crawl_image">
+                <img src="" alt="">
               </section>
-              <section class="crawl_buttons">
-                <a href="">
-                  <img class="icon" src="{% static 'images/config_icon.svg' %}" alt="Close Icon">
-                </a>
-                <a href="/deletecrawl/{{ crawl.id }}/">
-                  <img class="icon" src="{% static 'images/close_icon.svg' %}" alt="Close Icon">
-                </a>
+              <section class="crawl_information">
+                <section class="crawl_details">
+                  <p class="details_id">{{ crawl.id }}</p>
+                  <p class="details_name">{{ crawl.Crawl_Name }}</p>
+                  <p class="details_startDate"> {{ crawl.startdate.day }}/{{ crawl.startdate.month }}/{{ crawl.startdate.year }} </p>
+                </section>
+                <section class="crawl_buttons">
+                  <a class="editCrawlButton" href="">
+                    <img class="icon" src="{% static 'images/config_icon.svg' %}" alt="Close Icon">
+                  </a>
+                  <a href="/deletecrawl/{{ crawl.id }}/">
+                    <img class="icon" src="{% static 'images/close_icon.svg' %}" alt="Close Icon">
+                  </a>
+                </section>
               </section>
-            </section>
+            </a>
           </li>
         {% endfor %}
         </ul>
-        <form action="/newcrawl/" method="post">
-          {% csrf_token %}
-          <input type="text" name="name" placeholder="Crawl name" value="">
-          <input id="newCrawlDate" type="date" name="crawlstartdate" value="">
-          <button type="submit" name="button">Add New Crawl</button>
-        </form>
+        <section class="newCrawlMenu">
+          <form class="newCrawlForm" action="/newcrawl/" method="post">
+            {% csrf_token %}
+            <h2>New Crawl</h2>
+            <input type="text" name="name" placeholder="Crawl name" value="" required>
+            <input class="newCrawlDate inputDate" type="date" name="crawlstartdate" value="" required>
+            <button type="submit" name="addCrawl">Add Crawl</button>
+          </form>
+          <div class="overlay"></div>
+        </section>
+        <section class="editCrawlMenu">
+          <form class="editCrawlForm" action="/editcrawl/" method="post">
+            {% csrf_token %}
+            <h2>Edit Crawl</h2>
+            <input class="editCrawlID" type="text" name="crawlid">
+            <input class="editCrawlName" type="text" name="name" placeholder="Crawl name" value="" required>
+            <input class="editCrawlDate inputDate" type="date" name="crawlstartdate" value="" required>
+            <button type="submit" name="editCrawl">Update Crawl</button>
+          </form>
+          <div class="overlay"></div>
+        </section>
       </section>
     </main>
+    <script src="{% static 'js/crawlSpace_home.js' %}"></script>
 {% endblock %}
