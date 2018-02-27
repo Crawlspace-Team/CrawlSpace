@@ -12,8 +12,7 @@ class Crawl(models.Model):
 
 class Pub(models.Model):
     Pub_Name = models.CharField(max_length=255)
-    Places_ID = models.TextField(default=1,max_length=50)
-
+    Places_ID = models.TextField(default=1,max_length=100)
 
 class Pub_On_Crawl(models.Model):
     pub = models.ForeignKey(Pub, on_delete=models.CASCADE)

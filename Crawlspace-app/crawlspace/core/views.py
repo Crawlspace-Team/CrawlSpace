@@ -4,6 +4,8 @@ from django.shortcuts import render, redirect
 
 from crawlspace.core.forms import *
 from crawlspace.core.models import *
+import requests
+import json
 
 @login_required
 def home(request):
@@ -60,8 +62,30 @@ def viewCrawl(request, pk):
     crawl = Crawl.objects.get(id=pk)
     if (crawl.user == request.user):
         pubs = Pub_On_Crawl.objects.filter(crawl=crawl)
-        pubList = Pub.objects.filter()
+        for pub in pubs:
+            rawPubData = requests.get("https://maps.googleapis.com/maps/api/place/details/json?placeid=" + pub.pub.Places_ID + "&key=AIzaSyDw2YcCGEW97S5zIoTwv13fEjIzc118CjY")
+            pubData = rawPubData.content
+            pubData = json.loads(pubData)
+            pubData = pubData['result']
+            pub.phoneNumber = pubData['formatted_phone_number']
+            #pubData = json.loads(rawPubData)
+            #pub.open = pubData['internation_phone_number']
         if (pubs.exists()):
-            return render(request, 'crawl.html', {'status' : '', 'crawl_name' : crawl.Crawl_Name, 'pubs': pubs})
+            return render(request, 'crawl.html', {'status' : '', 'crawl_name' : crawl.Crawl_Name, 'crawl_id': crawl.id, 'pubs': pubs})
         else:
-            return render(request, 'crawl.html', {'status' : 'No Pubs in crawl', 'crawl_name' : crawl.Crawl_Name, 'pubs': []})
+            return render(request, 'crawl.html', {'status' : 'No Pubs in crawl', 'crawl_name' : crawl.Crawl_Name, 'crawl_id': crawl.id, 'pubs': []})
+
+@login_required
+def addPub(request, pk):
+    if request.method == 'POST':
+        form = AddPubForm(request.POST)
+        if form.is_valid():
+            crawl = Crawl.objects.get(id=pk)
+            if (crawl.user == request.user):
+                pubs = Pub_On_Crawl.objects.filter(crawl=crawl)
+                numOfPubs = len(pubs)+1
+                pub = Pub.objects.create(Pub_Name=form.cleaned_data.get('pubname'),Places_ID=form.cleaned_data.get('placeid'))
+                pub.save()
+                pubOnCrawl = Pub_On_Crawl.objects.create(pub=pub,crawl=crawl,position=numOfPubs)
+                pubOnCrawl.save()
+    return redirect('/crawl/' + pk + "/")

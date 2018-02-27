@@ -18,3 +18,7 @@ class EditCrawlForm(forms.Form):
     crawlid = forms.CharField(max_length=50)
     name = forms.CharField(max_length=50, help_text='Required. Input a valid Crawl Name')
     crawlstartdate = forms.DateTimeField(help_text='Required. Input a valid start date and time')
+
+class AddPubForm(forms.Form):
+    pubname = forms.CharField(max_length=255)
+    placeid = forms.CharField(max_length=100)

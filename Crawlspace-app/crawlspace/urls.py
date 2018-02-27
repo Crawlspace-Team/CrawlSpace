@@ -15,4 +15,5 @@ urlpatterns = [
     url(r'^editcrawl/$', core_views.editCrawl, name='editCrawl'),
     url(r'^deletecrawl/(?P<pk>\d+)/$', core_views.deleteCrawl, name='deleteCrawl'),
     url(r'^crawl/(?P<pk>\d+)/$', core_views.viewCrawl, name='viewCrawl'),
+    url(r'^crawl/(?P<pk>\d+)/addpub/', core_views.addPub, name='addPub'),
 ]

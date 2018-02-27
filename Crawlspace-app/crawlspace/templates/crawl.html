@@ -23,6 +23,13 @@
     </header>
     <main>
       <section id="content">
+        <form class="newCrawlForm" action="/crawl/{{ crawl_id }}/addpub/" method="post">
+          {% csrf_token %}
+          <h2>Add Pub</h2>
+          <input type="text" name="pubname" placeholder="Pub" value="Deco" required>
+          <input type="text" name="placeid" value="ChIJsYuN2aJddEgRY4yrUjBgqI0" required>
+          <button type="submit" name="addPub">Add Pub</button>
+        </form>
         <p class="status">{{ status }}</p>
         <ul class="crawlList">
         {% for pub in pubs %}
@@ -30,6 +37,8 @@
             <p>{{ pub.pub.Pub_Name }} : <a href="
 https://maps.googleapis.com/maps/api/place/details/json?placeid={{ pub.pub.Places_ID }}&key=AIzaSyDw2YcCGEW97S5zIoTwv13fEjIzc118CjY
 ">Places Data</a></p>
+            <p>{{ pub.open }}</p>
+            <p>{{ pub.phoneNumber }}</p>
           </li>
         {% endfor %}
         </ul>
