@@ -89,3 +89,21 @@ def addPub(request, pk):
                 pubOnCrawl = Pub_On_Crawl.objects.create(pub=pub,crawl=crawl,position=numOfPubs)
                 pubOnCrawl.save()
     return redirect('/crawl/' + pk + "/")
+
+@login_required
+def orderStartDate(request):
+    crawls = Crawl.objects.filter(user=request.user)
+    orderedCrawls = crawls.order_by('startdate')
+    if (crawls.exists()):
+        return render(request, 'home.html', {'crawls' : orderedCrawls, 'status' : ''})
+    else:
+        return render(request, 'home.html', {'crawls' : [], 'status' : 'No crawls'})
+
+@login_required
+def orderCrawlName(request):
+    crawls = Crawl.objects.filter(user=request.user)
+    orderedCrawls = crawls.order_by('Crawl_Name')
+    if (crawls.exists()):
+        return render(request, 'home.html', {'crawls' : orderedCrawls, 'status' : ''})
+    else:
+        return render(request, 'home.html', {'crawls' : [], 'status' : 'No crawls'})
