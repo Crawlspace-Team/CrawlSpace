@@ -190,6 +190,30 @@ main {
     }
 }
 
+
+.pubList {
+    grid-template-columns: 1fr;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    .pub {
+      background: $white;
+      color: $accent;
+      display: flex;
+      margin: 0.5em;
+      flex-direction: column;
+      .pub_image {
+        width: 100%;
+        height: 10em;
+        background: $dark;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+}
+
 .logo {
     width: $logo-size;
 }
