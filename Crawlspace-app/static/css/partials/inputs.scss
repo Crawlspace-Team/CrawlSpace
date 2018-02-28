@@ -1,11 +1,7 @@
 
 .button--createCrawl {
+  @include button-circle;
   @include box-shadow;
-  -webkit-appearance: none;
-  border: none;
-  background: $accent;
-  padding: 0.9em 1em;
-  border-radius: 50%;
   position: fixed;
   right: 15vw;
   bottom: 10vw;
@@ -14,18 +10,16 @@
 }
 
 .button--orderCrawl {
+  @include button-circle;
   @include box-shadow;
-  -webkit-appearance: none;
-  border: none;
-  background: $accent;
-  padding: 0.9em 1em;
-  border-radius: 50%;
-  cursor: pointer;
   z-index: 5;
+  clear: both;
+  display: inline-block;
 }
 
 .button--large {
-
+  -webkit-appearance: none;
+  border: none;
   border: 2px solid $accent;
   background: none;
   border-radius: 5em;

@@ -11,9 +11,11 @@
 
 @media screen and (max-width: 40em) {
   html body {
-    .icon {
-      width: 2em;
-      height: 2em;
+    .button {
+      .icon {
+        width: 2em;
+        height: 2em;
+      }
     }
     header {
       .title--left {

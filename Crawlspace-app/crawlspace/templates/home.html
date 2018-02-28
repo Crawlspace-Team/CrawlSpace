@@ -24,10 +24,10 @@
     <main>
       <section id="content">
         <a class="button--orderCrawl" href="/orderDate/">
-          <img class="icon" src="{% static 'images/plus_icon.svg' %}" alt="Close Icon">
+          <img class="icon" src="{% static 'images/calendar_icon.svg' %}" alt="Close Icon">
         </a>
         <a class="button--orderCrawl" href="/orderName/">
-          <img class="icon" src="{% static 'images/plus_icon.svg' %}" alt="Close Icon">
+          <img class="icon" src="{% static 'images/ordername_icon.svg' %}" alt="Close Icon">
         </a>
         <button class="button--createCrawl" type="button" name="createCrawl">
           <img class="icon" src="{% static 'images/plus_icon.svg' %}" alt="Close Icon">
@@ -36,7 +36,7 @@
         <ul class="crawlList">
         {% for crawl in crawls %}
           <li class="crawl">
-            <a href="crawl/{{ crawl.id }}/">
+            <a href="/crawl/{{ crawl.id }}/">
               <section class="crawl_image">
                 <img src="" alt="">
               </section>

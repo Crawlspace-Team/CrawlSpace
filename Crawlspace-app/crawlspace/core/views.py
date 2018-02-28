@@ -7,6 +7,8 @@ from crawlspace.core.models import *
 import requests
 import json
 
+googleAPIKey = 'AIzaSyDw2YcCGEW97S5zIoTwv13fEjIzc118CjY'
+
 @login_required
 def home(request):
     crawls = Crawl.objects.filter(user=request.user)
@@ -63,13 +65,20 @@ def viewCrawl(request, pk):
     if (crawl.user == request.user):
         pubs = Pub_On_Crawl.objects.filter(crawl=crawl)
         for pub in pubs:
-            rawPubData = requests.get("https://maps.googleapis.com/maps/api/place/details/json?placeid=" + pub.pub.Places_ID + "&key=AIzaSyDw2YcCGEW97S5zIoTwv13fEjIzc118CjY")
+            pub.name = pub.pub.Pub_Name
+            pub.position = pub.position + 1
+            rawPubData = requests.get("https://maps.googleapis.com/maps/api/place/details/json?placeid=" + pub.pub.Places_ID + "&key=" + googleAPIKey)
             pubData = rawPubData.content
             pubData = json.loads(pubData)
             pubData = pubData['result']
             pub.phoneNumber = pubData['formatted_phone_number']
-            #pubData = json.loads(rawPubData)
-            #pub.open = pubData['internation_phone_number']
+            pubPhotos = pubData['photos']
+            pubThumbnailObject = pubPhotos[0]
+            pubThumbnailCode = pubThumbnailObject['photo_reference']
+            pubThumbnailUrl = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + pubThumbnailCode + "&key=" + googleAPIKey
+            pub.thumbnail = pubThumbnailUrl
+        searchResult = requests.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=50.790589,-1.089377&radius=500&type=pub&keyword=pub&key=AIzaSyDw2YcCGEW97S5zIoTwv13fEjIzc118CjY')
+        print(searchResult)
         if (pubs.exists()):
             return render(request, 'crawl.html', {'status' : '', 'crawl_name' : crawl.Crawl_Name, 'crawl_id': crawl.id, 'pubs': pubs})
         else:

@@ -3,7 +3,7 @@
     right: 30vw;
     bottom: 10vw; } }
 @media screen and (max-width: 40em) {
-  html body .icon {
+  html body .button .icon {
     width: 2em;
     height: 2em; }
   html body header .title--left {
@@ -33,14 +33,15 @@
       html body main #content .form--vertical input, html body main #content--flex .form--vertical input {
         padding: 0.5em 0; } }
 .button--createCrawl {
-  -webkit-box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.16);
-  -moz-box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.16);
-  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.16);
   -webkit-appearance: none;
   border: none;
   background: #2699FB;
   padding: 0.9em 1em;
   border-radius: 50%;
+  cursor: pointer;
+  -webkit-box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.16);
+  -moz-box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.16);
+  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.16);
   position: fixed;
   right: 15vw;
   bottom: 10vw;
@@ -48,18 +49,22 @@
   z-index: 5; }
 
 .button--orderCrawl {
-  -webkit-box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.16);
-  -moz-box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.16);
-  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.16);
   -webkit-appearance: none;
   border: none;
   background: #2699FB;
   padding: 0.9em 1em;
   border-radius: 50%;
   cursor: pointer;
-  z-index: 5; }
+  -webkit-box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.16);
+  -moz-box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.16);
+  box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.16);
+  z-index: 5;
+  clear: both;
+  display: inline-block; }
 
 .button--large {
+  -webkit-appearance: none;
+  border: none;
   border: 2px solid #2699FB;
   background: none;
   border-radius: 5em;
@@ -266,6 +271,25 @@ main {
       .crawlList .crawl .crawl_information p, .crawlList .crawl .crawl_information a {
         text-decoration: none;
         color: #2699FB; }
+
+.pubList {
+  grid-template-columns: 1fr;
+  padding: 0;
+  list-style: none;
+  display: grid; }
+  .pubList .pub {
+    background: white;
+    color: #2699FB;
+    display: flex;
+    margin: 0.5em;
+    flex-direction: column; }
+    .pubList .pub .pub_image {
+      width: 100%;
+      height: 10em;
+      background: #222222; }
+      .pubList .pub .pub_image img {
+        width: 100%;
+        height: 100%; }
 
 .logo {
   width: 5em; }

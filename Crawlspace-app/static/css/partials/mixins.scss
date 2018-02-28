@@ -3,3 +3,12 @@
   -moz-box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.16);
   box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.16);
 }
+
+@mixin button-circle {
+  -webkit-appearance: none;
+  border: none;
+  background: $accent;
+  padding: 0.9em 1em;
+  border-radius: 50%;
+  cursor: pointer;
+}

@@ -23,7 +23,13 @@
     </header>
     <main>
       <section id="content">
-        <form class="newCrawlForm" action="/crawl/{{ crawl_id }}/addpub/" method="post">
+        <form class="searchPubsForm">
+          {% csrf_token %}
+          <h2>Search For Pubs</h2>
+          <input id="inputLocation" type="text" name="location" placeholder="Location" value="" required>
+          <button id="inputSearchButton" type="submit" name="searchPubs">Search Pubs</button>
+        </form>
+        <form class="addPubForm" action="/crawl/{{ crawl_id }}/addpub/" method="post">
           {% csrf_token %}
           <h2>Add Pub</h2>
           <input type="text" name="pubname" placeholder="Pub" value="Deco" required>
@@ -34,14 +40,17 @@
         <ul class="pubList">
         {% for pub in pubs %}
           <li class="pub">
-            <p>{{ pub.pub.Pub_Name }} : <a href="
+            <p>{{ pub.position }}: {{ pub.name }} : <a href="
 https://maps.googleapis.com/maps/api/place/details/json?placeid={{ pub.pub.Places_ID }}&key=AIzaSyDw2YcCGEW97S5zIoTwv13fEjIzc118CjY
 ">Places Data</a></p>
-            <p>{{ pub.open }}</p>
+            <img src="{{ pub.thumbnail }}" alt="">
             <p>{{ pub.phoneNumber }}</p>
           </li>
         {% endfor %}
         </ul>
+        <div id="map"></div>
       </section>
     </main>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjJreU4NFphqBuqOzx--tr0fSL4Nj-sjI&libraries=places" async defer></script>
+    <script src="{% static 'js/crawlSpace_crawl.js' %}"></script>
 {% endblock %}
