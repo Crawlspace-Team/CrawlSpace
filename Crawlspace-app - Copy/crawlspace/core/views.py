@@ -6,7 +6,6 @@ from crawlspace.core.forms import *
 from crawlspace.core.models import *
 import requests
 import json
-from django.http import JsonResponse
 
 googleAPIKey = 'AIzaSyDw2YcCGEW97S5zIoTwv13fEjIzc118CjY'
 
@@ -78,9 +77,8 @@ def viewCrawl(request, pk):
             pubThumbnailCode = pubThumbnailObject['photo_reference']
             pubThumbnailUrl = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + pubThumbnailCode + "&key=" + googleAPIKey
             pub.thumbnail = pubThumbnailUrl
-            pub.rating = pubData['rating']
-            #print(pub.rating)
-
+        searchResult = requests.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=50.790589,-1.089377&radius=500&type=pub&keyword=pub&key=AIzaSyDw2YcCGEW97S5zIoTwv13fEjIzc118CjY')
+        print(searchResult)
         if (pubs.exists()):
             return render(request, 'crawl.html', {'status' : '', 'crawl_name' : crawl.Crawl_Name, 'crawl_id': crawl.id, 'pubs': pubs})
         else:
@@ -118,11 +116,3 @@ def orderCrawlName(request):
         return render(request, 'home.html', {'crawls' : orderedCrawls, 'status' : ''})
     else:
         return render(request, 'home.html', {'crawls' : [], 'status' : 'No crawls'})
-
-def searchPubs(request, lat, lon):
-    searchRadius = str(2000)
-    searchType = "Pub"
-    searchResult = requests.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + lat + ',' + lon + '&radius=' + searchRadius + '&type=' + searchType + '&keyword=pub&key=AIzaSyDw2YcCGEW97S5zIoTwv13fEjIzc118CjY')
-    searchResult = searchResult.content
-    searchResult = json.loads(searchResult)
-    return JsonResponse(searchResult, safe=False)

@@ -47,27 +47,15 @@ function handleErrors(error) {
 }
 
 function getPubsAtLocation(position) {
-  const lat = position.coords.latitude
-  const lon = position.coords.longitude
-  //fetch(`/searchPubs/${lat}/${long}/`)
-  fetch(`/searchPubs/lat=${lat}&lon=${lon}`)
+  const lat = position.langitude
+  const long = position.longitude
+  fetch('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=50.790589,-1.089377&radius=500&type=pub&keyword=pub&key=AIzaSyDw2YcCGEW97S5zIoTwv13fEjIzc118CjY')
   .then(function(response) {
-    return response.json()
+    return response.text()
   }).then(function(body) {
-    displaySearchResults(body)
+    console.log(body)
     return true
-  })
-}
-
-function displaySearchResults(results) {
-  foundPubs = results.results
-  console.log(foundPubs);
-  const resultsList = document.querySelector('#searchResults')
-  for (pub in foundPubs) {
-    pubName = foundPubs[pub].name
-    pubPlaceID = foundPubs[pub].place_id
-    let pubElement = document.createElement("li")
-    pubElement.innerHTML = pubName + ", " + pubPlaceID
-    resultsList.appendChild(pubElement)
-  }
+  }).catch(function(error) {
+    console.log('Fetch error')
+  });
 }

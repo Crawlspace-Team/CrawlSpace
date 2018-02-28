@@ -29,11 +29,6 @@
           <input id="inputLocation" type="text" name="location" placeholder="Location" value="" required>
           <button id="inputSearchButton" type="submit" name="searchPubs">Search Pubs</button>
         </form>
-        <section>
-          <ul id="searchResults">
-            
-          </ul>
-        </section>
         <form class="addPubForm" action="/crawl/{{ crawl_id }}/addpub/" method="post">
           {% csrf_token %}
           <h2>Add Pub</h2>
