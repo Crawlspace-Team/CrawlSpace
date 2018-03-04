@@ -9,14 +9,16 @@ import json
 from django.http import JsonResponse
 
 googleAPIKey = 'AIzaSyDw2YcCGEW97S5zIoTwv13fEjIzc118CjY'
+googlePlacesDetailUrl = 'https://maps.googleapis.com/maps/api/place/details/json?placeid='
+googlePlacesPhotoUrl = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference='
 
 @login_required
 def home(request):
     crawls = Crawl.objects.filter(user=request.user)
     if (crawls.exists()):
-        return render(request, 'home.html', {'crawls' : crawls, 'status' : ''})
+        return render(request, 'home.html', {'crawls': crawls, 'status': ''})
     else:
-        return render(request, 'home.html', {'crawls' : [], 'status' : 'No crawls'})
+        return render(request, 'home.html', {'crawls': [], 'status': 'No crawls'})
 
 def signup(request):
     if request.method == 'POST':
@@ -37,7 +39,9 @@ def newCrawl(request):
     if request.method == 'POST':
         form = NewCrawlForm(request.POST)
         if form.is_valid():
-            crawl = Crawl.objects.create(user=request.user,Crawl_Name=form.cleaned_data.get('name'),startdate=form.cleaned_data.get('crawlstartdate'))
+            crawlName = Crawl_Name=form.cleaned_data.get('name')
+            crawlStartDate = startdate=form.cleaned_data.get('crawlstartdate')
+            crawl = Crawl.objects.create(user=request.user, Crawl_Name=crawlName, startdate=crawlStartDate)
             crawl.save()
     return redirect('/')
 
@@ -68,7 +72,7 @@ def viewCrawl(request, pk):
         for pub in pubs:
             pub.name = pub.pub.Pub_Name
             pub.position = pub.position + 1
-            rawPubData = requests.get("https://maps.googleapis.com/maps/api/place/details/json?placeid=" + pub.pub.Places_ID + "&key=" + googleAPIKey)
+            rawPubData = requests.get(googlePlacesDetailUrl + pub.pub.Places_ID + '&key=' + googleAPIKey)
             pubData = rawPubData.content
             pubData = json.loads(pubData)
             pubData = pubData['result']
@@ -76,11 +80,9 @@ def viewCrawl(request, pk):
             pubPhotos = pubData['photos']
             pubThumbnailObject = pubPhotos[0]
             pubThumbnailCode = pubThumbnailObject['photo_reference']
-            pubThumbnailUrl = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=" + pubThumbnailCode + "&key=" + googleAPIKey
+            pubThumbnailUrl = googlePlacesPhotoUrl + pubThumbnailCode + '&key=' + googleAPIKey
             pub.thumbnail = pubThumbnailUrl
             pub.rating = pubData['rating']
-            #print(pub.rating)
-
         if (pubs.exists()):
             return render(request, 'crawl.html', {'status' : '', 'crawl_name' : crawl.Crawl_Name, 'crawl_id': crawl.id, 'pubs': pubs})
         else:
@@ -93,35 +95,38 @@ def addPub(request, pk):
         if form.is_valid():
             crawl = Crawl.objects.get(id=pk)
             if (crawl.user == request.user):
-                pubs = Pub_On_Crawl.objects.filter(crawl=crawl)
-                numOfPubs = len(pubs)+1
-                pub = Pub.objects.create(Pub_Name=form.cleaned_data.get('pubname'),Places_ID=form.cleaned_data.get('placeid'))
+                pubsOnCrawl = Pub_On_Crawl.objects.filter(crawl=crawl)
+                numOfPubs = len(pubsOnCrawl)+1
+                pubName = form.cleaned_data.get('pubname')
+                pubPlaceID = form.cleaned_data.get('placeid')
+                pub = Pub.objects.create(Pub_Name=pubName, Places_ID=pubPlaceID)
                 pub.save()
-                pubOnCrawl = Pub_On_Crawl.objects.create(pub=pub,crawl=crawl,position=numOfPubs)
+                pubOnCrawl = Pub_On_Crawl.objects.create(pub=pub, crawl=crawl, position=numOfPubs)
                 pubOnCrawl.save()
-    return redirect('/crawl/' + pk + "/")
+    return redirect('/crawl/' + pk + '/')
 
 @login_required
 def orderStartDate(request):
     crawls = Crawl.objects.filter(user=request.user)
     orderedCrawls = crawls.order_by('startdate')
     if (crawls.exists()):
-        return render(request, 'home.html', {'crawls' : orderedCrawls, 'status' : ''})
+        return render(request, 'home.html', {'crawls': orderedCrawls, 'status': ''})
     else:
-        return render(request, 'home.html', {'crawls' : [], 'status' : 'No crawls'})
+        return render(request, 'home.html', {'crawls': [], 'status': 'No crawls'})
 
 @login_required
 def orderCrawlName(request):
     crawls = Crawl.objects.filter(user=request.user)
     orderedCrawls = crawls.order_by('Crawl_Name')
     if (crawls.exists()):
-        return render(request, 'home.html', {'crawls' : orderedCrawls, 'status' : ''})
+        return render(request, 'home.html', {'crawls': orderedCrawls, 'status': ''})
     else:
-        return render(request, 'home.html', {'crawls' : [], 'status' : 'No crawls'})
+        return render(request, 'home.html', {'crawls': [], 'status': 'No crawls'})
 
+@login_required
 def searchPubs(request, lat, lon):
     searchRadius = str(2000)
-    searchType = "Pub"
+    searchType = 'Pub'
     searchResult = requests.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + lat + ',' + lon + '&radius=' + searchRadius + '&type=' + searchType + '&keyword=pub&key=AIzaSyDw2YcCGEW97S5zIoTwv13fEjIzc118CjY')
     searchResult = searchResult.content
     searchResult = json.loads(searchResult)

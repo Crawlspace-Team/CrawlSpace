@@ -8,7 +8,7 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password1', 'password2', )
+        fields = ('username', 'email', 'password1', 'password2',)
 
 class NewCrawlForm(forms.Form):
     name = forms.CharField(max_length=50, help_text='Required. Input a valid Crawl Name')

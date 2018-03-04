@@ -11,7 +11,7 @@ function searchForPubs(e) {
   return false
 }
 
-document.addEventListener("DOMContentLoaded", function(event) {
+document.addEventListener('DOMContentLoaded', function(event) {
   getLocation();
 });
 
@@ -24,24 +24,24 @@ function getLocation() {
       };
       navigator.geolocation.getCurrentPosition(getPubsAtLocation, handleErrors, options);
     } else {
-      statusEle.innerHTML = "Geolocation is not supported by this browser.";
-      console.log("Geolocation is not supported by this browser.");
+      statusEle.innerHTML = 'Geolocation is not supported by this browser.';
+      console.log('Geolocation is not supported by this browser.');
     }
 }
 
 function handleErrors(error) {
     switch(error.code) {
         case error.PERMISSION_DENIED:
-            console.log("User denied the request for Geolocation.");
+            console.log('User denied the request for Geolocation.');
             break;
         case error.POSITION_UNAVAILABLE:
-            console.log("Location information is unavailable.");
+            console.log('Location information is unavailable.');
             break;
         case error.TIMEOUT:
-            console.log("The request to get user location timed out.");
+            console.log('The request to get user location timed out.');
             break;
         case error.UNKNOWN_ERROR:
-            console.log("An unknown error occurred.");
+            console.log('An unknown error occurred.');
             break;
     }
 }
@@ -66,8 +66,8 @@ function displaySearchResults(results) {
   for (pub in foundPubs) {
     pubName = foundPubs[pub].name
     pubPlaceID = foundPubs[pub].place_id
-    let pubElement = document.createElement("li")
-    pubElement.innerHTML = pubName + ", " + pubPlaceID
+    let pubElement = document.createElement('li')
+    pubElement.innerHTML = pubName + ', ' + pubPlaceID
     resultsList.appendChild(pubElement)
   }
 }

@@ -1,8 +1,10 @@
 # CrawlSpace
+Prototype app for the Crawlspace project.
 ## Setting up the project on your local machine
-1. Install GitHub Desktop App
-2. File -> Clone Repository
-3. Select CrawlSpace and click clone
-4. Install Python latest version 
-5. Run pip install Django==2.0.2 in the Command Prompt 
-6. Run runserver.cmd in the CrawlSpace Folder (User\Name\Documents\GitHub\CrawlSpace)
+1. Using the GitHub Desktop App or equivalent git application
+2. Within the git application open the File menu then click Clone Repository
+3. Select CrawlSpace repository and click clone to download the app to your system
+4. Install Python latest version 3.6.4 from https://www.python.org/downloads/, while installing ensure add python to path is selected
+5. Run 'pip install Django==2.0.2' in the Command Prompt
+6. Run 'pip install requests' in the Command Prompt
+7. Run runserver.cmd in the CrawlSpace Folder (User\Name\Documents\GitHub\CrawlSpace)
