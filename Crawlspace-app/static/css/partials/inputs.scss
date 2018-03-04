@@ -1,5 +1,5 @@
 
-.button--createCrawl {
+.button--createCrawl, .button--searchPubs {
   @include button-circle;
   @include box-shadow;
   position: fixed;

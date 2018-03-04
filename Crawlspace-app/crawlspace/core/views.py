@@ -8,7 +8,7 @@ import requests
 import json
 from django.http import JsonResponse
 
-googleAPIKey = 'AIzaSyDw2YcCGEW97S5zIoTwv13fEjIzc118CjY'
+googleAPIKey = 'AIzaSyC3v_pZbmLZNkIasBzu_U2M9wqyO3O1rf8'
 googlePlacesDetailUrl = 'https://maps.googleapis.com/maps/api/place/details/json?placeid='
 googlePlacesPhotoUrl = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference='
 
@@ -67,26 +67,36 @@ def deleteCrawl(request, pk):
 @login_required
 def viewCrawl(request, pk):
     crawl = Crawl.objects.get(id=pk)
+    status = ''
     if (crawl.user == request.user):
         pubs = Pub_On_Crawl.objects.filter(crawl=crawl)
         for pub in pubs:
             pub.name = pub.pub.Pub_Name
             pub.position = pub.position + 1
             rawPubData = requests.get(googlePlacesDetailUrl + pub.pub.Places_ID + '&key=' + googleAPIKey)
-            pubData = rawPubData.content
-            pubData = json.loads(pubData)
-            pubData = pubData['result']
-            pub.phoneNumber = pubData['formatted_phone_number']
-            pubPhotos = pubData['photos']
-            pubThumbnailObject = pubPhotos[0]
-            pubThumbnailCode = pubThumbnailObject['photo_reference']
-            pubThumbnailUrl = googlePlacesPhotoUrl + pubThumbnailCode + '&key=' + googleAPIKey
-            pub.thumbnail = pubThumbnailUrl
-            pub.rating = pubData['rating']
+            if (json.loads(rawPubData.content)['status'] == 'OVER_QUERY_LIMIT'):
+                print('OVER LIMIT')
+                status = 'Over api query limit'
+            else:
+                pubData = rawPubData.content
+                pubData = json.loads(pubData)
+                pubData = pubData['result']
+                pub.phoneNumber = pubData['formatted_phone_number']
+                pubPhotos = pubData['photos']
+                pubThumbnailObject = pubPhotos[0]
+                pubThumbnailCode = pubThumbnailObject['photo_reference']
+                pubThumbnailUrl = googlePlacesPhotoUrl + pubThumbnailCode + '&key=' + googleAPIKey
+                pub.thumbnail = pubThumbnailUrl
+                pubAddressComponents  = pubData['address_components']
+                pubStreetNumber = pubAddressComponents[0]['short_name']
+                pubStreet = pubAddressComponents[1]['short_name']
+                pubLocation = pubAddressComponents[2]['short_name']
+                pub.address = pubStreetNumber + ' ' + pubStreet + ', ' + pubLocation
         if (pubs.exists()):
-            return render(request, 'crawl.html', {'status' : '', 'crawl_name' : crawl.Crawl_Name, 'crawl_id': crawl.id, 'pubs': pubs})
+            return render(request, 'crawl.html', {'status' : status, 'crawl_name' : crawl.Crawl_Name, 'crawl_id': crawl.id, 'pubs': pubs})
         else:
-            return render(request, 'crawl.html', {'status' : 'No Pubs in crawl', 'crawl_name' : crawl.Crawl_Name, 'crawl_id': crawl.id, 'pubs': []})
+            status = 'No Pubs in crawl'
+            return render(request, 'crawl.html', {'status' : status, 'crawl_name' : crawl.Crawl_Name, 'crawl_id': crawl.id, 'pubs': []})
 
 @login_required
 def addPub(request, pk):
@@ -106,6 +116,16 @@ def addPub(request, pk):
     return redirect('/crawl/' + pk + '/')
 
 @login_required
+def viewMap(request, pk):
+    crawl = Crawl.objects.get(id=pk)
+    if (crawl.user == request.user):
+        pubs = Pub_On_Crawl.objects.filter(crawl=crawl)
+        if (pubs.exists()):
+            return render(request, 'map.html', {'status' : '', 'crawl_name' : crawl.Crawl_Name, 'crawl_id': crawl.id, 'pubs': pubs})
+        else:
+            return render(request, 'map.html', {'status' : 'No Pubs in crawl', 'crawl_name' : crawl.Crawl_Name, 'crawl_id': crawl.id, 'pubs': []})
+
+@login_required
 def orderStartDate(request):
     crawls = Crawl.objects.filter(user=request.user)
     orderedCrawls = crawls.order_by('startdate')
@@ -123,11 +143,10 @@ def orderCrawlName(request):
     else:
         return render(request, 'home.html', {'crawls': [], 'status': 'No crawls'})
 
-@login_required
 def searchPubs(request, lat, lon):
     searchRadius = str(2000)
     searchType = 'Pub'
-    searchResult = requests.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + lat + ',' + lon + '&radius=' + searchRadius + '&type=' + searchType + '&keyword=pub&key=AIzaSyDw2YcCGEW97S5zIoTwv13fEjIzc118CjY')
+    searchResult = requests.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + lat + ',' + lon + '&radius=' + searchRadius + '&type=' + searchType + '&keyword=pub&key=' + googleAPIKey)
     searchResult = searchResult.content
     searchResult = json.loads(searchResult)
     return JsonResponse(searchResult, safe=False)

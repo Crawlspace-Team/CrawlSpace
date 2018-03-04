@@ -34,6 +34,8 @@ body {
 
 header {
     display: flex;
+    position: fixed;
+    z-index: 5;
     background: $accent;
     width: 100%;
     color: $white;
@@ -61,6 +63,7 @@ main {
 #content {
     margin: 1em;
     width: 40em;
+    padding-top: 5em;
 }
 
 #content--flex {
@@ -77,33 +80,37 @@ main {
     }
 }
 
-.editCrawlMenu, .newCrawlMenu {
+.editCrawlMenu, .newCrawlMenu, .searchPubsContainer {
   @include box-shadow;
   display: none;
   align-items: center;
   justify-content: center;
-  .editCrawlForm, .newCrawlForm {
+  .editCrawlForm, .newCrawlForm, .searchPubsMenu {
     z-index: 1;
     background: white;
     padding: 5em;
   }
 }
 
+.fixedScroll {
+  overflow: hidden;
+}
+
 .menu--open {
   display: flex;
-  top: 6.5%;
+  top: 6.4%;
   left: 0;
   position: fixed;
-  height: calc(100vh - 6.5%);
+  height: calc(100vh - 6.4%);
   width: 100vw;
+  overflow-y: scroll;
   .overlay {
-    position: absolute;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background: grey;
-    opacity: 0.2;
-    z-index: 0;
+    @include overlay;
+    position: fixed;
+  }
+  .searchPubsMenu {
+    overflow-y: scroll;
   }
 }
 
@@ -197,21 +204,42 @@ main {
     list-style: none;
     display: grid;
     .pub {
-      background: $white;
+    //  background: $white;
       color: $accent;
       display: flex;
+      position: relative;
       margin: 0.5em;
+      height: 15em;
       flex-direction: column;
+      background: $dark;
+      background-size: cover;
+      .pub_overlay {
+        @include overlay;
+      }
       .pub_image {
+        height: 100%;
         width: 100%;
-        height: 10em;
-        background: $dark;
-        img {
-          width: 100%;
-          height: 100%;
+        object-fit: cover;
+      }
+      .pub_description {
+        box-sizing: border-box;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        padding: 1em;
+        color: $white;
+        .pub_name {
+          font-weight: bold;
         }
       }
     }
+}
+
+.pubDetailsButton {
+  cursor: pointer;
+  display: inline-block;
 }
 
 .logo {

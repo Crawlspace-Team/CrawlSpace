@@ -32,7 +32,7 @@
       width: 100%; }
       html body main #content .form--vertical input, html body main #content--flex .form--vertical input {
         padding: 0.5em 0; } }
-.button--createCrawl {
+.button--createCrawl, .button--searchPubs {
   -webkit-appearance: none;
   border: none;
   background: #2699FB;
@@ -141,6 +141,8 @@ body {
 
 header {
   display: flex;
+  position: fixed;
+  z-index: 5;
   background: #2699FB;
   width: 100%;
   color: white;
@@ -164,7 +166,8 @@ main {
 
 #content {
   margin: 1em;
-  width: 40em; }
+  width: 40em;
+  padding-top: 5em; }
 
 #content--flex {
   width: auto; }
@@ -177,33 +180,40 @@ main {
   .container--form h2 {
     color: #222222; }
 
-.editCrawlMenu, .newCrawlMenu {
+.editCrawlMenu, .newCrawlMenu, .searchPubsContainer {
   -webkit-box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.16);
   -moz-box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.16);
   box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.16);
   display: none;
   align-items: center;
   justify-content: center; }
-  .editCrawlMenu .editCrawlForm, .editCrawlMenu .newCrawlForm, .newCrawlMenu .editCrawlForm, .newCrawlMenu .newCrawlForm {
+  .editCrawlMenu .editCrawlForm, .editCrawlMenu .newCrawlForm, .editCrawlMenu .searchPubsMenu, .newCrawlMenu .editCrawlForm, .newCrawlMenu .newCrawlForm, .newCrawlMenu .searchPubsMenu, .searchPubsContainer .editCrawlForm, .searchPubsContainer .newCrawlForm, .searchPubsContainer .searchPubsMenu {
     z-index: 1;
     background: white;
     padding: 5em; }
 
+.fixedScroll {
+  overflow: hidden; }
+
 .menu--open {
   display: flex;
-  top: 6.5%;
+  top: 6.4%;
   left: 0;
   position: fixed;
-  height: calc(100vh - 6.5%);
-  width: 100vw; }
+  height: calc(100vh - 6.4%);
+  width: 100vw;
+  overflow-y: scroll; }
   .menu--open .overlay {
-    position: absolute;
     left: 0;
+    position: absolute;
     width: 100%;
     height: 100%;
-    background: grey;
-    opacity: 0.2;
-    z-index: 0; }
+    background: #666;
+    opacity: 0.4;
+    z-index: 0;
+    position: fixed; }
+  .menu--open .searchPubsMenu {
+    overflow-y: scroll; }
 
 .title--left {
   display: flex;
@@ -278,18 +288,40 @@ main {
   list-style: none;
   display: grid; }
   .pubList .pub {
-    background: white;
     color: #2699FB;
     display: flex;
+    position: relative;
     margin: 0.5em;
-    flex-direction: column; }
-    .pubList .pub .pub_image {
+    height: 15em;
+    flex-direction: column;
+    background: #222222;
+    background-size: cover; }
+    .pubList .pub .pub_overlay {
+      position: absolute;
       width: 100%;
-      height: 10em;
-      background: #222222; }
-      .pubList .pub .pub_image img {
-        width: 100%;
-        height: 100%; }
+      height: 100%;
+      background: #666;
+      opacity: 0.4;
+      z-index: 0; }
+    .pubList .pub .pub_image {
+      height: 100%;
+      width: 100%;
+      object-fit: cover; }
+    .pubList .pub .pub_description {
+      box-sizing: border-box;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 1em;
+      color: white; }
+      .pubList .pub .pub_description .pub_name {
+        font-weight: bold; }
+
+.pubDetailsButton {
+  cursor: pointer;
+  display: inline-block; }
 
 .logo {
   width: 5em; }

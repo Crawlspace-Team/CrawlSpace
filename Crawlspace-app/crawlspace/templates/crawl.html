@@ -23,37 +23,50 @@
     </header>
     <main>
       <section id="content">
-        <form class="searchPubsForm">
-          {% csrf_token %}
-          <h2>Search For Pubs</h2>
-          <input id="inputLocation" type="text" name="location" placeholder="Location" value="" required>
-          <button id="inputSearchButton" type="submit" name="searchPubs">Search Pubs</button>
-        </form>
-        <section>
-          <ul id="searchResults">
-            
-          </ul>
-        </section>
-        <form class="addPubForm" action="/crawl/{{ crawl_id }}/addpub/" method="post">
-          {% csrf_token %}
-          <h2>Add Pub</h2>
-          <input type="text" name="pubname" placeholder="Pub" value="Deco" required>
-          <input type="text" name="placeid" value="ChIJsYuN2aJddEgRY4yrUjBgqI0" required>
-          <button type="submit" name="addPub">Add Pub</button>
-        </form>
+        <button class="button--searchPubs" type="button" name="searchPubs">
+          <img class="icon" src="{% static 'images/plus_icon.svg' %}" alt="Plus Icon">
+        </button>
+
+        <a href="/crawl/{{ crawl_id }}/map/">View Crawl Map</a>
         <p class="status">{{ status }}</p>
         <ul class="pubList">
         {% for pub in pubs %}
-          <li class="pub">
-            <p>{{ pub.position }}: {{ pub.name }} : <a href="
-https://maps.googleapis.com/maps/api/place/details/json?placeid={{ pub.pub.Places_ID }}&key=AIzaSyDw2YcCGEW97S5zIoTwv13fEjIzc118CjY
-">Places Data</a></p>
-            <img src="{{ pub.thumbnail }}" alt="">
-            <p>{{ pub.phoneNumber }}</p>
-          </li>
+          <a class="pubDetailsButton">
+            <li class="pub">
+              <div class="pub_overlay"></div>
+              <img class="pub_image" src="{{ pub.thumbnail }}" alt="">
+              <section class="pub_description">
+                <p class="pub_name">{{ pub.position }}: {{ pub.name }}</p>
+                <p class="pub_address">{{ pub.address }}</p>
+              </section>
+            </li>
+          </a>
         {% endfor %}
         </ul>
-        <div id="map"></div>
+
+        <section class="searchPubsContainer">
+          <section class="searchPubsMenu">
+            <form class="searchPubsForm">
+              {% csrf_token %}
+              <h2>Search For Pubs</h2>
+              <input id="inputLocation" type="text" name="location" placeholder="Location" value="" required>
+              <button id="inputSearchButton" type="submit" name="searchPubs">Search Pubs</button>
+            </form>
+            <button id="geolocationButton" >Geolocation Search</button>
+            <section>
+              <ul id="searchResults">
+
+              </ul>
+            </section>
+            <form class="addPubForm" action="/crawl/{{ crawl_id }}/addpub/" method="post">
+              {% csrf_token %}
+              <h2>Add Pub</h2>
+              <input type="text" name="pubname" placeholder="Pub" value="Deco" required>
+              <input type="text" name="placeid" value="ChIJsYuN2aJddEgRY4yrUjBgqI0" required>
+              <button type="submit" name="addPub">Add Pub</button>
+            </form>
+        </section>
+        <div class="overlay"></div>
       </section>
     </main>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjJreU4NFphqBuqOzx--tr0fSL4Nj-sjI&libraries=places" async defer></script>

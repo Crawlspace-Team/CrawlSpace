@@ -12,3 +12,12 @@
   border-radius: 50%;
   cursor: pointer;
 }
+
+@mixin overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #666;
+  opacity: 0.4;
+  z-index: 0;
+}

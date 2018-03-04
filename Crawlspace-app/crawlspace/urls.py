@@ -16,6 +16,7 @@ urlpatterns = [
     url(r'^deletecrawl/(?P<pk>\d+)/$', core_views.deleteCrawl, name='deleteCrawl'),
     url(r'^crawl/(?P<pk>\d+)/$', core_views.viewCrawl, name='viewCrawl'),
     url(r'^crawl/(?P<pk>\d+)/addpub/', core_views.addPub, name='addPub'),
+    url(r'^crawl/(?P<pk>\d+)/map/', core_views.viewMap, name='viewMap'),
     url(r'^orderDate/', core_views.orderStartDate, name='orderCrawlDate'),
     url(r'^orderName/', core_views.orderCrawlName, name='orderCrawlName'),
     url(r'^searchPubs/lat=(?P<lat>-?\d+\.\d+)&lon=(?P<lon>-?\d+\.\d+)$', core_views.searchPubs, name='searchPubs'),

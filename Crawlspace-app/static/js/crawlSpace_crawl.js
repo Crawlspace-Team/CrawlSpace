@@ -1,21 +1,56 @@
 const searchButton = document.querySelector('#inputSearchButton')
+const geolocationButton = document.querySelector('#geolocationButton')
 searchButton.addEventListener('click', searchForPubs)
+const googleAPIKey = 'AIzaSyC3v_pZbmLZNkIasBzu_U2M9wqyO3O1rf8'
 
-const googleAPIKey = 'AIzaSyDw2YcCGEW97S5zIoTwv13fEjIzc118CjY'
+const searchPubsMenu = document.querySelector('.searchPubsContainer')
+const searchpubsOverlay = searchPubsMenu.querySelector('.overlay')
+const searchPubsButton = document.querySelector('.button--searchPubs')
+searchPubsButton.addEventListener('click', toggleSearchPubsMenu)
+searchpubsOverlay.addEventListener('click', toggleSearchPubsMenu)
+geolocationButton.addEventListener('click', getLocationByGeolocation)
+const body = document.querySelector('body')
+
+function toggleSearchPubsMenu() {
+  body.classList.toggle('fixedScroll')
+  searchPubsMenu.classList.toggle('menu--open')
+  searchPubsButton.classList.toggle('button--active')
+}
+
 
 function searchForPubs(e) {
   e.preventDefault()
   searchLocation = document.querySelector('#inputLocation').value
   console.log(searchLocation)
-  getLocation()
-  return false
+  if(searchLocation) {
+    getLocationBySearch(searchLocation)
+  } else {
+    console.log("Search input empty");
+  }
+  //getLocationByGeolocation()
 }
 
-document.addEventListener('DOMContentLoaded', function(event) {
-  getLocation();
-});
+function getLocationBySearch(searchLocation) {
+  searchString = searchLocation
+  fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${searchString}&key=${googleAPIKey}`)
+  .then(function(response) {
+    return response.json()
+  }).then(function(body) {
+    const location = body.results[0].geometry.location
+    const position = new Object();
+    position.coords = {}
+    position.coords.latitude = location.lat
+    position.coords.longitude = location.lng
+    console.log(position);
+    getPubsAtLocation(position)
+  }).catch(function(error) {
+    console.log("Location search" + error)
+  });
+}
 
-function getLocation() {
+function getLocationByGeolocation(e) {
+    e.preventDefault()
+    console.log('Geolocation search');
     if (navigator.geolocation) {
       const options = {
         enableHighAccuracy: false,
@@ -54,15 +89,21 @@ function getPubsAtLocation(position) {
   .then(function(response) {
     return response.json()
   }).then(function(body) {
+    console.log(body)
     displaySearchResults(body)
     return true
-  })
+  }).catch(function(error) {
+    console.log(error)
+    return false
+  });
 }
 
 function displaySearchResults(results) {
   foundPubs = results.results
-  console.log(foundPubs);
   const resultsList = document.querySelector('#searchResults')
+  while (resultsList.firstChild) {
+      resultsList.removeChild(resultsList.firstChild);
+  }
   for (pub in foundPubs) {
     pubName = foundPubs[pub].name
     pubPlaceID = foundPubs[pub].place_id
