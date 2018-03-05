@@ -83,7 +83,7 @@ main {
 .editCrawlMenu, .newCrawlMenu, .searchPubsContainer {
   @include box-shadow;
   display: none;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
   .editCrawlForm, .newCrawlForm, .searchPubsMenu {
     z-index: 1;

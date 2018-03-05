@@ -185,7 +185,7 @@ main {
   -moz-box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.16);
   box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.16);
   display: none;
-  align-items: center;
+  align-items: flex-start;
   justify-content: center; }
   .editCrawlMenu .editCrawlForm, .editCrawlMenu .newCrawlForm, .editCrawlMenu .searchPubsMenu, .newCrawlMenu .editCrawlForm, .newCrawlMenu .newCrawlForm, .newCrawlMenu .searchPubsMenu, .searchPubsContainer .editCrawlForm, .searchPubsContainer .newCrawlForm, .searchPubsContainer .searchPubsMenu {
     z-index: 1;

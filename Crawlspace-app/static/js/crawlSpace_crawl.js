@@ -2,7 +2,7 @@ const searchButton = document.querySelector('#inputSearchButton')
 const geolocationButton = document.querySelector('#geolocationButton')
 searchButton.addEventListener('click', searchForPubs)
 const googleAPIKey = 'AIzaSyC3v_pZbmLZNkIasBzu_U2M9wqyO3O1rf8'
-
+const googlePlacesPhotoUrl = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference='
 const searchPubsMenu = document.querySelector('.searchPubsContainer')
 const searchpubsOverlay = searchPubsMenu.querySelector('.overlay')
 const searchPubsButton = document.querySelector('.button--searchPubs')
@@ -105,10 +105,37 @@ function displaySearchResults(results) {
       resultsList.removeChild(resultsList.firstChild);
   }
   for (pub in foundPubs) {
-    pubName = foundPubs[pub].name
-    pubPlaceID = foundPubs[pub].place_id
-    let pubElement = document.createElement('li')
-    pubElement.innerHTML = pubName + ', ' + pubPlaceID
-    resultsList.appendChild(pubElement)
+    console.log(foundPubs[pub])
+    const pubName = foundPubs[pub].name
+    const pubPlaceID = foundPubs[pub].place_id
+    let pubImageUrl = ''
+    if (foundPubs[pub].photos != null) {
+      const pubImageCode = foundPubs[pub].photos[0].photo_reference
+      pubImageUrl = googlePlacesPhotoUrl + pubImageCode + '&key=' + googleAPIKey
+      console.log(pubImageUrl);
+    }
+    const pubLinkContainer = document.createElement('a')
+    pubLinkContainer.classList.add('pubDetailsButton')
+    const pubElement = document.createElement('li')
+    pubElement.classList.add('pub')
+    const pubOverlay = document.createElement('div')
+    pubOverlay.classList.add('pub_overlay')
+    const pubImage = document.createElement('img')
+    pubImage.classList.add('pub_image')
+    pubImage.src = pubImageUrl
+    const pubDescription = document.createElement('section')
+    pubDescription.classList.add('pub_description')
+    const pubNameElement = document.createElement('p')
+    pubNameElement.classList.add('pub_name')
+    const pubAddress = document.createElement('p')
+    pubAddress.classList.add('pub_address')
+    pubNameElement.innerHTML = pubName + ', ' + pubPlaceID
+    resultsList.appendChild(pubLinkContainer)
+    pubLinkContainer.appendChild(pubElement)
+    pubElement.appendChild(pubOverlay)
+    pubElement.appendChild(pubImage)
+    pubElement.appendChild(pubDescription)
+    pubDescription.appendChild(pubNameElement)
+    pubDescription.appendChild(pubAddress)
   }
 }
