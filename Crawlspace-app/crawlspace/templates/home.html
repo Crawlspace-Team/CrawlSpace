@@ -3,6 +3,7 @@
 
 {% block content %}
     <header>
+      {% csrf_token %}
        <section class="title--left">
           <h1>CrawlSpace</h1>
           <img class="logo--small" src="{% static 'images/CrawlSpace_Logo.svg' %}" alt="CrawlSpace Logo">
@@ -29,7 +30,7 @@
         <a class="button--orderCrawl" href="/orderName/">
           <img class="icon" src="{% static 'images/ordername_icon.svg' %}" alt="Close Icon">
         </a>
-        <button class="button--createCrawl" type="button" name="createCrawl">
+        <button class="button--hover" type="button" name="createCrawl">
           <img class="icon" src="{% static 'images/plus_icon.svg' %}" alt="Plus Icon">
         </button>
         <p class="status">{{ status }}</p>
@@ -63,9 +64,9 @@
           <form class="newCrawlForm" action="/newcrawl/" method="post">
             {% csrf_token %}
             <h2>New Crawl</h2>
-            <input type="text" name="name" placeholder="Crawl name" value="" required>
-            <input class="newCrawlDate inputDate" type="date" name="crawlstartdate" value="" required>
-            <button type="submit" name="addCrawl">Add Crawl</button>
+            <input class="input--blue" type="text" name="name" placeholder="Crawl name" value="" required>
+            <input class="input--blue" class="newCrawlDate inputDate" type="date" name="crawlstartdate" value="" required>
+            <button class="button--blue" type="submit" name="addCrawl">Add Crawl</button>
           </form>
           <div class="overlay"></div>
         </section>
@@ -73,10 +74,10 @@
           <form class="editCrawlForm" action="/editcrawl/" method="post">
             {% csrf_token %}
             <h2>Edit Crawl</h2>
-            <input class="editCrawlID" type="text" name="crawlid">
-            <input class="editCrawlName" type="text" name="name" placeholder="Crawl name" value="" required>
-            <input class="editCrawlDate inputDate" type="date" name="crawlstartdate" value="" required>
-            <button type="submit" name="editCrawl">Update Crawl</button>
+            <input class="input--blue editCrawlID" type="text" name="crawlid">
+            <input class="input--blue editCrawlName" type="text" name="name" placeholder="Crawl name" value="" required>
+            <input class="input--blue editCrawlDate inputDate" type="date" name="crawlstartdate" value="" required>
+            <button class="button--blue" type="submit" name="editCrawl">Update Crawl</button>
           </form>
           <div class="overlay"></div>
         </section>

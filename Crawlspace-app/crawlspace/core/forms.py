@@ -22,3 +22,6 @@ class EditCrawlForm(forms.Form):
 class AddPubForm(forms.Form):
     pubname = forms.CharField(max_length=255)
     placeid = forms.CharField(max_length=100)
+
+class DeleteAppForm(forms.Form):
+    pubposition = forms.IntegerField()

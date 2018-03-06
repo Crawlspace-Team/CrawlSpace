@@ -20,25 +20,36 @@
             </a>
           {% endif %}
        </section>
+       <script>
+           var csrfToken = '{{ csrf_token }}';
+       </script>
     </header>
     <main>
       <section id="content">
-        <button class="button--searchPubs" type="button" name="searchPubs">
+        <button class="button--hover" type="button" name="searchPubs">
           <img class="icon" src="{% static 'images/plus_icon.svg' %}" alt="Plus Icon">
         </button>
 
-        <a href="/crawl/{{ crawl_id }}/map/">View Crawl Map</a>
+        <a class="button--blue" href="/crawl/{{ crawl_id }}/map/">View Crawl Map</a>
+        <a class="button--blue" href="/crawl/{{ crawl_id }}/clearpubs/">Clear Pubs</a>
+
         <p class="status">{{ status }}</p>
         <ul class="pubList">
         {% for pub in pubs %}
           <a class="pubDetailsButton">
             <li class="pub">
-              <div class="pub_overlay"></div>
               <img class="pub_image" src="{{ pub.thumbnail }}" alt="">
               <section class="pub_description">
                 <p class="pub_name">{{ pub.position }}: {{ pub.name }}</p>
                 <p class="pub_address">{{ pub.address }}</p>
               </section>
+              <form class="deletePubForm" action="/crawl/{{ crawl_id }}/deletepub/" method="POST">
+                {% csrf_token %}
+                <input type="hidden" value="{{ pub.position }}" name="pubposition">
+                <button class="pub_button" type="submit" name="deletePub">
+                  <img class="icon" src="/static/images/close_icon.svg">
+                </button>
+              </form>
             </li>
           </a>
         {% endfor %}
@@ -49,22 +60,13 @@
             <form class="searchPubsForm">
               {% csrf_token %}
               <h2>Search For Pubs</h2>
-              <input id="inputLocation" type="text" name="location" placeholder="Location" value="" required>
-              <button id="inputSearchButton" type="submit" name="searchPubs">Search Pubs</button>
+              <input class="input--blue" id="inputLocation" type="text" name="location" placeholder="Location" value="" required>
+              <button class="button--blue" id="inputSearchButton" type="submit" name="searchPubs">Search Pubs</button>
             </form>
-            <button id="geolocationButton" >Geolocation Search</button>
+            <button class="button--blue" id="geolocationButton" >Geolocation Search</button>
             <section>
-              <ul id="searchResults" class="pubList">
-
-              </ul>
+              <ul id="searchResults" class="pubList">  </ul>
             </section>
-            <form class="addPubForm" action="/crawl/{{ crawl_id }}/addpub/" method="post">
-              {% csrf_token %}
-              <h2>Add Pub</h2>
-              <input type="text" name="pubname" placeholder="Pub" value="Deco" required>
-              <input type="text" name="placeid" value="ChIJsYuN2aJddEgRY4yrUjBgqI0" required>
-              <button type="submit" name="addPub">Add Pub</button>
-            </form>
         </section>
         <div class="overlay"></div>
       </section>

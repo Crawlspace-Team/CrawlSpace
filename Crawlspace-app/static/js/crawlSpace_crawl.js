@@ -5,11 +5,16 @@ const googleAPIKey = 'AIzaSyC3v_pZbmLZNkIasBzu_U2M9wqyO3O1rf8'
 const googlePlacesPhotoUrl = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference='
 const searchPubsMenu = document.querySelector('.searchPubsContainer')
 const searchpubsOverlay = searchPubsMenu.querySelector('.overlay')
-const searchPubsButton = document.querySelector('.button--searchPubs')
+const searchPubsButton = document.querySelector('.button--hover')
 searchPubsButton.addEventListener('click', toggleSearchPubsMenu)
 searchpubsOverlay.addEventListener('click', toggleSearchPubsMenu)
 geolocationButton.addEventListener('click', getLocationByGeolocation)
 const body = document.querySelector('body')
+let crawlID = ''
+
+window.onload = function(){
+  crawlID = window.location.href.split('/')[4]
+};
 
 function toggleSearchPubsMenu() {
   body.classList.toggle('fixedScroll')
@@ -27,7 +32,6 @@ function searchForPubs(e) {
   } else {
     console.log("Search input empty");
   }
-  //getLocationByGeolocation()
 }
 
 function getLocationBySearch(searchLocation) {
@@ -89,7 +93,7 @@ function getPubsAtLocation(position) {
   .then(function(response) {
     return response.json()
   }).then(function(body) {
-    console.log(body)
+    //console.log(body)
     displaySearchResults(body)
     return true
   }).catch(function(error) {
@@ -98,44 +102,95 @@ function getPubsAtLocation(position) {
   });
 }
 
+function displayPubResult(pub) {
+  const pubName = pub.name
+  const pubPlaceID = pub.place_id
+  const pubAddress = pub.vicinity
+  console.log(pub);
+  let pubImageUrl = ''
+  if (pub.photos != null) {
+    const pubImageCode = pub.photos[0].photo_reference
+    pubImageUrl = googlePlacesPhotoUrl + pubImageCode + '&key=' + googleAPIKey
+  }
+  const pubLinkContainer = document.createElement('a')
+  pubLinkContainer.classList.add('pubDetailsButton')
+  const pubElement = document.createElement('li')
+  pubElement.classList.add('pub')
+  const pubOverlay = document.createElement('div')
+  pubOverlay.classList.add('pub_overlay')
+  if (pubImageUrl) {
+    const pubImage = document.createElement('img')
+    pubImage.classList.add('pub_image')
+    pubImage.src = pubImageUrl
+    pubElement.appendChild(pubImage)
+  } else {
+    const pubBackground = document.createElement('div')
+    pubBackground.classList.add('pub_image')
+    pubElement.appendChild(pubBackground)
+    const pubBackgroundName = document.createElement('p')
+    pubBackgroundName.innerHTML = pubName
+    pubBackground.appendChild(pubBackgroundName)
+  }
+  const pubDescriptionElement = document.createElement('section')
+  pubDescriptionElement.classList.add('pub_description')
+  const pubNameElement = document.createElement('p')
+  pubNameElement.classList.add('pub_name')
+  pubNameElement.innerHTML = pubName
+  const pubAddressElement = document.createElement('p')
+  pubAddressElement.classList.add('pub_address')
+  pubAddressElement.innerHTML = pubAddress
+  pubLinkContainer.appendChild(pubElement)
+  pubElement.appendChild(pubDescriptionElement)
+  pubDescriptionElement.appendChild(pubNameElement)
+  pubDescriptionElement.appendChild(pubAddressElement)
+
+  const addPubForm = document.createElement('form')
+  addPubForm.classList.add('addPubForm')
+  addPubForm.action = '/crawl/' + crawlID + '/addpub/'
+  addPubForm.method = 'POST'
+
+  const token = document.createElement('input')
+  token.type = 'hidden'
+  token.value = csrfToken
+  token.name = 'csrfmiddlewaretoken'
+  addPubForm.appendChild(token)
+
+  const pubText = document.createElement('input')
+  pubText.value = pubName
+  pubText.type = 'hidden'
+  pubText.name = 'pubname'
+  addPubForm.appendChild(pubText)
+
+  const pubID = document.createElement('input')
+  pubID.type = 'hidden'
+  pubID.value = pubPlaceID
+  pubID.name = 'placeid'
+  addPubForm.appendChild(pubID)
+
+  const pubButton = document.createElement('button')
+  pubButton.classList.add('pub_button')
+  pubButton.type = 'submit'
+  pubButton.name = 'addPub'
+
+  const addIcon = document.createElement('img')
+  addIcon.classList.add('icon')
+  addIcon.src = '/static/images/plus_icon_blue.svg'
+  pubButton.appendChild(addIcon)
+
+  addPubForm.appendChild(pubButton)
+  pubElement.appendChild(addPubForm)
+
+  return pubElement
+}
+
 function displaySearchResults(results) {
   foundPubs = results.results
   const resultsList = document.querySelector('#searchResults')
   while (resultsList.firstChild) {
       resultsList.removeChild(resultsList.firstChild);
   }
-  for (pub in foundPubs) {
-    console.log(foundPubs[pub])
-    const pubName = foundPubs[pub].name
-    const pubPlaceID = foundPubs[pub].place_id
-    let pubImageUrl = ''
-    if (foundPubs[pub].photos != null) {
-      const pubImageCode = foundPubs[pub].photos[0].photo_reference
-      pubImageUrl = googlePlacesPhotoUrl + pubImageCode + '&key=' + googleAPIKey
-      console.log(pubImageUrl);
-    }
-    const pubLinkContainer = document.createElement('a')
-    pubLinkContainer.classList.add('pubDetailsButton')
-    const pubElement = document.createElement('li')
-    pubElement.classList.add('pub')
-    const pubOverlay = document.createElement('div')
-    pubOverlay.classList.add('pub_overlay')
-    const pubImage = document.createElement('img')
-    pubImage.classList.add('pub_image')
-    pubImage.src = pubImageUrl
-    const pubDescription = document.createElement('section')
-    pubDescription.classList.add('pub_description')
-    const pubNameElement = document.createElement('p')
-    pubNameElement.classList.add('pub_name')
-    const pubAddress = document.createElement('p')
-    pubAddress.classList.add('pub_address')
-    pubNameElement.innerHTML = pubName + ', ' + pubPlaceID
-    resultsList.appendChild(pubLinkContainer)
-    pubLinkContainer.appendChild(pubElement)
-    pubElement.appendChild(pubOverlay)
-    pubElement.appendChild(pubImage)
-    pubElement.appendChild(pubDescription)
-    pubDescription.appendChild(pubNameElement)
-    pubDescription.appendChild(pubAddress)
-  }
+  foundPubs.forEach(pub =>  resultsList.appendChild(displayPubResult(pub)))
+  endOfSearchText = document.createElement('p')
+  endOfSearchText.innerHTML = "No more pubs available, try other search criteria."
+  resultsList.appendChild(endOfSearchText)
 }

@@ -29,6 +29,11 @@
       .crawlList {
         grid-template-columns: 1fr;
       }
+      .editCrawlMenu, .newCrawlMenu, .searchPubsContainer {
+        .editCrawlForm, .newCrawlForm, .searchPubsMenu {
+          padding: 1em;
+        }
+      }
     }
   }
 }

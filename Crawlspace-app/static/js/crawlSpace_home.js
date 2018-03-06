@@ -8,7 +8,7 @@ let editCrawlMenuOpen = false
 
 const newCrawlMenu = document.querySelector('.newCrawlMenu')
 const newCrawlOverlay = newCrawlMenu.querySelector('.overlay')
-const newCrawlButton = document.querySelector('.button--createCrawl')
+const newCrawlButton = document.querySelector('.button--hover')
 newCrawlButton.addEventListener('click', toggleNewCrawlMenu)
 newCrawlOverlay.addEventListener('click', toggleNewCrawlMenu)
 

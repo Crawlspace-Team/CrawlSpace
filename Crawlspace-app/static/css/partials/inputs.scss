@@ -1,5 +1,9 @@
+button {
+  cursor: pointer;
+}
 
-.button--createCrawl, .button--searchPubs {
+
+.button--hover {
   @include button-circle;
   @include box-shadow;
   position: fixed;
@@ -86,7 +90,39 @@
     margin: 0.3em;
 }
 
-.button--createCrawl.button--active {
+.pub_button {
+  position: absolute;
+  right: 1em;
+  border: none;
+  -webkit-appearance: none;
+  background: $white;
+  border-radius: 50%;
+}
+
+.button--blue {
+  font-family: 'Open Sans', sans-serif;
+  -webkit-appearance: none;
+  background: #2699fb;
+  color: white;
+  border: none;
+  text-decoration: none;
+  font-size: 1em;
+  font-weight: bold;
+  padding: 0.5em;
+  border-radius: 0.4em;
+}
+
+.input--blue {
+  font-family: 'Open Sans', sans-serif;
+  text-decoration: none;
+  font-size: 1em;
+  font-weight: 500;
+  padding: 0.5em;
+  -webkit-appearance: none;
+  border: solid 1px $accent;
+}
+
+.button--hover.button--active {
   img {
     -webkit-transform: rotate(45deg);  /* to support Safari and Android browser */
     -ms-transform: rotate(45deg);      /* to support IE 9 */

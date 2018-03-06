@@ -30,6 +30,8 @@ body {
     min-width: 100vw;
     min-height: 100vh;
     margin: 0;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 header {
@@ -108,9 +110,6 @@ main {
     left: 0;
     @include overlay;
     position: fixed;
-  }
-  .searchPubsMenu {
-    overflow-y: scroll;
   }
 }
 
@@ -210,16 +209,22 @@ main {
       position: relative;
       margin: 0.5em;
       height: 15em;
-      flex-direction: column;
+      flex-direction: row;
       background: $dark;
       background-size: cover;
-      .pub_overlay {
-        @include overlay;
-      }
       .pub_image {
+        display: flex;
         height: 100%;
         width: 100%;
         object-fit: cover;
+        color: $white;
+        justify-content: center;
+        align-items: center;
+        filter: opacity(0.4);
+        p {
+          font-weight: bold;
+          font-size: 1.5em;
+        }
       }
       .pub_description {
         box-sizing: border-box;
@@ -232,6 +237,18 @@ main {
         color: $white;
         .pub_name {
           font-weight: bold;
+        }
+      }
+      form {
+        align-self: center;
+        margin-right: 1em;
+        .pub_button {
+          -webkit-appearance: none;
+          background: white;
+          border: none;
+          border-radius: 50%;
+          padding: 0.9em 1em;
+          cursor: pointer;
         }
       }
     }

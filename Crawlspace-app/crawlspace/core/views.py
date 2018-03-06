@@ -72,7 +72,7 @@ def viewCrawl(request, pk):
         pubs = Pub_On_Crawl.objects.filter(crawl=crawl)
         for pub in pubs:
             pub.name = pub.pub.Pub_Name
-            pub.position = pub.position + 1
+            #pub.position = pub.position + 1
             rawPubData = requests.get(googlePlacesDetailUrl + pub.pub.Places_ID + '&key=' + googleAPIKey)
             if (json.loads(rawPubData.content)['status'] == 'OVER_QUERY_LIMIT'):
                 print('OVER LIMIT')
@@ -81,17 +81,20 @@ def viewCrawl(request, pk):
                 pubData = rawPubData.content
                 pubData = json.loads(pubData)
                 pubData = pubData['result']
-                pub.phoneNumber = pubData['formatted_phone_number']
-                pubPhotos = pubData['photos']
-                pubThumbnailObject = pubPhotos[0]
-                pubThumbnailCode = pubThumbnailObject['photo_reference']
-                pubThumbnailUrl = googlePlacesPhotoUrl + pubThumbnailCode + '&key=' + googleAPIKey
-                pub.thumbnail = pubThumbnailUrl
-                pubAddressComponents  = pubData['address_components']
-                pubStreetNumber = pubAddressComponents[0]['short_name']
-                pubStreet = pubAddressComponents[1]['short_name']
-                pubLocation = pubAddressComponents[2]['short_name']
-                pub.address = pubStreetNumber + ' ' + pubStreet + ', ' + pubLocation
+                if('formatted_phone_number' in pubData):
+                    pub.phoneNumber = pubData['formatted_phone_number']
+                if('photos' in pubData):
+                    pubPhotos = pubData['photos']
+                    pubThumbnailObject = pubPhotos[0]
+                    pubThumbnailCode = pubThumbnailObject['photo_reference']
+                    pubThumbnailUrl = googlePlacesPhotoUrl + pubThumbnailCode + '&key=' + googleAPIKey
+                    pub.thumbnail = pubThumbnailUrl
+                if('address_components' in pubData):
+                    pubAddressComponents  = pubData['address_components']
+                    pubStreetNumber = pubAddressComponents[0]['short_name']
+                    pubStreet = pubAddressComponents[1]['short_name']
+                    pubLocation = pubAddressComponents[2]['short_name']
+                    pub.address = pubStreetNumber + ' ' + pubStreet + ', ' + pubLocation
         if (pubs.exists()):
             return render(request, 'crawl.html', {'status' : status, 'crawl_name' : crawl.Crawl_Name, 'crawl_id': crawl.id, 'pubs': pubs})
         else:
@@ -124,6 +127,39 @@ def viewMap(request, pk):
             return render(request, 'map.html', {'status' : '', 'crawl_name' : crawl.Crawl_Name, 'crawl_id': crawl.id, 'pubs': pubs})
         else:
             return render(request, 'map.html', {'status' : 'No Pubs in crawl', 'crawl_name' : crawl.Crawl_Name, 'crawl_id': crawl.id, 'pubs': []})
+
+@login_required
+def deletePub(request, pk):
+    print('delete pub')
+    if request.method == 'POST':
+        form = DeleteAppForm(request.POST)
+        if form.is_valid():
+            crawl = Crawl.objects.get(id=pk)
+            if (crawl.user == request.user):
+                pubPosition = form.cleaned_data.get('pubposition')
+                pub = Pub_On_Crawl.objects.filter(crawl=crawl,position=pubPosition)
+                pub.delete()
+                pubs = Pub_On_Crawl.objects.filter(crawl=crawl)
+                pubCounter = 0
+                for pub in pubs:
+                    pubPosition = pub.position
+                    pubCounter = pubCounter + 1
+                    if (pubPosition != pubCounter):
+                        pub.position = (pubPosition - 1)
+                        pub.save()
+
+    return redirect('/crawl/' + pk + '/')
+
+
+
+@login_required
+def clearPubs(request, pk):
+    crawl = Crawl.objects.get(id=pk)
+    if (crawl.user == request.user):
+        pubs = Pub_On_Crawl.objects.filter(crawl=crawl)
+        for pub in pubs:
+            pub.delete()
+    return redirect('/crawl/' + pk + '/')
 
 @login_required
 def orderStartDate(request):

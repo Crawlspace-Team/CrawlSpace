@@ -11,7 +11,9 @@
   html body header .nav {
     margin: 0; }
   html body main .crawlList {
-    grid-template-columns: 1fr; } }
+    grid-template-columns: 1fr; }
+  html body main .editCrawlMenu .editCrawlForm, html body main .editCrawlMenu .newCrawlForm, html body main .editCrawlMenu .searchPubsMenu, html body main .newCrawlMenu .editCrawlForm, html body main .newCrawlMenu .newCrawlForm, html body main .newCrawlMenu .searchPubsMenu, html body main .searchPubsContainer .editCrawlForm, html body main .searchPubsContainer .newCrawlForm, html body main .searchPubsContainer .searchPubsMenu {
+    padding: 1em; } }
 @media screen and (max-width: 25em) {
   html body header {
     flex-direction: column; }
@@ -32,7 +34,10 @@
       width: 100%; }
       html body main #content .form--vertical input, html body main #content--flex .form--vertical input {
         padding: 0.5em 0; } }
-.button--createCrawl, .button--searchPubs {
+button {
+  cursor: pointer; }
+
+.button--hover {
   -webkit-appearance: none;
   border: none;
   background: #2699FB;
@@ -121,7 +126,36 @@
   color: white;
   margin: 0.3em; }
 
-.button--createCrawl.button--active img {
+.pub_button {
+  position: absolute;
+  right: 1em;
+  border: none;
+  -webkit-appearance: none;
+  background: white;
+  border-radius: 50%; }
+
+.button--blue {
+  font-family: 'Open Sans', sans-serif;
+  -webkit-appearance: none;
+  background: #2699fb;
+  color: white;
+  border: none;
+  text-decoration: none;
+  font-size: 1em;
+  font-weight: bold;
+  padding: 0.5em;
+  border-radius: 0.4em; }
+
+.input--blue {
+  font-family: 'Open Sans', sans-serif;
+  text-decoration: none;
+  font-size: 1em;
+  font-weight: 500;
+  padding: 0.5em;
+  -webkit-appearance: none;
+  border: solid 1px #2699FB; }
+
+.button--hover.button--active img {
   -webkit-transform: rotate(45deg);
   /* to support Safari and Android browser */
   -ms-transform: rotate(45deg);
@@ -137,7 +171,9 @@ body {
   font-family: 'Open Sans', sans-serif;
   min-width: 100vw;
   min-height: 100vh;
-  margin: 0; }
+  margin: 0;
+  overflow-y: scroll;
+  overflow-x: hidden; }
 
 header {
   display: flex;
@@ -212,8 +248,6 @@ main {
     opacity: 0.4;
     z-index: 0;
     position: fixed; }
-  .menu--open .searchPubsMenu {
-    overflow-y: scroll; }
 
 .title--left {
   display: flex;
@@ -293,20 +327,21 @@ main {
     position: relative;
     margin: 0.5em;
     height: 15em;
-    flex-direction: column;
+    flex-direction: row;
     background: #222222;
     background-size: cover; }
-    .pubList .pub .pub_overlay {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: #666;
-      opacity: 0.4;
-      z-index: 0; }
     .pubList .pub .pub_image {
+      display: flex;
       height: 100%;
       width: 100%;
-      object-fit: cover; }
+      object-fit: cover;
+      color: white;
+      justify-content: center;
+      align-items: center;
+      filter: opacity(0.4); }
+      .pubList .pub .pub_image p {
+        font-weight: bold;
+        font-size: 1.5em; }
     .pubList .pub .pub_description {
       box-sizing: border-box;
       position: absolute;
@@ -318,6 +353,16 @@ main {
       color: white; }
       .pubList .pub .pub_description .pub_name {
         font-weight: bold; }
+    .pubList .pub form {
+      align-self: center;
+      margin-right: 1em; }
+      .pubList .pub form .pub_button {
+        -webkit-appearance: none;
+        background: white;
+        border: none;
+        border-radius: 50%;
+        padding: 0.9em 1em;
+        cursor: pointer; }
 
 .pubDetailsButton {
   cursor: pointer;
