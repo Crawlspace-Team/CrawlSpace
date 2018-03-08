@@ -22,5 +22,5 @@ urlpatterns = [
     url(r'^orderDate/', core_views.orderStartDate, name='orderCrawlDate'),
     url(r'^orderName/', core_views.orderCrawlName, name='orderCrawlName'),
     url(r'^searchPubs/lat=(?P<lat>-?\d+\.\d+)&lon=(?P<lon>-?\d+\.\d+)$', core_views.searchPubs, name='searchPubs'),
-
+    url(r'^pubdetails/(?P<id>[\w\-]+)', core_views.pubDetails, name='pubDetails'),
 ]

@@ -36,7 +36,7 @@
         <p class="status">{{ status }}</p>
         <ul class="pubList">
         {% for pub in pubs %}
-          <a class="pubDetailsButton">
+          <a class="pubDetailsButton" data-id="{{ pub.placeID }}">
             <li class="pub">
               <img class="pub_image" src="{{ pub.thumbnail }}" alt="">
               <section class="pub_description">
@@ -67,6 +67,14 @@
             <section>
               <ul id="searchResults" class="pubList">  </ul>
             </section>
+        </section>
+        <div class="overlay"></div>
+      </section>
+      <section class="pubDetailsContainer">
+        <section class="pubDetails">
+          <p class="pubDetails_name"></p>
+          <p class="pubDetails_rating"></p>
+          <button class="pubDetails_close" type="button" name="button">Close</button>
         </section>
         <div class="overlay"></div>
       </section>

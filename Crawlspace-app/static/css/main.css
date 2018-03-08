@@ -216,20 +216,23 @@ main {
   .container--form h2 {
     color: #222222; }
 
-.editCrawlMenu, .newCrawlMenu, .searchPubsContainer {
+.editCrawlMenu, .newCrawlMenu, .searchPubsContainer, .pubDetailsContainer {
   -webkit-box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.16);
   -moz-box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.16);
   box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.16);
   display: none;
   align-items: flex-start;
   justify-content: center; }
-  .editCrawlMenu .editCrawlForm, .editCrawlMenu .newCrawlForm, .editCrawlMenu .searchPubsMenu, .newCrawlMenu .editCrawlForm, .newCrawlMenu .newCrawlForm, .newCrawlMenu .searchPubsMenu, .searchPubsContainer .editCrawlForm, .searchPubsContainer .newCrawlForm, .searchPubsContainer .searchPubsMenu {
+  .editCrawlMenu .editCrawlForm, .editCrawlMenu .newCrawlForm, .editCrawlMenu .searchPubsMenu, .editCrawlMenu .pubDetails, .newCrawlMenu .editCrawlForm, .newCrawlMenu .newCrawlForm, .newCrawlMenu .searchPubsMenu, .newCrawlMenu .pubDetails, .searchPubsContainer .editCrawlForm, .searchPubsContainer .newCrawlForm, .searchPubsContainer .searchPubsMenu, .searchPubsContainer .pubDetails, .pubDetailsContainer .editCrawlForm, .pubDetailsContainer .newCrawlForm, .pubDetailsContainer .searchPubsMenu, .pubDetailsContainer .pubDetails {
     z-index: 1;
     background: white;
     padding: 5em; }
 
 .fixedScroll {
   overflow: hidden; }
+
+.pubDetailsContainer .pubDetails {
+  z-index: 7; }
 
 .menu--open {
   display: flex;
@@ -248,6 +251,9 @@ main {
     opacity: 0.4;
     z-index: 0;
     position: fixed; }
+
+.pubDetailsContainer .overlay {
+  z-index: 6; }
 
 .title--left {
   display: flex;
@@ -367,6 +373,9 @@ main {
 .pubDetailsButton {
   cursor: pointer;
   display: inline-block; }
+
+.hidden {
+  z-index: 0; }
 
 .logo {
   width: 5em; }

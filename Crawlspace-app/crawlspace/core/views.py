@@ -72,6 +72,7 @@ def viewCrawl(request, pk):
         pubs = Pub_On_Crawl.objects.filter(crawl=crawl)
         for pub in pubs:
             pub.name = pub.pub.Pub_Name
+            pub.placeID = pub.pub.Places_ID
             #pub.position = pub.position + 1
             rawPubData = requests.get(googlePlacesDetailUrl + pub.pub.Places_ID + '&key=' + googleAPIKey)
             if (json.loads(rawPubData.content)['status'] == 'OVER_QUERY_LIMIT'):
@@ -186,3 +187,10 @@ def searchPubs(request, lat, lon):
     searchResult = searchResult.content
     searchResult = json.loads(searchResult)
     return JsonResponse(searchResult, safe=False)
+
+def pubDetails(request, id):
+    pubDetailsUrl = (googlePlacesDetailUrl + str(id) + '&key=' + googleAPIKey)
+    pubDetails = requests.get(pubDetailsUrl)
+    pubDetails = pubDetails.content
+    pubDetails = json.loads(pubDetails)
+    return JsonResponse(pubDetails, safe=False)

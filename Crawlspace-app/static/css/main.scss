@@ -82,12 +82,12 @@ main {
     }
 }
 
-.editCrawlMenu, .newCrawlMenu, .searchPubsContainer {
+.editCrawlMenu, .newCrawlMenu, .searchPubsContainer, .pubDetailsContainer {
   @include box-shadow;
   display: none;
   align-items: flex-start;
   justify-content: center;
-  .editCrawlForm, .newCrawlForm, .searchPubsMenu {
+  .editCrawlForm, .newCrawlForm, .searchPubsMenu, .pubDetails {
     z-index: 1;
     background: white;
     padding: 5em;
@@ -97,6 +97,13 @@ main {
 .fixedScroll {
   overflow: hidden;
 }
+
+.pubDetailsContainer {
+  .pubDetails {
+    z-index: 7;
+  }
+}
+
 
 .menu--open {
   display: flex;
@@ -110,6 +117,12 @@ main {
     left: 0;
     @include overlay;
     position: fixed;
+  }
+}
+
+.pubDetailsContainer {
+  .overlay {
+    z-index: 6;
   }
 }
 
@@ -258,6 +271,11 @@ main {
   cursor: pointer;
   display: inline-block;
 }
+
+.hidden {
+  z-index: 0;
+}
+
 
 .logo {
     width: $logo-size;
