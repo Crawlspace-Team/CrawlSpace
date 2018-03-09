@@ -40,7 +40,7 @@ function searchForPubs(e) {
 }
 
 function getLocationBySearch(searchLocation) {
-  fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${searchString}&key=${googleAPIKey}`)
+  fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${searchLocation}&key=${googleAPIKey}`)
   .then(function(response) {
     return response.json()
   }).then(function(body) {
