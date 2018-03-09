@@ -15,7 +15,7 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="arrow_left_icon.svg">
+   sodipodi:docname="arrow_right_icon_blue - Copy.svg">
   <defs
      id="defs4">
     <style
@@ -38,8 +38,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.7"
-     inkscape:cx="15.49989"
-     inkscape:cy="465.69968"
+     inkscape:cx="-200.2144"
+     inkscape:cy="463.11297"
      inkscape:document-units="px"
      inkscape:current-layer="g3348"
      showgrid="false"
@@ -69,20 +69,20 @@
        id="g3348"
        transform="matrix(31.595238,0,0,31.595238,-6565.0264,-18132.73)">
       <rect
-         transform="translate(207,584)"
+         transform="scale(-1,1)"
          height="24"
          width="24"
          class="cls-1"
          id="rectangle"
-         x="0"
-         y="0"
+         x="-231"
+         y="584"
          style="fill:none" />
       <path
          d="m 219,588 1.4,1.4 -5.6,5.6 12.2,0 0,2 -12.2,0 5.6,5.6 -1.4,1.4 -8,-8 z"
          class="cls-2"
          id="path"
          inkscape:connector-curvature="0"
-         style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd" />
+         style="fill:#2699fb;fill-opacity:1;fill-rule:evenodd" />
     </g>
   </g>
 </svg>

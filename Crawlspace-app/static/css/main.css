@@ -13,7 +13,11 @@
   html body main .crawlList {
     grid-template-columns: 1fr; }
   html body main .editCrawlMenu .editCrawlForm, html body main .editCrawlMenu .newCrawlForm, html body main .editCrawlMenu .searchPubsMenu, html body main .newCrawlMenu .editCrawlForm, html body main .newCrawlMenu .newCrawlForm, html body main .newCrawlMenu .searchPubsMenu, html body main .searchPubsContainer .editCrawlForm, html body main .searchPubsContainer .newCrawlForm, html body main .searchPubsContainer .searchPubsMenu {
-    padding: 1em; } }
+    padding: 1em; }
+  html body main .pubDetailsContainer .pubDetails {
+    width: 90%; }
+  html body main #map {
+    width: 100vw; } }
 @media screen and (max-width: 25em) {
   html body header {
     flex-direction: column; }
@@ -137,7 +141,7 @@ button {
 .button--blue {
   font-family: 'Open Sans', sans-serif;
   -webkit-appearance: none;
-  background: #2699fb;
+  background: #2699FB;
   color: white;
   border: none;
   text-decoration: none;
@@ -161,6 +165,108 @@ button {
   -ms-transform: rotate(45deg);
   /* to support IE 9 */
   transform: rotate(45deg); }
+
+#map {
+  height: 80vh;
+  position: relative;
+  width: 60vw; }
+
+#nextLocation {
+  display: flex;
+  height: 20vh;
+  background: white; }
+
+#nextLocation__details {
+  display: flex;
+  flex-direction: column;
+  flex: 1; }
+
+#nextLocation__button {
+  flex: 0.5; }
+
+.carousel {
+  --color-default-state: grey;
+  --color-hover-state: rgb(107, 107, 195);
+  --color-selected-state: rgb(17, 26, 101);
+  display: grid;
+  grid-template-columns: 3em 1fr 3em;
+  grid-template-rows: 50vh 3em;
+  align-items: center;
+  grid-gap: 1em;
+  width: 100%; }
+
+.carousel__track-container {
+  grid-column: 2;
+  align-self: stretch;
+  overflow: hidden; }
+
+.carousel__track {
+  position: relative;
+  width: 100%;
+  height: 100%; }
+
+.carousel__slide {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  list-style: none; }
+
+.carousel__slide > a {
+  display: block;
+  width: inherit;
+  height: inherit;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center; }
+
+/**
+ * Buttons
+ */
+.carousel__button {
+  -webkit-appearance: none;
+  border: none;
+  background: #2699FB;
+  border-radius: 50%;
+  padding: 0.25em 0.4em; }
+
+.carousel__button img {
+  width: 100%; }
+
+.carousel__button.is-hidden {
+  display: none; }
+
+/**
+ * Dots
+ */
+.carousel__nav {
+  grid-column: 1 / -1;
+  justify-self: center; }
+
+.carousel__dot {
+  width: 1em;
+  height: 1em;
+  border-radius: 100%;
+  border: 0;
+  background-color: var(--color-default-state); }
+
+.carousel__dot + .carousel__dot {
+  margin-left: 1em; }
+
+.carousel__dot:hover {
+  background-color: var(--color-hover-state); }
+
+.carousel__dot.is-selected {
+  background-color: var(--color-selected-state); }
+
+.carousel__dot > * {
+  pointer-events: none; }
+
+.is-hidden {
+  display: none; }
 
 html {
   margin: 0; }
@@ -232,7 +338,8 @@ main {
   overflow: hidden; }
 
 .pubDetailsContainer .pubDetails {
-  z-index: 7; }
+  z-index: 7;
+  width: 50vw; }
 
 .menu--open {
   display: flex;
@@ -399,35 +506,27 @@ main {
 .status {
   text-align: center; }
 
-#map {
-  height: 430px;
+.pubDetails_rating {
+  unicode-bidi: bidi-override;
+  color: #222222;
+  font-size: 25px;
+  height: 25px;
+  width: 75px;
+  margin: 0 auto;
   position: relative;
-  width: 100%; }
-
-.maps-frame {
-  height: 430px;
-  width: 100%; }
-
-.kd-tabbed-vert.header-links .kd-tabbutton a {
-  color: #757575;
-  display: inline-block;
-  height: 100%;
-  padding: 0 24px;
-  width: 100%; }
-
-.kd-tabbed-vert.header-links .kd-tabbutton {
   padding: 0; }
-
-.kd-tabbed-vert.header-links .kd-tabbutton.selected a {
-  color: #03a9f4; }
-
-.kd-tabbed-vert.header-links .kd-tabbutton a:focus {
-  text-decoration: none; }
-
-p.top-desc {
-  padding: 1em 1em .1em 1em; }
-
-p.bottom-desc {
-  padding: 0em 1em 1em 1em; }
+  .pubDetails_rating .pubDetails_rating--top {
+    color: #2699FB;
+    padding: 0;
+    position: absolute;
+    z-index: 1;
+    display: block;
+    top: 0;
+    left: 0;
+    overflow: hidden; }
+  .pubDetails_rating .pubDetails_rating--bottom {
+    padding: 0;
+    display: block;
+    z-index: 0; }
 
 /*# sourceMappingURL=main.css.map */

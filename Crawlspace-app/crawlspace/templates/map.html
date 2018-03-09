@@ -22,10 +22,17 @@
        </section>
     </header>
     <main>
-      <section id="content">
+      <section id="content--flex">
         <div id="map"></div>
+        <section id="nextLocation">
+          <section id="nextLocation__details">
+            <p id="nextLocation__name"></p>
+            <p id="nextLocation__address"></p>
+          </section>
+          <button class="button--blue" id="nextLocation__button" type="button" name="button">Next Pub</button>
+        </section>
       </section>
     </main>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3v_pZbmLZNkIasBzu_U2M9wqyO3O1rf8&callback=initMap" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3v_pZbmLZNkIasBzu_U2M9wqyO3O1rf8&callback=getCrawlPubs" async defer></script>
     <script src="{% static 'js/crawlSpace_map.js' %}"></script>
 {% endblock %}

@@ -194,3 +194,26 @@ def pubDetails(request, id):
     pubDetails = pubDetails.content
     pubDetails = json.loads(pubDetails)
     return JsonResponse(pubDetails, safe=False)
+
+def getPubs(request, pk):
+    crawl = Crawl.objects.get(id=pk)
+    pubs = []
+    rawPubs = Pub_On_Crawl.objects.filter(crawl=crawl)
+    for pub in rawPubs:
+        placeID = pub.pub.Places_ID
+        rawPubData = requests.get(googlePlacesDetailUrl + str(placeID) + '&key=' + googleAPIKey)
+        pubData = json.loads(rawPubData.content)
+        pubData = pubData['result']
+        pubName = pubData['name']
+        pubAddress = pubData['formatted_address']
+        pubLocation = pubData['geometry']['location']
+        pubLat = pubLocation['lat']
+        pubLong = pubLocation['lng']
+
+        pubJSON = {}
+        pubJSON['name'] = pubName
+        pubJSON['address'] = pubAddress
+        pubJSON['lat'] = pubLat
+        pubJSON['lng'] = pubLong
+        pubs.append(pubJSON)
+    return JsonResponse(pubs, safe=False)

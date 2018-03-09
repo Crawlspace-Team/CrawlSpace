@@ -74,11 +74,42 @@
         <section class="pubDetails">
           <p class="pubDetails_name"></p>
           <p class="pubDetails_rating"></p>
-          <button class="pubDetails_close" type="button" name="button">Close</button>
+          <div class="pubDetails_rating">
+            <div class="pubDetails_rating--top"><span>♥</span><span>♥</span><span>♥</span><span>♥</span><span>♥</span></div>
+            <div class="pubDetails_rating--bottom"><span>♥</span><span>♥</span><span>♥</span><span>♥</span><span>♥</span></div>
+          </div>
+          <section class="carousel">
+            <button class="carousel__button jsPrevious is-hidden">
+              <img src="{% static 'images/arrow_left_icon.svg' %}" alt="">
+            </button>
+
+            <div class="carousel__track-container">
+              <ul class="carousel__track jsTrack">
+
+              </ul>
+            </div>
+
+            <button class="carousel__button jsNext">
+              <img src="{% static 'images/arrow_right_icon.svg' %}" alt="">
+            </button>
+
+            <div class="carousel__nav jsDotContainer">
+
+            </div>
+          </section>
+          <section class="pubDetailsGrid">
+            <p class="pubDetails_address"></p>
+            <a target="_blank" class="pubDetails_url"></a>
+            <p class="pubDetails_phone"></p>
+            <p class="pubDetails_open"></p>
+          </section>
+
+          <button class="pubDetails_close button--blue" type="button" name="button">Close</button>
         </section>
         <div class="overlay"></div>
       </section>
     </main>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjJreU4NFphqBuqOzx--tr0fSL4Nj-sjI&libraries=places" async defer></script>
     <script src="{% static 'js/crawlSpace_crawl.js' %}"></script>
+    <script src="{% static 'js/crawlSpace_slider.js' %}"></script>
 {% endblock %}

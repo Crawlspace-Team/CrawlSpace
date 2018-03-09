@@ -1,0 +1,22 @@
+
+#map {
+  height: 80vh;
+  position: relative;
+  width: 60vw;
+}
+
+#nextLocation {
+  display: flex;
+  height: 20vh;
+  background: $white;
+}
+
+#nextLocation__details {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+#nextLocation__button {
+  flex: 0.5;
+}

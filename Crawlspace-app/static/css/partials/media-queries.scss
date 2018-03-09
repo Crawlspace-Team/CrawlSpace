@@ -34,6 +34,14 @@
           padding: 1em;
         }
       }
+      .pubDetailsContainer {
+        .pubDetails {
+          width: 90%;
+        }
+      }
+      #map {
+        width: 100vw;
+      }
     }
   }
 }

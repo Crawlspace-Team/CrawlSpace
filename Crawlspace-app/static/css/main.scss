@@ -18,6 +18,8 @@ $logo-size: 5em;
 @import 'partials/mixins';
 @import 'partials/media-queries';
 @import 'partials/inputs';
+@import 'partials/map';
+@import 'partials/slider';
 
 html {
     margin: 0;
@@ -101,9 +103,9 @@ main {
 .pubDetailsContainer {
   .pubDetails {
     z-index: 7;
+    width: 50vw;
   }
 }
-
 
 .menu--open {
   display: flex;
@@ -305,42 +307,29 @@ main {
   text-align: center;
 }
 
-
-#map {
-  height: 430px;
+.pubDetails_rating {
+  unicode-bidi: bidi-override;
+  color: $dark;
+  font-size: 25px;
+  height: 25px;
+  width: 75px;
+  margin: 0 auto;
   position: relative;
-  width: 100%;
-}
-
-.maps-frame {
-  height: 430px;
-  width: 100%;
-}
-
-.kd-tabbed-vert.header-links .kd-tabbutton a {
-  color: #757575;
-  display: inline-block;
-  height: 100%;
-  padding: 0 24px;
-  width: 100%;
-}
-
-.kd-tabbed-vert.header-links .kd-tabbutton {
   padding: 0;
-}
 
-.kd-tabbed-vert.header-links .kd-tabbutton.selected a {
-  color: #03a9f4;
-}
-
-.kd-tabbed-vert.header-links .kd-tabbutton a:focus {
-  text-decoration: none;
-}
-
-p.top-desc {
-  padding: 1em 1em .1em 1em;
-}
-
-p.bottom-desc {
-  padding: 0em 1em 1em 1em;
+  .pubDetails_rating--top {
+    color: $accent;
+    padding: 0;
+    position: absolute;
+    z-index: 1;
+    display: block;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+  }
+  .pubDetails_rating--bottom {
+    padding: 0;
+    display: block;
+    z-index: 0;
+  }
 }
