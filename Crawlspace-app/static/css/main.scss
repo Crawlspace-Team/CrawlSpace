@@ -1,7 +1,9 @@
 $white: white;
+$grey: #efefef;
 $off-white: #F5F5F5;
 $dark: #222222;
 $accent: #2699FB;
+$accent-dark: #0e82e4;
 $accent-light: #BCE0FD;
 $accent-lighter: #F1F9FF;
 
@@ -91,8 +93,12 @@ main {
   justify-content: center;
   .editCrawlForm, .newCrawlForm, .searchPubsMenu, .pubDetails {
     z-index: 1;
-    background: white;
-    padding: 5em;
+    background: $white;
+    padding: 2em;
+    max-width: 35em;
+    h2 {
+      color: $accent;
+    }
   }
 }
 
@@ -104,6 +110,52 @@ main {
   .pubDetails {
     z-index: 7;
     width: 50vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: $accent;
+    .pubDetails_name {
+      font-weight: bold;
+    }
+    .pubDetails_rating {
+      unicode-bidi: bidi-override;
+      color: $dark;
+      font-size: 25px;
+      height: 25px;
+      width: 75px;
+      margin: 0 auto;
+      position: relative;
+      padding: 0;
+      display: flex;
+      flex-direction: row;
+      vertical-align: middle;
+      .pubDetails_rating--top {
+        color: $accent;
+        padding: 0;
+        position: absolute;
+        z-index: 1;
+        display: block;
+        top: 0;
+        left: 0;
+        overflow: hidden;
+      }
+      .pubDetails_rating--bottom {
+        padding: 0;
+        display: block;
+        z-index: 0;
+      }
+    }
+    .pubDetails_url {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-decoration: underline;
+      color: $accent;
+    }
+  }
+  .overlay {
+    z-index: 6;
   }
 }
 
@@ -119,12 +171,6 @@ main {
     left: 0;
     @include overlay;
     position: fixed;
-  }
-}
-
-.pubDetailsContainer {
-  .overlay {
-    z-index: 6;
   }
 }
 
@@ -157,17 +203,27 @@ main {
     margin: 0 9em;
 }
 
+.status {
+  font-weight: bold;
+  color: $accent;
+  padding: 1.25em;
+}
+
 .crawlList {
     grid-template-columns: 1fr 1fr;
     padding: 0;
     list-style: none;
     display: grid;
     .crawl {
+      @include smooth-transition;
       background: $white;
       color: $accent;
       display: flex;
       margin: 0.5em;
       flex-direction: column;
+      &:hover {
+        background: $grey;
+      }
       .crawl_image {
         width: 100%;
         height: 10em;
@@ -175,6 +231,7 @@ main {
         img {
           width: 100%;
           height: 100%;
+          filter: opacity(0.4);
         }
       }
       .crawl_information {
@@ -218,7 +275,6 @@ main {
     list-style: none;
     display: grid;
     .pub {
-    //  background: $white;
       color: $accent;
       display: flex;
       position: relative;
@@ -253,17 +309,25 @@ main {
         .pub_name {
           font-weight: bold;
         }
+        .button--blue {
+          max-width: 10em;
+        }
       }
-      form {
+      .deletePubForm, .addPubForm {
         align-self: center;
         margin-right: 1em;
+        margin-bottom: 2em;
         .pub_button {
+          @include smooth-transition;
           -webkit-appearance: none;
           background: white;
           border: none;
           border-radius: 50%;
           padding: 0.9em 1em;
           cursor: pointer;
+          &:hover {
+            background: $grey;
+          }
         }
       }
     }
@@ -272,6 +336,7 @@ main {
 .pubDetailsButton {
   cursor: pointer;
   display: inline-block;
+  max-width: 40em;
 }
 
 .hidden {
@@ -307,29 +372,6 @@ main {
   text-align: center;
 }
 
-.pubDetails_rating {
-  unicode-bidi: bidi-override;
-  color: $dark;
-  font-size: 25px;
-  height: 25px;
-  width: 75px;
-  margin: 0 auto;
-  position: relative;
-  padding: 0;
-
-  .pubDetails_rating--top {
-    color: $accent;
-    padding: 0;
-    position: absolute;
-    z-index: 1;
-    display: block;
-    top: 0;
-    left: 0;
-    overflow: hidden;
-  }
-  .pubDetails_rating--bottom {
-    padding: 0;
-    display: block;
-    z-index: 0;
-  }
+.hidden {
+  display: none;
 }

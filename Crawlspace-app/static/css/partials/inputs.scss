@@ -2,8 +2,8 @@ button {
   cursor: pointer;
 }
 
-
 .button--hover {
+  @include smooth-transition;
   @include button-circle;
   @include box-shadow;
   position: fixed;
@@ -11,6 +11,9 @@ button {
   bottom: 10vw;
   cursor: pointer;
   z-index: 5;
+  &:hover {
+    background: $accent-dark;
+  }
 }
 
 .button--orderCrawl {
@@ -100,6 +103,7 @@ button {
 }
 
 .button--blue {
+  @include smooth-transition;
   font-family: 'Open Sans', sans-serif;
   -webkit-appearance: none;
   background: $accent;
@@ -109,7 +113,11 @@ button {
   font-size: 1em;
   font-weight: bold;
   padding: 0.5em;
+  margin: 0.5em 0;
   border-radius: 0.4em;
+  &:hover {
+    background: $accent-dark;
+  }
 }
 
 .input--blue {
@@ -128,4 +136,8 @@ button {
     -ms-transform: rotate(45deg);      /* to support IE 9 */
     transform: rotate(45deg);
   }
+}
+
+.pubDetails_close {
+  width: 5em;
 }

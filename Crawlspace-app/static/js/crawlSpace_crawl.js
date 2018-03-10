@@ -5,10 +5,13 @@ const googleAPIKey = 'AIzaSyC3v_pZbmLZNkIasBzu_U2M9wqyO3O1rf8'
 const googlePlacesDetailUrl = 'https://maps.googleapis.com/maps/api/place/details/json?placeid='
 const googlePlacesPhotoUrl = 'https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photoreference='
 const searchPubsMenu = document.querySelector('.searchPubsContainer')
-const searchpubsOverlay = searchPubsMenu.querySelector('.overlay')
+const searchPubsOverlay = searchPubsMenu.querySelector('.overlay')
 const searchPubsButton = document.querySelector('.button--hover')
+const searchStatusElement = searchPubsMenu.querySelector('#searchStatus')
+const searchResultsList = document.querySelector('#searchResults')
+
 searchPubsButton.addEventListener('click', toggleSearchPubsMenu)
-searchpubsOverlay.addEventListener('click', toggleSearchPubsMenu)
+searchPubsOverlay.addEventListener('click', toggleSearchPubsMenu)
 geolocationButton.addEventListener('click', getLocationByGeolocation)
 
 const body = document.querySelector('body')
@@ -22,7 +25,14 @@ let crawlID = ''
 window.onload = function(){
   crawlID = window.location.href.split('/')[4]
   const pubs = document.querySelectorAll('.pubDetailsButton')
-  pubs.forEach(pub => pub.addEventListener('click', showPubDetails))
+  pubs.forEach(pub => {
+    pub.addEventListener('click', showPubDetails)
+    const select = pub.querySelector('select')
+    const options = select.querySelectorAll('option')
+    const position = select.dataset.position-1
+    const selectedOption = options[position]
+    selectedOption.setAttribute('selected', true)
+  })
 }
 
 function toggleSearchPubsMenu() {
@@ -90,6 +100,8 @@ function handleErrors(error) {
 function getPubsAtLocation(position) {
   const lat = position.coords.latitude
   const lon = position.coords.longitude
+  searchStatusElement.innerHTML = 'Searching for pubs'
+  removeChildren(searchResultsList)
   fetch(`/searchPubs/lat=${lat}&lon=${lon}`)
   .then(function(response) {
     return response.json()
@@ -214,12 +226,13 @@ function displayPubResult(pub) {
 
 function showPubDetails(e) {
   const clickedElement = e.target
-  if (clickedElement.classList.contains('pub_button') || clickedElement.classList.contains('icon')) {
+  console.log(e.target);
+  if (clickedElement.classList.contains('pub_button') || clickedElement.classList.contains('icon') || clickedElement.classList.contains('reorderPubSelect')) {
     return false
   } else {
     const pubElement = clickedElement.closest('ul > .pubDetailsButton')
     const pubID = pubElement.dataset.id
-    console.log(`Clicked: ${pubID}`);
+
     fetch(`/pubdetails/${pubID}`)
     .then(function(response) {
       return response.json()
@@ -234,11 +247,10 @@ function showPubDetails(e) {
 function showPubDetailsInterface(pub) {
   console.log(pub)
   const pubNameElement = pubDetailsContainer.querySelector('.pubDetails_name')
-  //const pubImageElement = pubDetailsContainer.querySelector('.pubDetails_img')
-  const sliderContainerElement = pubDetailsContainer.querySelector('.carousel__track')
-  const dotContainerElement = pubDetailsContainer.querySelector('.carousel__nav')
+  const sliderElement = pubDetailsContainer.querySelector('.slider')
+  const sliderContainerElement = pubDetailsContainer.querySelector('.slider__track')
+  const dotContainerElement = pubDetailsContainer.querySelector('.slider__nav')
   const pubDetailsElement = pubDetailsContainer.querySelector('.pubDetailsGrid')
-
   const pubRatingElement = pubDetailsContainer.querySelector('.pubDetails_rating--top')
   const pubAddressElement = pubDetailsContainer.querySelector('.pubDetails_address')
   const pubUrlElement = pubDetailsContainer.querySelector('.pubDetails_url')
@@ -253,37 +265,52 @@ function showPubDetailsInterface(pub) {
   removeChildren(dotContainerElement)
 
   const photos = pub.photos
-  photos.forEach(photo => {
-    const pubImageCode = photo.photo_reference
-    const pubImageUrl = googlePlacesPhotoUrl + pubImageCode + '&key=' + googleAPIKey
-    const slideContainer = document.createElement('li')
-    slideContainer.classList.add('carousel__slide')
-    const sliderImage = document.createElement('a')
-    sliderImage.style.backgroundImage = `url(${pubImageUrl})`
-    slideContainer.appendChild(sliderImage)
-    sliderContainerElement.appendChild(slideContainer)
+  if (photos != null) {
+    sliderElement.style.display = 'grid'
+    photos.forEach(photo => {
+      const pubImageCode = photo.photo_reference
+      const pubImageUrl = googlePlacesPhotoUrl + pubImageCode + '&key=' + googleAPIKey
+      const slideContainer = document.createElement('li')
+      slideContainer.classList.add('slider__slide')
+      const sliderImage = document.createElement('a')
+      sliderImage.style.backgroundImage = `url(${pubImageUrl})`
+      slideContainer.appendChild(sliderImage)
+      sliderContainerElement.appendChild(slideContainer)
 
-    const dotElement = document.createElement('button')
-    dotElement.classList.add('carousel__dot')
-    dotContainerElement.appendChild(dotElement)
-  })
-  if (photos.length >= 1) {
-    const firstSlide = sliderContainerElement.querySelector('.carousel__slide')
+      const dotElement = document.createElement('button')
+      dotElement.classList.add('slider__dot')
+      dotContainerElement.appendChild(dotElement)
+    })
+    const firstSlide = sliderContainerElement.querySelector('.slider__slide')
     firstSlide.classList.add('is-selected')
-    const firstDot = dotContainerElement.querySelector('.carousel__dot')
+    const firstDot = dotContainerElement.querySelector('.slider__dot')
     firstDot.classList.add('is-selected')
+  } else {
+    sliderElement.style.display = 'none'
   }
 
+  const pubAddress = pub.formatted_address
+  const pubWebsite = pub.website
+  const pubPhone = pub.international_phone_number
   const pubRating = (pub.rating*20)
+  const pubOpeningHours = pub.opening_hours
   pubRatingElement.style.width = `${pubRating}%`
-  pubAddressElement.innerHTML = pub.formatted_address
-  pubUrlElement.innerHTML = pub.website
-  pubUrlElement.href = pub.website
-  pubPhoneElement.innerHTML = pub.international_phone_number
-  if (pub.opening_hours.open_now == true) {
-    pubOpenElement.innerHTML = 'Open Now'
-  } else {
-    pubOpenElement.innerHTML = 'Closed'
+  if (pubAddress != null) {
+    pubAddressElement.innerHTML = pubAddress
+  }
+  if (pubWebsite != null) {
+    pubUrlElement.innerHTML = pubWebsite
+    pubUrlElement.href = pubWebsite
+  }
+  if (pubPhone != null) {
+    pubPhoneElement.innerHTML = pubPhone
+  }
+  if (pubOpeningHours != null) {
+    if (pubOpeningHours.open_now == true) {
+      pubOpenElement.innerHTML = 'Open Now'
+    } else {
+      pubOpenElement.innerHTML = 'Closed'
+    }
   }
   openDetailsMenu()
   initSlider()
@@ -311,10 +338,10 @@ function closeDetailsMenu() {
 
 function displaySearchResults(results) {
   foundPubs = results.results
-  const resultsList = document.querySelector('#searchResults')
-  removeChildren(resultsList)
-  foundPubs.forEach(pub => resultsList.appendChild(displayPubResult(pub)))
+  const numberOfResults = foundPubs.length
+  searchStatusElement.innerHTML = `Found ${numberOfResults} pubs`
+  foundPubs.forEach(pub => searchResultsList.appendChild(displayPubResult(pub)))
   endOfSearchText = document.createElement('p')
   endOfSearchText.innerHTML = "No more pubs available, try other search criteria."
-  resultsList.appendChild(endOfSearchText)
+  searchResultsList.appendChild(endOfSearchText)
 }

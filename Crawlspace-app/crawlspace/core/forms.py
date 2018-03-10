@@ -23,5 +23,9 @@ class AddPubForm(forms.Form):
     pubname = forms.CharField(max_length=255)
     placeid = forms.CharField(max_length=100)
 
-class DeleteAppForm(forms.Form):
+class DeletePubForm(forms.Form):
     pubposition = forms.IntegerField()
+
+class ReorderPubForm(forms.Form):
+    pubposition = forms.IntegerField()
+    newposition = forms.IntegerField()

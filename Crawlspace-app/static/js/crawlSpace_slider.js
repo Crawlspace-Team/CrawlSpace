@@ -1,9 +1,9 @@
 function initSlider(){
-  const track = document.querySelector('.jsTrack')
+  const track = document.querySelector('.slider__track ')
   const slides = Array.from(track.children)
-  const nextButton = document.querySelector('.jsNext')
-  const previousButton = document.querySelector('.jsPrevious')
-  const dotContainer = document.querySelector('.jsDotContainer')
+  const nextButton = document.querySelector('.slider__next')
+  const previousButton = document.querySelector('.slider__previous')
+  const dotContainer = document.querySelector('.slider__nav')
   const dots = Array.from(dotContainer.children)
   const slideWidth = slides[0].getBoundingClientRect().width
 

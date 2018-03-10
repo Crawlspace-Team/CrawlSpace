@@ -7,6 +7,7 @@ from crawlspace.core.models import *
 import requests
 import json
 from django.http import JsonResponse
+import operator
 
 googleAPIKey = 'AIzaSyC3v_pZbmLZNkIasBzu_U2M9wqyO3O1rf8'
 googlePlacesDetailUrl = 'https://maps.googleapis.com/maps/api/place/details/json?placeid='
@@ -15,10 +16,21 @@ googlePlacesPhotoUrl = 'https://maps.googleapis.com/maps/api/place/photo?maxwidt
 @login_required
 def home(request):
     crawls = Crawl.objects.filter(user=request.user)
-    if (crawls.exists()):
+    for crawl in crawls:
+        pubs = Pub_On_Crawl.objects.filter(crawl=crawl)
+        if (len(pubs) >= 1):
+            firstPub = pubs[0]
+            placeID = firstPub.pub.Places_ID
+            rawPubData = requests.get(googlePlacesDetailUrl + str(placeID) + '&key=' + googleAPIKey)
+            pubData = json.loads(rawPubData.content)
+            pubData = pubData['result']
+            pubPhotos = pubData['photos']
+            if('photos' in pubData):
+                if (len(pubPhotos) >= 1):
+                    pubThumbnailCode = pubPhotos[0]['photo_reference']
+                    crawl.thumbnail = googlePlacesPhotoUrl + pubThumbnailCode + '&key=' + googleAPIKey
         return render(request, 'home.html', {'crawls': crawls, 'status': ''})
-    else:
-        return render(request, 'home.html', {'crawls': [], 'status': 'No crawls'})
+    return render(request, 'home.html', {'crawls': [], 'status': 'No crawls'})
 
 def signup(request):
     if request.method == 'POST':
@@ -69,11 +81,10 @@ def viewCrawl(request, pk):
     crawl = Crawl.objects.get(id=pk)
     status = ''
     if (crawl.user == request.user):
-        pubs = Pub_On_Crawl.objects.filter(crawl=crawl)
+        pubs = Pub_On_Crawl.objects.filter(crawl=crawl).order_by('position')
         for pub in pubs:
             pub.name = pub.pub.Pub_Name
             pub.placeID = pub.pub.Places_ID
-            #pub.position = pub.position + 1
             rawPubData = requests.get(googlePlacesDetailUrl + pub.pub.Places_ID + '&key=' + googleAPIKey)
             if (json.loads(rawPubData.content)['status'] == 'OVER_QUERY_LIMIT'):
                 print('OVER LIMIT')
@@ -109,7 +120,7 @@ def addPub(request, pk):
         if form.is_valid():
             crawl = Crawl.objects.get(id=pk)
             if (crawl.user == request.user):
-                pubsOnCrawl = Pub_On_Crawl.objects.filter(crawl=crawl)
+                pubsOnCrawl = Pub_On_Crawl.objects.filter(crawl=crawl).order_by('position')
                 numOfPubs = len(pubsOnCrawl)+1
                 pubName = form.cleaned_data.get('pubname')
                 pubPlaceID = form.cleaned_data.get('placeid')
@@ -123,24 +134,47 @@ def addPub(request, pk):
 def viewMap(request, pk):
     crawl = Crawl.objects.get(id=pk)
     if (crawl.user == request.user):
-        pubs = Pub_On_Crawl.objects.filter(crawl=crawl)
+        pubs = Pub_On_Crawl.objects.filter(crawl=crawl).order_by('position')
         if (pubs.exists()):
             return render(request, 'map.html', {'status' : '', 'crawl_name' : crawl.Crawl_Name, 'crawl_id': crawl.id, 'pubs': pubs})
         else:
             return render(request, 'map.html', {'status' : 'No Pubs in crawl', 'crawl_name' : crawl.Crawl_Name, 'crawl_id': crawl.id, 'pubs': []})
 
 @login_required
+def reorderPub(request, pk):
+    if request.method == 'POST':
+        form = ReorderPubForm(request.POST)
+        print(form)
+        if form.is_valid():
+            print("valid")
+            crawl = Crawl.objects.get(id=pk)
+            if (crawl.user == request.user):
+                pubsOnCrawl = Pub_On_Crawl.objects.filter(crawl=crawl).order_by('position')
+                oldPosition = form.cleaned_data.get('pubposition')
+                newPosition = form.cleaned_data.get('newposition')
+                for pub in pubsOnCrawl:
+                    print(pub.pub.Pub_Name + ", " + str(pub.position))
+                print("old: " + str(oldPosition) + ", new: " + str(newPosition))
+                firstPub = pubsOnCrawl[oldPosition-1]
+                secondPub = pubsOnCrawl[newPosition-1]
+                firstPub.position = newPosition
+                secondPub.position = oldPosition
+                firstPub.save()
+                secondPub.save()
+    return redirect('/crawl/' + pk + '/')
+
+@login_required
 def deletePub(request, pk):
     print('delete pub')
     if request.method == 'POST':
-        form = DeleteAppForm(request.POST)
+        form = DeletePubForm(request.POST)
         if form.is_valid():
             crawl = Crawl.objects.get(id=pk)
             if (crawl.user == request.user):
                 pubPosition = form.cleaned_data.get('pubposition')
                 pub = Pub_On_Crawl.objects.filter(crawl=crawl,position=pubPosition)
                 pub.delete()
-                pubs = Pub_On_Crawl.objects.filter(crawl=crawl)
+                pubs = Pub_On_Crawl.objects.filter(crawl=crawl).order_by('position')
                 pubCounter = 0
                 for pub in pubs:
                     pubPosition = pub.position
@@ -157,7 +191,7 @@ def deletePub(request, pk):
 def clearPubs(request, pk):
     crawl = Crawl.objects.get(id=pk)
     if (crawl.user == request.user):
-        pubs = Pub_On_Crawl.objects.filter(crawl=crawl)
+        pubs = Pub_On_Crawl.objects.filter(crawl=crawl).order_by('position')
         for pub in pubs:
             pub.delete()
     return redirect('/crawl/' + pk + '/')
@@ -198,7 +232,7 @@ def pubDetails(request, id):
 def getPubs(request, pk):
     crawl = Crawl.objects.get(id=pk)
     pubs = []
-    rawPubs = Pub_On_Crawl.objects.filter(crawl=crawl)
+    rawPubs = Pub_On_Crawl.objects.filter(crawl=crawl).order_by('position')
     for pub in rawPubs:
         placeID = pub.pub.Places_ID
         rawPubData = requests.get(googlePlacesDetailUrl + str(placeID) + '&key=' + googleAPIKey)

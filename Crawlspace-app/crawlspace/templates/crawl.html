@@ -42,6 +42,16 @@
               <section class="pub_description">
                 <p class="pub_name">{{ pub.position }}: {{ pub.name }}</p>
                 <p class="pub_address">{{ pub.address }}</p>
+                <button class="button--blue" type="button" name="button">View Details</button>
+                <form class="reorderPubForm" action="/crawl/{{ crawl_id }}/reorder/" method="POST">
+                  {% csrf_token %}
+                  <select class="reorderPubSelect" name="newposition" data-position="{{ pub.position }}" onchange="submit()">
+                    {% for pub in pubs %}
+                    <option value="{{ pub.position }}">{{ pub.position }}</option>
+                    {% endfor %}
+                  </select>
+                  <input type="hidden" value="{{ pub.position }}" name="pubposition">
+                </form>
               </section>
               <form class="deletePubForm" action="/crawl/{{ crawl_id }}/deletepub/" method="POST">
                 {% csrf_token %}
@@ -62,9 +72,10 @@
               <h2>Search For Pubs</h2>
               <input class="input--blue" id="inputLocation" type="text" name="location" placeholder="Location" value="" required>
               <button class="button--blue" id="inputSearchButton" type="submit" name="searchPubs">Search Pubs</button>
+              <button class="button--blue" id="geolocationButton" >Geolocation Search</button>
             </form>
-            <button class="button--blue" id="geolocationButton" >Geolocation Search</button>
             <section>
+              <p id="searchStatus" class="status"></p>
               <ul id="searchResults" class="pubList">  </ul>
             </section>
         </section>
@@ -72,28 +83,28 @@
       </section>
       <section class="pubDetailsContainer">
         <section class="pubDetails">
-          <p class="pubDetails_name"></p>
-          <p class="pubDetails_rating"></p>
+          <h3 class="pubDetails_name"></h3>
           <div class="pubDetails_rating">
             <div class="pubDetails_rating--top"><span>♥</span><span>♥</span><span>♥</span><span>♥</span><span>♥</span></div>
             <div class="pubDetails_rating--bottom"><span>♥</span><span>♥</span><span>♥</span><span>♥</span><span>♥</span></div>
+            <p class="pubDetails_ratingNumber"></p>
           </div>
-          <section class="carousel">
-            <button class="carousel__button jsPrevious is-hidden">
+          <section class="slider">
+            <button class="slider__button slider__previous is-hidden">
               <img src="{% static 'images/arrow_left_icon.svg' %}" alt="">
             </button>
 
-            <div class="carousel__track-container">
-              <ul class="carousel__track jsTrack">
+            <div class="slider__track-container">
+              <ul class="slider__track">
 
               </ul>
             </div>
 
-            <button class="carousel__button jsNext">
+            <button class="slider__button slider__next">
               <img src="{% static 'images/arrow_right_icon.svg' %}" alt="">
             </button>
 
-            <div class="carousel__nav jsDotContainer">
+            <div class="slider__nav">
 
             </div>
           </section>

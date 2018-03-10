@@ -56,7 +56,12 @@
     }
     main {
       #content, #content--flex {
-        width: 90vw;
+        #map {
+          height: 70vh;
+        }
+        #nextLocation {
+          height: 30vh;
+        }
         .container--form {
             width: 100%;
         }

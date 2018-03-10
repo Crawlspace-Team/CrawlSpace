@@ -1,5 +1,8 @@
 # CrawlSpace
 Prototype app for the Crawlspace project.
+
+Built with Django for backend functionality, JavaScript for frontend functionality, SCSS complied to CSS for the frontend styling.
+
 ## Setting up the project on your local machine
 1. Using the GitHub Desktop App or equivalent git application
 2. Within the git application open the File menu then click Clone Repository

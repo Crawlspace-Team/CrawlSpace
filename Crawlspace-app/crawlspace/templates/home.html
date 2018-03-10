@@ -39,7 +39,7 @@
           <li class="crawl">
             <a href="/crawl/{{ crawl.id }}/">
               <section class="crawl_image">
-                <img src="" alt="">
+                <img src="{{ crawl.thumbnail }}" alt="">
               </section>
               <section class="crawl_information">
                 <section class="crawl_details">
@@ -65,7 +65,7 @@
             {% csrf_token %}
             <h2>New Crawl</h2>
             <input class="input--blue" type="text" name="name" placeholder="Crawl name" value="" required>
-            <input class="input--blue" class="newCrawlDate inputDate" type="date" name="crawlstartdate" value="" required>
+            <input class="input--blue newCrawlDate" class="newCrawlDate inputDate" type="date" name="crawlstartdate" value="" required>
             <button class="button--blue" type="submit" name="addCrawl">Add Crawl</button>
           </form>
           <div class="overlay"></div>
