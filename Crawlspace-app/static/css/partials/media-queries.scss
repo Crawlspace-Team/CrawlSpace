@@ -9,20 +9,25 @@
   }
 }
 
-@media screen and (max-width: 40em) {
+@media screen and (max-width: 50em) {
   html body {
-    .button {
-      .icon {
-        width: 2em;
-        height: 2em;
-      }
-    }
     header {
       .title--left {
         display: none;
       }
       .nav {
         margin: 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 40em) {
+  html body {
+    .button {
+      .icon {
+        width: 2em;
+        height: 2em;
       }
     }
     main {

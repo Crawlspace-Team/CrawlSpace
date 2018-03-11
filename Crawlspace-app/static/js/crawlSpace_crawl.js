@@ -102,7 +102,7 @@ function getPubsAtLocation(position) {
   const lon = position.coords.longitude
   searchStatusElement.innerHTML = 'Searching for pubs'
   removeChildren(searchResultsList)
-  fetch(`/searchPubs/lat=${lat}&lon=${lon}`)
+  fetch(`/searchpubs/lat=${lat}&lon=${lon}`)
   .then(function(response) {
     return response.json()
   }).then(function(body) {
@@ -151,10 +151,15 @@ function displayPubResult(pub) {
   const pubAddressElement = document.createElement('p')
   pubAddressElement.classList.add('pub_address')
   pubAddressElement.innerHTML = pubAddress
+  const pubDetailsButton = document.createElement('button')
+  pubDetailsButton.classList.add('button--blue')
+  pubDetailsButton.innerHTML = 'View Details'
+
   pubLinkContainer.appendChild(pubElement)
   pubElement.appendChild(pubDescriptionElement)
   pubDescriptionElement.appendChild(pubNameElement)
   pubDescriptionElement.appendChild(pubAddressElement)
+  pubDescriptionElement.appendChild(pubDetailsButton)
 
   const addPubForm = createAddPubForm()
 
@@ -226,7 +231,6 @@ function displayPubResult(pub) {
 
 function showPubDetails(e) {
   const clickedElement = e.target
-  console.log(e.target);
   if (clickedElement.classList.contains('pub_button') || clickedElement.classList.contains('icon') || clickedElement.classList.contains('reorderPubSelect')) {
     return false
   } else {
@@ -245,7 +249,6 @@ function showPubDetails(e) {
 }
 
 function showPubDetailsInterface(pub) {
-  console.log(pub)
   const pubNameElement = pubDetailsContainer.querySelector('.pubDetails_name')
   const sliderElement = pubDetailsContainer.querySelector('.slider')
   const sliderContainerElement = pubDetailsContainer.querySelector('.slider__track')
@@ -282,9 +285,9 @@ function showPubDetailsInterface(pub) {
       dotContainerElement.appendChild(dotElement)
     })
     const firstSlide = sliderContainerElement.querySelector('.slider__slide')
-    firstSlide.classList.add('is-selected')
+    firstSlide.classList.add('selected')
     const firstDot = dotContainerElement.querySelector('.slider__dot')
-    firstDot.classList.add('is-selected')
+    firstDot.classList.add('selected')
   } else {
     sliderElement.style.display = 'none'
   }
@@ -296,14 +299,22 @@ function showPubDetailsInterface(pub) {
   const pubOpeningHours = pub.opening_hours
   pubRatingElement.style.width = `${pubRating}%`
   if (pubAddress != null) {
+    pubAddressElement.parentNode.style.display = 'flex'
     pubAddressElement.innerHTML = pubAddress
+  } else {
+    pubAddressElement.parentNode.style.display = 'none'
   }
   if (pubWebsite != null) {
-    pubUrlElement.innerHTML = pubWebsite
+    pubUrlElement.parentNode.style.display = 'flex'
     pubUrlElement.href = pubWebsite
+  } else {
+    pubUrlElement.parentNode.style.display = 'none'
   }
   if (pubPhone != null) {
+    pubPhoneElement.parentNode.style.display = 'flex'
     pubPhoneElement.innerHTML = pubPhone
+  } else {
+    pubPhoneElement.parentNode.style.display = 'none'
   }
   if (pubOpeningHours != null) {
     if (pubOpeningHours.open_now == true) {

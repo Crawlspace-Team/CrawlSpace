@@ -26,15 +26,14 @@
     width: 100%;
     height: 100%;
     list-style: none;
-  }
-
-  .slider__slide > a {
-    display: block;
-    width: inherit;
-    height: inherit;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
+    & > a {
+      display: block;
+      width: inherit;
+      height: inherit;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center;
+    }
   }
 }
 
@@ -50,10 +49,11 @@
   }
   img {
     width: 100%;
+    user-select: none;
   }
 }
 
-.slider__button.is-hidden {
+.slider__button.hidden {
   display: none;
 }
 
@@ -74,7 +74,7 @@
   .slider__dot + .slider__dot {
     margin-left: 1em;
   }
-  .slider__dot.is-selected {
+  .slider__dot.selected {
     background-color: $dark;
   }
   .slider__dot > * {

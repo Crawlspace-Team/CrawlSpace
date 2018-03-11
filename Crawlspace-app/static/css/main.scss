@@ -95,7 +95,7 @@ main {
     z-index: 1;
     background: $white;
     padding: 2em;
-    max-width: 35em;
+    max-width: 45em;
     h2 {
       color: $accent;
     }
@@ -146,12 +146,26 @@ main {
         z-index: 0;
       }
     }
-    .pubDetails_url {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      text-decoration: underline;
-      color: $accent;
+    .pubDetailsGrid {
+      display: grid;
+      span {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        .icon {
+          margin-right: 1em;
+        }
+        a, p {
+          margin: 0.5em 0;
+        }
+      }
+      .pubDetails_url {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-decoration: underline;
+        color: $accent;
+      }
     }
   }
   .overlay {
@@ -278,8 +292,8 @@ main {
       color: $accent;
       display: flex;
       position: relative;
-      margin: 0.5em;
-      height: 15em;
+      margin: 1em 0.5em;
+      height: 17em;
       flex-direction: row;
       background: $dark;
       background-size: cover;
@@ -309,8 +323,23 @@ main {
         .pub_name {
           font-weight: bold;
         }
+        .pub_address {
+          margin: 0.5em 0;
+        }
         .button--blue {
           max-width: 10em;
+          margin-bottom: 3em;
+        }
+        .reorderPubForm {
+          display: flex;
+          flex-direction: row;
+          margin: 0.5em 0;
+          p {
+            margin: 0.5em 0;
+          }
+          select {
+            margin-left: 1em;
+          }
         }
       }
       .deletePubForm, .addPubForm {
@@ -323,7 +352,7 @@ main {
           background: white;
           border: none;
           border-radius: 50%;
-          padding: 0.9em 1em;
+          padding: 0.9em 1em 0.8em 1em;
           cursor: pointer;
           &:hover {
             background: $grey;

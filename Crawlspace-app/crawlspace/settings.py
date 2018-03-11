@@ -25,8 +25,7 @@ SECRET_KEY = 'i%06y2q&4l-!nv*8oolv470b!o)!xg*^9f7^d=q10#b$wd%c_e'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-#CORS_ORIGIN_ALLOW_ALL = True
-ALLOWED_HOSTS = []
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,12 +36,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'crawlspace.core',
-    #'corsheaders',
 ]
 
 MIDDLEWARE = [
-    #'corsheaders.middleware.CorsMiddleware',
-    'crawlspace.middleware.MyMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -113,6 +109,3 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout'
 LOGIN_REDIRECT_URL = 'home'
-
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_ALLOW_CREDENTIALS = False

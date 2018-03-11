@@ -8,18 +8,18 @@ function initSlider(){
   const slideWidth = slides[0].getBoundingClientRect().width
 
   track.style.left = '0'
-  nextButton.classList.remove('is-hidden')
-  previousButton.classList.add('is-hidden')
+  nextButton.classList.remove('hidden')
+  previousButton.classList.add('hidden')
   slides.forEach((slide, index) => {
     slide.style.left = index * slideWidth + `px`
   })
 
-  const getCurrentIndex = slides => {
+  function getCurrentIndex(slides) {
     let currentIndex
 
     for (let index = 0; index < dots.length; index++) {
       const slide = slides[index]
-      if (slide.classList.contains('is-selected')) {
+      if (slide.classList.contains('selected')) {
         currentIndex = index
       }
     }
@@ -27,33 +27,33 @@ function initSlider(){
     return currentIndex
   }
 
-  const updateSlides = (track, currentIndex, targetIndex) => {
+  function updateSlides(track, currentIndex, targetIndex) {
     const currentSlide = slides[currentIndex]
     const targetSlide = slides[targetIndex]
     track.style.left = '-' + targetSlide.style.left
-    currentSlide.classList.remove('is-selected')
-    targetSlide.classList.add('is-selected')
+    currentSlide.classList.remove('selected')
+    targetSlide.classList.add('selected')
   }
 
-  const updateDots = (currentIndex, targetIndex) => {
-    dots[currentIndex].classList.remove('is-selected')
-    dots[targetIndex].classList.add('is-selected')
+  function updateDots(currentIndex, targetIndex) {
+    dots[currentIndex].classList.remove('selected')
+    dots[targetIndex].classList.add('selected')
   }
 
-  const updateArrows = targetIndex => {
+  function updateArrows(targetIndex) {
     if (targetIndex === 0) {
-      previousButton.classList.add('is-hidden')
-      nextButton.classList.remove('is-hidden')
+      previousButton.classList.add('hidden')
+      nextButton.classList.remove('hidden')
     } else if (targetIndex === slides.length - 1) {
-      previousButton.classList.remove('is-hidden')
-      nextButton.classList.add('is-hidden')
+      previousButton.classList.remove('hidden')
+      nextButton.classList.add('hidden')
     } else {
-      previousButton.classList.remove('is-hidden')
-      nextButton.classList.remove('is-hidden')
+      previousButton.classList.remove('hidden')
+      nextButton.classList.remove('hidden')
     }
   }
 
-  const nextSlide = e => {
+  function nextSlide() {
     const currentIndex = getCurrentIndex(slides)
     const nextIndex = currentIndex + 1
 
@@ -62,7 +62,7 @@ function initSlider(){
     updateArrows(nextIndex)
   }
 
-  const previousSlide = e => {
+  function previousSlide() {
     const currentIndex = getCurrentIndex(slides)
     const previousIndex = currentIndex - 1
 
@@ -71,7 +71,7 @@ function initSlider(){
     updateArrows(previousIndex)
   }
 
-  const setSlide = e => {
+  function setSlide(e) {
     if (!e.target.matches('button')) return
 
     const currentIndex = getCurrentIndex(slides)

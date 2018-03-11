@@ -20,9 +20,9 @@ urlpatterns = [
     url(r'^crawl/(?P<pk>\d+)/clearpubs/', core_views.clearPubs, name='clearPubs'),
     url(r'^crawl/(?P<pk>\d+)/deletepub/', core_views.deletePub, name='deletePub'),
     url(r'^crawl/(?P<pk>\d+)/getpubs/', core_views.getPubs, name='getPubs'),
-url(r'^crawl/(?P<pk>\d+)/reorder/', core_views.reorderPub, name='reorderPub'),
-    url(r'^orderDate/', core_views.orderStartDate, name='orderCrawlDate'),
-    url(r'^orderName/', core_views.orderCrawlName, name='orderCrawlName'),
-    url(r'^searchPubs/lat=(?P<lat>-?\d+\.\d+)&lon=(?P<lon>-?\d+\.\d+)$', core_views.searchPubs, name='searchPubs'),
+    url(r'^crawl/(?P<pk>\d+)/reorder/', core_views.reorderPub, name='reorderPub'),
+    url(r'^orderdate/', core_views.orderStartDate, name='orderCrawlDate'),
+    url(r'^ordername/', core_views.orderCrawlName, name='orderCrawlName'),
+    url(r'^searchpubs/lat=(?P<lat>-?\d+\.\d+)&lon=(?P<lon>-?\d+\.\d+)$', core_views.searchPubs, name='searchPubs'),
     url(r'^pubdetails/(?P<id>[\w\-]+)', core_views.pubDetails, name='pubDetails'),
 ]

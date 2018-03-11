@@ -24,10 +24,10 @@
     </header>
     <main>
       <section id="content">
-        <a class="button--orderCrawl" href="/orderDate/">
+        <a class="button--orderCrawl" href="/orderdate/">
           <img class="icon" src="{% static 'images/calendar_icon.svg' %}" alt="Close Icon">
         </a>
-        <a class="button--orderCrawl" href="/orderName/">
+        <a class="button--orderCrawl" href="/ordername/">
           <img class="icon" src="{% static 'images/ordername_icon.svg' %}" alt="Close Icon">
         </a>
         <button class="button--hover" type="button" name="createCrawl">
@@ -44,8 +44,8 @@
               <section class="crawl_information">
                 <section class="crawl_details">
                   <p class="details_id">{{ crawl.id }}</p>
-                  <p class="details_name">{{ crawl.Crawl_Name }}</p>
-                  <p class="details_startDate"> {{ crawl.startdate.day }}/{{ crawl.startdate.month }}/{{ crawl.startdate.year }} </p>
+                  <p class="details_name">{{ crawl.crawl_name }}</p>
+                  <p class="details_startDate"> {{ crawl.startDate }}</p>
                 </section>
                 <section class="crawl_buttons">
                   <a class="editCrawlButton" href="">

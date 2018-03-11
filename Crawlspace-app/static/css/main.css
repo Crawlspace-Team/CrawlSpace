@@ -2,14 +2,15 @@
   html body main .button--createCrawl {
     right: 30vw;
     bottom: 10vw; } }
+@media screen and (max-width: 50em) {
+  html body header .title--left {
+    display: none; }
+  html body header .nav {
+    margin: 0; } }
 @media screen and (max-width: 40em) {
   html body .button .icon {
     width: 2em;
     height: 2em; }
-  html body header .title--left {
-    display: none; }
-  html body header .nav {
-    margin: 0; }
   html body main .crawlList {
     grid-template-columns: 1fr; }
   html body main .editCrawlMenu .editCrawlForm, html body main .editCrawlMenu .newCrawlForm, html body main .editCrawlMenu .searchPubsMenu, html body main .newCrawlMenu .editCrawlForm, html body main .newCrawlMenu .newCrawlForm, html body main .newCrawlMenu .searchPubsMenu, html body main .searchPubsContainer .editCrawlForm, html body main .searchPubsContainer .newCrawlForm, html body main .searchPubsContainer .searchPubsMenu {
@@ -178,6 +179,57 @@ button {
 .pubDetails_close {
   width: 5em; }
 
+.reorderPubForm_select {
+  position: relative;
+  display: inline-block;
+  width: 4em; }
+
+select {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
+  display: inline-block;
+  width: 100%;
+  cursor: pointer;
+  padding: 10px 15px;
+  outline: 0;
+  border: 0;
+  border-radius: 0px;
+  background: #2699FB;
+  color: white;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none; }
+
+select::-ms-expand {
+  display: none; }
+
+select:hover,
+select:focus {
+  color: #ffffff;
+  background: #0e82e4; }
+
+select:disabled {
+  opacity: 0.4;
+  pointer-events: none; }
+
+.select_arrow {
+  position: absolute;
+  top: 17px;
+  right: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  border-style: solid;
+  border-width: 8px 5px 0px 5px;
+  border-color: white transparent transparent transparent; }
+
+.select select:hover ~ .select_arrow,
+.select select:focus ~ .select_arrow {
+  border-top-color: #000000; }
+
+.select select:disabled ~ .select_arrow {
+  border-top-color: white; }
+
 #map {
   height: 80vh;
   position: relative;
@@ -199,11 +251,16 @@ button {
   #nextLocation__details #nextLocation__name {
     font-weight: bold; }
 
-#nextLocation__button {
+#nextLocation__buttons {
   display: flex;
-  align-self: center;
-  margin: 0.5em 0.75em;
-  padding: 0.75em 2em; }
+  flex-direction: column;
+  justify-content: center;
+  margin: 0.2em; }
+  #nextLocation__buttons button {
+    display: flex;
+    align-self: flex-end;
+    margin: 0.5em 0.75em;
+    padding: 0.5em 1.5em; }
 
 .slider {
   display: grid;
@@ -231,13 +288,13 @@ button {
     width: 100%;
     height: 100%;
     list-style: none; }
-  .slider__track .slider__slide > a {
-    display: block;
-    width: inherit;
-    height: inherit;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center; }
+    .slider__track .slider__slide > a {
+      display: block;
+      width: inherit;
+      height: inherit;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center center; }
 
 .slider__button {
   transition: all 0.2s ease-in-out;
@@ -249,9 +306,10 @@ button {
   .slider__button:hover {
     background: #0e82e4; }
   .slider__button img {
-    width: 100%; }
+    width: 100%;
+    user-select: none; }
 
-.slider__button.is-hidden {
+.slider__button.hidden {
   display: none; }
 
 .slider__nav {
@@ -267,7 +325,7 @@ button {
       background-color: #2699FB; }
   .slider__nav .slider__dot + .slider__dot {
     margin-left: 1em; }
-  .slider__nav .slider__dot.is-selected {
+  .slider__nav .slider__dot.selected {
     background-color: #222222; }
   .slider__nav .slider__dot > * {
     pointer-events: none; }
@@ -337,7 +395,7 @@ main {
     z-index: 1;
     background: white;
     padding: 2em;
-    max-width: 35em; }
+    max-width: 45em; }
     .editCrawlMenu .editCrawlForm h2, .editCrawlMenu .newCrawlForm h2, .editCrawlMenu .searchPubsMenu h2, .editCrawlMenu .pubDetails h2, .newCrawlMenu .editCrawlForm h2, .newCrawlMenu .newCrawlForm h2, .newCrawlMenu .searchPubsMenu h2, .newCrawlMenu .pubDetails h2, .searchPubsContainer .editCrawlForm h2, .searchPubsContainer .newCrawlForm h2, .searchPubsContainer .searchPubsMenu h2, .searchPubsContainer .pubDetails h2, .pubDetailsContainer .editCrawlForm h2, .pubDetailsContainer .newCrawlForm h2, .pubDetailsContainer .searchPubsMenu h2, .pubDetailsContainer .pubDetails h2 {
       color: #2699FB; }
 
@@ -379,12 +437,22 @@ main {
       padding: 0;
       display: block;
       z-index: 0; }
-  .pubDetailsContainer .pubDetails .pubDetails_url {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    text-decoration: underline;
-    color: #2699FB; }
+  .pubDetailsContainer .pubDetails .pubDetailsGrid {
+    display: grid; }
+    .pubDetailsContainer .pubDetails .pubDetailsGrid span {
+      display: flex;
+      flex-direction: row;
+      align-items: center; }
+      .pubDetailsContainer .pubDetails .pubDetailsGrid span .icon {
+        margin-right: 1em; }
+      .pubDetailsContainer .pubDetails .pubDetailsGrid span a, .pubDetailsContainer .pubDetails .pubDetailsGrid span p {
+        margin: 0.5em 0; }
+    .pubDetailsContainer .pubDetails .pubDetailsGrid .pubDetails_url {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-decoration: underline;
+      color: #2699FB; }
 .pubDetailsContainer .overlay {
   z-index: 6; }
 
@@ -491,8 +559,8 @@ main {
     color: #2699FB;
     display: flex;
     position: relative;
-    margin: 0.5em;
-    height: 15em;
+    margin: 1em 0.5em;
+    height: 17em;
     flex-direction: row;
     background: #222222;
     background-size: cover; }
@@ -519,8 +587,19 @@ main {
       color: white; }
       .pubList .pub .pub_description .pub_name {
         font-weight: bold; }
+      .pubList .pub .pub_description .pub_address {
+        margin: 0.5em 0; }
       .pubList .pub .pub_description .button--blue {
-        max-width: 10em; }
+        max-width: 10em;
+        margin-bottom: 3em; }
+      .pubList .pub .pub_description .reorderPubForm {
+        display: flex;
+        flex-direction: row;
+        margin: 0.5em 0; }
+        .pubList .pub .pub_description .reorderPubForm p {
+          margin: 0.5em 0; }
+        .pubList .pub .pub_description .reorderPubForm select {
+          margin-left: 1em; }
     .pubList .pub .deletePubForm, .pubList .pub .addPubForm {
       align-self: center;
       margin-right: 1em;
@@ -531,7 +610,7 @@ main {
         background: white;
         border: none;
         border-radius: 50%;
-        padding: 0.9em 1em;
+        padding: 0.9em 1em 0.8em 1em;
         cursor: pointer; }
         .pubList .pub .deletePubForm .pub_button:hover, .pubList .pub .addPubForm .pub_button:hover {
           background: #efefef; }

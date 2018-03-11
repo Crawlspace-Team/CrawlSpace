@@ -45,11 +45,15 @@
                 <button class="button--blue" type="button" name="button">View Details</button>
                 <form class="reorderPubForm" action="/crawl/{{ crawl_id }}/reorder/" method="POST">
                   {% csrf_token %}
-                  <select class="reorderPubSelect" name="newposition" data-position="{{ pub.position }}" onchange="submit()">
-                    {% for pub in pubs %}
-                    <option value="{{ pub.position }}">{{ pub.position }}</option>
-                    {% endfor %}
-                  </select>
+                  <p>Reorder Pub: </p>
+                  <div class="reorderPubForm_select">
+                    <select class="reorderPubSelect" name="newposition" data-position="{{ pub.position }}" onchange="submit()">
+                      {% for pub in pubs %}
+                      <option value="{{ pub.position }}">{{ pub.position }}</option>
+                      {% endfor %}
+                    </select>
+                    <div class="select_arrow"></div>
+                  </div>
                   <input type="hidden" value="{{ pub.position }}" name="pubposition">
                 </form>
               </section>
@@ -104,15 +108,13 @@
               <img src="{% static 'images/arrow_right_icon.svg' %}" alt="">
             </button>
 
-            <div class="slider__nav">
-
-            </div>
+            <div class="slider__nav"></div>
           </section>
           <section class="pubDetailsGrid">
-            <p class="pubDetails_address"></p>
-            <a target="_blank" class="pubDetails_url"></a>
-            <p class="pubDetails_phone"></p>
-            <p class="pubDetails_open"></p>
+            <span> <img class="icon" src="{% static 'images/calendar_icon_blue.svg' %}" alt="Edit Icon"><p class="pubDetails_address"></p></span>
+            <span> <img class="icon" src="{% static 'images/web_icon.svg' %}" alt="Edit Icon"><a target="_blank" class="pubDetails_url">Pub Website</a></span>
+            <span> <img class="icon" src="{% static 'images/phone_icon.svg' %}" alt="Edit Icon"><p class="pubDetails_phone"></p></span>
+            <span> <img class="icon" src="{% static 'images/calendar_icon_blue.svg' %}" alt="Edit Icon"><p class="pubDetails_open"></p></span>
           </section>
 
           <button class="pubDetails_close button--blue" type="button" name="button">Close</button>
