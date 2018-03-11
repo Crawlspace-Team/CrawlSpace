@@ -1,9 +1,9 @@
 button {
+  @include smooth-transition;
   cursor: pointer;
 }
 
 .button--hover {
-  @include smooth-transition;
   @include button-circle;
   @include box-shadow;
   position: fixed;
@@ -45,11 +45,17 @@ button {
 .button--accent {
   background: $accent;
   color: $white;
+  &:hover {
+    background: $accent-dark;
+  }
 }
 
 .button--white {
   background: $white;
   color: $accent;
+  &:hover {
+    background: $off-white;
+  }
 }
 
 .form--vertical {
@@ -70,7 +76,7 @@ button {
     border: 2px solid $accent-light;
     border-radius: 0.75em;
     background: $accent-lighter;
-    padding: $input-padding;
+    padding: 0.5em 0;
     margin-top: 0.3em;
     text-decoration: none;
     color: $accent;
@@ -103,7 +109,6 @@ button {
 }
 
 .button--blue {
-  @include smooth-transition;
   font-family: 'Open Sans', sans-serif;
   -webkit-appearance: none;
   background: $accent;

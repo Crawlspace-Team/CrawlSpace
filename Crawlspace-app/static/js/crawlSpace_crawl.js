@@ -236,7 +236,6 @@ function showPubDetails(e) {
   } else {
     const pubElement = clickedElement.closest('ul > .pubDetailsButton')
     const pubID = pubElement.dataset.id
-
     fetch(`/pubdetails/${pubID}`)
     .then(function(response) {
       return response.json()

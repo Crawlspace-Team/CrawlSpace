@@ -21,8 +21,6 @@ GOOGLE_PLACES_PHOTO_URL = 'https://maps.googleapis.com/maps/api/place/photo?maxw
 @login_required
 def home(request):
     """
-    Renders the home page.
-
     Retrieves the crawls created by the current user and renders them within the home page.
 
     Parameters
@@ -33,16 +31,16 @@ def home(request):
     Returns
     -------
     HttpRequest
-        Home.html page rendered with the user's created crawls
+        home.html page rendered with the user's created crawls
 
     """
-    crawls = Crawl.objects.filter(user=request.user)
+    crawls = Crawl.objects.filter(user=request.user) # Retrieve all crawls created by the current user
     for crawl in crawls:
-        crawl.startDate = format_crawl_date(crawl)
-        pubs = PubOnCrawl.objects.filter(crawl=crawl).order_by('position')
-        number_of_pubs = len(pubs)
+        crawl.start_date = format_crawl_date(crawl)
+        pubs_on_crawl = PubOnCrawl.objects.filter(crawl=crawl).order_by('position') # Retrieve all pubs in the crawl
+        number_of_pubs = len(pubs_on_crawl)
         if number_of_pubs >= 1:
-            first_pub = pubs[0]
+            first_pub = pubs_on_crawl[0]
             place_id = str(first_pub.pub.places_id)
             raw_pub_data = requests.get(get_places_details(place_id))
             pub_data = json.loads(raw_pub_data.content)
@@ -57,6 +55,20 @@ def home(request):
 
 
 def signup(request):
+    """
+    Renders the sign up page or processes the sign up form if the sign up form is passed to the view
+
+    Parameters
+    ----------
+    request : HttpRequest
+        HttpRequest object retrieved from the url
+
+    Returns
+    -------
+    HttpRequest
+        Sign up page with the rendered sign up form
+
+    """
     if request.method == 'POST':
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -72,72 +84,132 @@ def signup(request):
 
 
 @login_required
-def newCrawl(request):
+def new_crawl(request):
+    """
+    Handles the new crawl form and creates a new crawl in the database from the form's data
+
+    Parameters
+    ----------
+    request : HttpRequest
+        HttpRequest object retrieved from the url with the form data
+
+    Returns
+    -------
+    HttpRequest
+        Redirects to the root url of the app
+
+    """
     if request.method == 'POST':
         form = NewCrawlForm(request.POST)
         if form.is_valid():
-            crawlName = crawl_name = form.cleaned_data.get('name')
-            crawlStartDate = startdate = form.cleaned_data.get('crawlstartdate')
-            crawl = Crawl.objects.create(user=request.user, crawl_name=crawlName, start_date=crawlStartDate)
+            crawl_name = form.cleaned_data.get('name')
+            crawl_start_date = form.cleaned_data.get('crawlstartdate')
+            crawl = Crawl.objects.create(user=request.user, crawl_name=crawl_name, start_date=crawl_start_date)
             crawl.save()
     return redirect('/')
 
 
 @login_required
-def editCrawl(request):
+def edit_crawl(request):
+    """
+    Handles the edit crawl form and edits the specified crawl in the database from the form's data
+
+    Parameters
+    ----------
+    request : HttpRequest
+        HttpRequest object retrieved from the url with the form data
+
+    Returns
+    -------
+    HttpRequest
+        Redirects to the root url of the app
+
+    """
     if request.method == 'POST':
         form = EditCrawlForm(request.POST)
         if form.is_valid():
-            crawl = Crawl.objects.get(id=form.cleaned_data.get('crawlid'))
-            if (crawl.user == request.user):
+            crawl_id = form.cleaned_data.get('crawlid')
+            crawl = Crawl.objects.get(id=crawl_id)
+            if crawl.user == request.user:
                 crawl.crawl_name = form.cleaned_data.get('name')
-                crawl.startdate = form.cleaned_data.get('crawlstartdate')
+                crawl.start_date = form.cleaned_data.get('crawlstartdate')
                 crawl.save()
     return redirect('/')
 
 
 @login_required
-def deleteCrawl(request, pk):
-    crawl = Crawl.objects.get(id=pk)
-    if (crawl.user == request.user):
+def delete_crawl(request, crawl_id):
+    """
+    Handles the delete crawl form and deletes the specified crawl in the database from the form's data
+
+    Parameters
+    ----------
+    request : HttpRequest
+        HttpRequest object retrieved from the url with the form data
+    crawl_id : String
+        String referencing the crawl to be rendered within the page
+
+    Returns
+    -------
+    HttpRequest
+        Redirects to the root url of the app
+
+    """
+    crawl = Crawl.objects.get(id=crawl_id)
+    if crawl.user == request.user:
         crawl.delete()
     return redirect('/')
 
 
 @login_required
-def viewCrawl(request, pk):
-    crawl = Crawl.objects.get(id=pk)
+def view_crawl(request, crawl_id):
+    """
+    Renders the view crawl page based on the crawl's data retrieved from the
+    database based on the crawl id passed on from the url
+
+    Parameters
+    ----------
+    request : HttpRequest
+        HttpRequest object retrieved from the url with the form data
+    crawl_id : String
+        String referencing the crawl to be rendered within the page
+
+    Returns
+    -------
+    HttpRequest
+        crawl.html page rendered with the specified crawl's details
+
+    """
+    crawl = Crawl.objects.get(id=crawl_id)
     status = ''
-    if (crawl.user == request.user):
-        pubs = PubOnCrawl.objects.filter(crawl=crawl).order_by('position')
-        for pub in pubs:
+    if crawl.user == request.user:
+        pubs_on_crawl = PubOnCrawl.objects.filter(crawl=crawl).order_by('position')
+        for pub in pubs_on_crawl:
             pub.name = pub.pub.pub_name
-            pub.place_ID = pub.pub.places_id
-            rawPubData = requests.get(GOOGLE_PLACES_DETAILS_URL + pub.pub.places_id + '&key=' + GOOGLE_API_KEY)
-            if (json.loads(rawPubData.content)['status'] == 'OVER_QUERY_LIMIT'):
-                print('OVER LIMIT')
+            pub.place_id = pub.pub.places_id
+            raw_pub_data = requests.get(get_places_details(pub.place_id))
+            if json.loads(raw_pub_data.content)['status'] == 'OVER_QUERY_LIMIT':
                 status = 'Over api query limit'
             else:
-                pubData = rawPubData.content
-                pubData = json.loads(pubData)
-                pubData = pubData['result']
-                if ('formatted_phone_number' in pubData):
-                    pub.phoneNumber = pubData['formatted_phone_number']
-                if ('photos' in pubData):
-                    pubPhotos = pubData['photos']
-                    pubThumbnailObject = pubPhotos[0]
-                    pubThumbnailRef = pubThumbnailObject['photo_reference']
-                    pubThumbnailUrl = GOOGLE_PLACES_PHOTO_URL + pubThumbnailRef + '&key=' + GOOGLE_API_KEY
-                    pub.thumbnail = pubThumbnailUrl
-                if ('address_components' in pubData):
-                    pubAddressComponents = pubData['address_components']
-                    pubStreetNumber = pubAddressComponents[0]['short_name']
-                    pubStreet = pubAddressComponents[1]['short_name']
-                    pubLocation = pubAddressComponents[2]['short_name']
-                    pub.address = pubStreetNumber + ' ' + pubStreet + ', ' + pubLocation
-        if (pubs.exists()):
+                pub_data = json.loads(raw_pub_data.content)
+                pub_data = pub_data['result']
+                if 'formatted_phone_number' in pub_data:
+                    pub.phone_number = pub_data['formatted_phone_number']
+                if 'photos' in pub_data:
+                    pub_photos = pub_data['photos']
+                    pub_thumbnail_object = pub_photos[0]
+                    pub_thumbnail_ref = pub_thumbnail_object['photo_reference']
+                    pub_thumbnail_url = get_places_photo_url(pub_thumbnail_ref)
+                    pub.thumbnail = pub_thumbnail_url
+                if 'address_components' in pub_data:
+                    pub_address_components = pub_data['address_components']
+                    pub_street_number = pub_address_components[0]['short_name']
+                    pub_street = pub_address_components[1]['short_name']
+                    pub_location = pub_address_components[2]['short_name']
+                    pub.address = pub_street_number + ' ' + pub_street + ', ' + pub_location
+        if pubs_on_crawl.exists():
             return render(request, 'crawl.html',
-                          {'status': status, 'crawl_name': crawl.crawl_name, 'crawl_id': crawl.id, 'pubs': pubs})
+                          {'status': status, 'crawl_name': crawl.crawl_name, 'crawl_id': crawl.id, 'pubs': pubs_on_crawl})
         else:
             status = 'No Pubs in crawl'
             return render(request, 'crawl.html',
@@ -145,31 +217,63 @@ def viewCrawl(request, pk):
 
 
 @login_required
-def addPub(request, pk):
+def add_pub(request, crawl_id):
+    """
+    Handles the add pub form and adds the pub to the specified crawl in the database from the form's data
+
+    Parameters
+    ----------
+    request : HttpRequest
+        HttpRequest object retrieved from the url with the form data
+    crawl_id : String
+        String referencing the crawl to be rendered within the page
+
+    Returns
+    -------
+    HttpRequest
+        Redirects to the crawl page for the specified crawl
+
+    """
     if request.method == 'POST':
         form = AddPubForm(request.POST)
         if form.is_valid():
-            crawl = Crawl.objects.get(id=pk)
-            if (crawl.user == request.user):
-                pubsOnCrawl = PubOnCrawl.objects.filter(crawl=crawl).order_by('position')
-                numOfPubs = len(pubsOnCrawl) + 1
-                pubName = form.cleaned_data.get('pubname')
-                pubplace_ID = form.cleaned_data.get('place_ID')
-                pub = Pub.objects.create(pub_name=pubName, places_id=pubplace_ID)
+            crawl = Crawl.objects.get(id=crawl_id)
+            if crawl.user == request.user:
+                pubs_on_crawl = PubOnCrawl.objects.filter(crawl=crawl).order_by('position')
+                num_of_pubs = len(pubs_on_crawl) + 1
+                pub_name = form.cleaned_data.get('pubname')
+                pub_place_id = form.cleaned_data.get('place_ID')
+                pub = Pub.objects.create(pub_name=pub_name, places_id=pub_place_id)
                 pub.save()
-                pubOnCrawl = PubOnCrawl.objects.create(pub=pub, crawl=crawl, position=numOfPubs)
-                pubOnCrawl.save()
-    return redirect('/crawl/' + pk + '/')
+                pub_on_crawl = PubOnCrawl.objects.create(pub=pub, crawl=crawl, position=num_of_pubs)
+                pub_on_crawl.save()
+    return redirect('/crawl/' + crawl_id + '/')
 
 
 @login_required
-def viewMap(request, pk):
-    crawl = Crawl.objects.get(id=pk)
-    if (crawl.user == request.user):
-        pubs = PubOnCrawl.objects.filter(crawl=crawl).order_by('position')
-        if (pubs.exists()):
+def view_map(request, crawl_id):
+    """
+    Renders the map page for the specified crawl based on the crawl's pubs retrieved from the database
+
+    Parameters
+    ----------
+    request : HttpRequest
+        HttpRequest object retrieved from the url with the form data
+    crawl_id : String
+        String referencing the crawl to be rendered within the page
+
+    Returns
+    -------
+    HttpRequest
+        map.html page rendered with the specified crawl's route
+
+    """
+    crawl = Crawl.objects.get(id=crawl_id)
+    if crawl.user == request.user:
+        pubs_on_crawl = PubOnCrawl.objects.filter(crawl=crawl).order_by('position')
+        if pubs_on_crawl.exists():
             return render(request, 'map.html',
-                          {'status': '', 'crawl_name': crawl.crawl_name, 'crawl_id': crawl.id, 'pubs': pubs})
+                          {'status': '', 'crawl_name': crawl.crawl_name, 'crawl_id': crawl.id, 'pubs': pubs_on_crawl})
         else:
             return render(request, 'map.html',
                           {'status': 'No Pubs in crawl', 'crawl_name': crawl.crawl_name, 'crawl_id': crawl.id,
@@ -177,119 +281,224 @@ def viewMap(request, pk):
 
 
 @login_required
-def reorderPub(request, pk):
+def reorder_pub(request, crawl_id):
+    """
+    Handles the reorder pub form and reorders the pub in the specified crawl in the database based on the form's data
+
+    Parameters
+    ----------
+    request : HttpRequest
+        HttpRequest object retrieved from the url with the form data
+    crawl_id : String
+        String referencing the crawl to be rendered within the page
+
+    Returns
+    -------
+    HttpRequest
+        Redirects to the crawl page for the specified crawl
+
+    """
     if request.method == 'POST':
         form = ReorderPubForm(request.POST)
-        print(form)
         if form.is_valid():
             print("valid")
-            crawl = Crawl.objects.get(id=pk)
-            if (crawl.user == request.user):
-                pubsOnCrawl = PubOnCrawl.objects.filter(crawl=crawl).order_by('position')
-                oldPosition = form.cleaned_data.get('pubposition')
-                newPosition = form.cleaned_data.get('newposition')
-                for pub in pubsOnCrawl:
-                    print(pub.pub.pub_name + ", " + str(pub.position))
-                print("old: " + str(oldPosition) + ", new: " + str(newPosition))
-                first_pub = pubsOnCrawl[oldPosition - 1]
-                secondPub = pubsOnCrawl[newPosition - 1]
-                first_pub.position = newPosition
-                secondPub.position = oldPosition
+            crawl = Crawl.objects.get(id=crawl_id)
+            if crawl.user == request.user:
+                pubs_on_crawl = PubOnCrawl.objects.filter(crawl=crawl).order_by('position')
+                old_pub_position = form.cleaned_data.get('pubposition')
+                new_pub_position = form.cleaned_data.get('newposition')
+                first_pub = pubs_on_crawl[old_pub_position - 1]
+                second_pub = pubs_on_crawl[new_pub_position - 1]
+                first_pub.position = new_pub_position
+                second_pub.position = old_pub_position
                 first_pub.save()
-                secondPub.save()
-    return redirect('/crawl/' + pk + '/')
+                second_pub.save()
+    return redirect('/crawl/' + crawl_id + '/')
 
 
 @login_required
-def deletePub(request, pk):
-    print('delete pub')
+def delete_pub(request, crawl_id):
+    """
+    Handles the delete pub request and delete the pub from the specified crawl in the database
+    Once the pub is deleted the pubs are reordered to keep the pub positions in order
+
+    Parameters
+    ----------
+    request : HttpRequest
+        HttpRequest object retrieved from the url with the form data
+    crawl_id : String
+        String referencing the crawl to be rendered within the page
+
+    Returns
+    -------
+    HttpRequest
+        Redirects to the crawl page for the specified crawl
+
+    """
     if request.method == 'POST':
         form = DeletePubForm(request.POST)
         if form.is_valid():
-            crawl = Crawl.objects.get(id=pk)
-            if (crawl.user == request.user):
-                pubPosition = form.cleaned_data.get('pubposition')
-                pub = PubOnCrawl.objects.filter(crawl=crawl, position=pubPosition)
+            crawl = Crawl.objects.get(id=crawl_id)
+            if crawl.user == request.user:
+                pub_position = form.cleaned_data.get('pubposition')
+                pub = PubOnCrawl.objects.filter(crawl=crawl, position=pub_position)
                 pub.delete()
-                pubs = PubOnCrawl.objects.filter(crawl=crawl).order_by('position')
-                pubCounter = 0
-                for pub in pubs:
-                    pubPosition = pub.position
-                    pubCounter = pubCounter + 1
-                    if (pubPosition != pubCounter):
-                        pub.position = (pubPosition - 1)
+                pubs_on_crawl = PubOnCrawl.objects.filter(crawl=crawl).order_by('position')
+                pub_counter = 0
+                for pub in pubs_on_crawl: # Reorder pubs to fix the broken pub position order
+                    pub_position = pub.position
+                    pub_counter = pub_counter + 1
+                    if pub_position != pub_counter:
+                        pub.position = (pub_position - 1)
                         pub.save()
-
-    return redirect('/crawl/' + pk + '/')
+    return redirect('/crawl/' + crawl_id + '/')
 
 
 @login_required
-def clearPubs(request, pk):
-    crawl = Crawl.objects.get(id=pk)
-    if (crawl.user == request.user):
-        pubs = PubOnCrawl.objects.filter(crawl=crawl).order_by('position')
-        for pub in pubs:
+def clear_pubs(request, crawl_id):
+    """
+    Handles the clear pubs request and deletes all pubs from the specified crawl in the database
+
+    Parameters
+    ----------
+    request : HttpRequest
+        HttpRequest object retrieved from the url with the form data
+    crawl_id : String
+        String referencing the crawl to be rendered within the page
+
+    Returns
+    -------
+    HttpRequest
+        Redirects to the crawl page for the specified crawl
+
+    """
+    crawl = Crawl.objects.get(id=crawl_id)
+    if crawl.user == request.user:
+        pubs_on_crawl = PubOnCrawl.objects.filter(crawl=crawl).order_by('position')
+        for pub in pubs_on_crawl:
             pub.delete()
-    return redirect('/crawl/' + pk + '/')
+    return redirect('/crawl/' + crawl_id + '/')
 
 
 @login_required
-def orderStartDate(request):
+def order_by_start_date(request):
+    """
+    Handles the order crawl by start date request and orders all crawls from the current user in the database
+
+    Parameters
+    ----------
+    request : HttpRequest
+        HttpRequest object retrieved from the url with the form data
+
+    Returns
+    -------
+    HttpRequest
+        Renders the home.html page with the ordered crawls
+
+    """
     crawls = Crawl.objects.filter(user=request.user)
-    orderedCrawls = crawls.order_by('start_date')
-    if (crawls.exists()):
-        return render(request, 'home.html', {'crawls': orderedCrawls, 'status': ''})
+    ordered_crawls = crawls.order_by('start_date')
+    if crawls.exists():
+        return render(request, 'home.html', {'crawls': ordered_crawls, 'status': ''})
     else:
         return render(request, 'home.html', {'crawls': [], 'status': 'No crawls'})
 
 
 @login_required
-def orderCrawlName(request):
+def order_by_crawl_name(request):
+    """
+    Handles the order crawl by name request and orders all crawls from the current user in the database
+
+    Parameters
+    ----------
+    request : HttpRequest
+        HttpRequest object retrieved from the url with the form data
+
+    Returns
+    -------
+    HttpRequest
+        Renders the home.html page with the ordered crawls
+
+    """
     crawls = Crawl.objects.filter(user=request.user)
-    orderedCrawls = crawls.order_by('crawl_name')
-    if (crawls.exists()):
-        return render(request, 'home.html', {'crawls': orderedCrawls, 'status': ''})
+    ordered_crawls = crawls.order_by('crawl_name')
+    if crawls.exists():
+        return render(request, 'home.html', {'crawls': ordered_crawls, 'status': ''})
     else:
         return render(request, 'home.html', {'crawls': [], 'status': 'No crawls'})
 
 
-def searchPubs(request, lat, lon):
-    searchRadius = str(2000)
-    searchType = 'Pub'
-    searchResult = requests.get(
-        'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + lat + ',' + lon + '&radius=' + searchRadius + '&type=' + searchType + '&keyword=pub&key=' + GOOGLE_API_KEY)
-    searchResult = searchResult.content
-    searchResult = json.loads(searchResult)
-    return JsonResponse(searchResult, safe=False)
+def search_pubs(request, lat, lon):
+    """
+    Handles the search pubs request and returns JSON containing the results of the pub search based
+    on the latitude and longitude passed to the view
+
+    Parameters
+    ----------
+    request : HttpRequest
+        HttpRequest object retrieved from the url with the form data
+    lat : String
+        String representing the latitude of the search location
+    lon : String
+        String representing the longitude of the search location
+
+    Returns
+    -------
+    HttpRequest
+        Returns the JSON repsonse containing the search result
+
+    """
+    search_radius = str(2000)
+    search_type = 'Pub'
+    search_result = requests.get(
+        'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + lat + ',' + lon + '&radius=' + search_radius + '&type=' + search_type + '&keyword=pub&key=' + GOOGLE_API_KEY)
+    search_details = json.loads(search_result.content)
+    return JsonResponse(search_details, safe=False)
 
 
-def pubDetails(request, id):
-    pubDetailsUrl = (GOOGLE_PLACES_DETAILS_URL + str(id) + '&key=' + GOOGLE_API_KEY)
-    pubDetails = requests.get(pubDetailsUrl)
-    pubDetails = pubDetails.content
-    pubDetails = json.loads(pubDetails)
-    return JsonResponse(pubDetails, safe=False)
+def get_pub_details(request, pub_id):
+    """
+    Handles the pub details request and returns JSON containing the pub details obtained
+    from the google places api
+
+    Parameters
+    ----------
+    pub_id : String
+        String representing the google places id for the pub
+
+    Returns
+    -------
+    HttpRequest
+        Returns the JSON repsonse containing the pub's google places details
+
+    """
+    pub_details_url = get_places_details(pub_id)
+    pub_details = requests.get(pub_details_url)
+    pub_details = json.loads(pub_details.content)
+    return JsonResponse(pub_details, safe=False)
 
 
-def getPubs(request, pk):
-    crawl = Crawl.objects.get(id=pk)
-    pubs = []
-    rawPubs = PubOnCrawl.objects.filter(crawl=crawl).order_by('position')
-    for pub in rawPubs:
-        place_ID = pub.pub.places_id
-        rawPubData = requests.get(GOOGLE_PLACES_DETAILS_URL + str(place_ID) + '&key=' + GOOGLE_API_KEY)
-        pubData = json.loads(rawPubData.content)
-        pubData = pubData['result']
-        pubName = pubData['name']
-        pubAddress = pubData['formatted_address']
-        pubLocation = pubData['geometry']['location']
-        pubLat = pubLocation['lat']
-        pubLong = pubLocation['lng']
+def get_pubs(request, crawl_id):
+    """
+    Handles the get pubs request and returns JSON containing pub details for each of the pubs within
+    the specified crawl
 
-        pubJSON = {}
-        pubJSON['name'] = pubName
-        pubJSON['address'] = pubAddress
-        pubJSON['lat'] = pubLat
-        pubJSON['lng'] = pubLong
-        pubs.append(pubJSON)
-    return JsonResponse(pubs, safe=False)
+    Parameters
+    ----------
+    crawl_id : String
+        String representing the google places id for the pub
+
+    Returns
+    -------
+    HttpRequest
+        Returns the JSON repsonse containing details for each of the pubs within the specified crawl
+
+    """
+    crawl = Crawl.objects.get(id=crawl_id)
+    pubs_json_list = []
+    pubs_on_crawl = PubOnCrawl.objects.filter(crawl=crawl).order_by('position')
+    for pub in pubs_on_crawl:
+        place_id = pub.pub.places_id
+        pub_json = get_pub_location_json(place_id)
+        pubs_json_list.append(pub_json)
+    return JsonResponse(pubs_json_list, safe=False)

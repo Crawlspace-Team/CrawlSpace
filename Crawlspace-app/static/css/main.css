@@ -33,7 +33,7 @@
   html body main #content h2, html body main #content--flex h2 {
     font-size: 1.2em; }
   html body main #content .logo, html body main #content--flex .logo {
-    width: 4.25em;
+    width: 3.4em;
     display: none; }
   html body main #content .form--login, html body main #content--flex .form--login {
     width: 100%; }
@@ -42,10 +42,10 @@
     html body main #content .form--vertical input, html body main #content--flex .form--vertical input {
       padding: 0.5em 0; } }
 button {
+  transition: all 0.2s ease-in-out;
   cursor: pointer; }
 
 .button--hover {
-  transition: all 0.2s ease-in-out;
   -webkit-appearance: none;
   border: none;
   background: #2699FB;
@@ -96,10 +96,14 @@ button {
 .button--accent {
   background: #2699FB;
   color: white; }
+  .button--accent:hover {
+    background: #0e82e4; }
 
 .button--white {
   background: white;
   color: #2699FB; }
+  .button--white:hover {
+    background: #F5F5F5; }
 
 .form--vertical {
   display: flex;
@@ -117,7 +121,7 @@ button {
     border: 2px solid #BCE0FD;
     border-radius: 0.75em;
     background: #F1F9FF;
-    padding: 0.7em 0;
+    padding: 0.5em 0;
     margin-top: 0.3em;
     text-decoration: none;
     color: #2699FB;
@@ -145,7 +149,6 @@ button {
   border-radius: 50%; }
 
 .button--blue {
-  transition: all 0.2s ease-in-out;
   font-family: 'Open Sans', sans-serif;
   -webkit-appearance: none;
   background: #2699FB;
@@ -528,21 +531,22 @@ main {
     .crawlList .crawl .crawl_information {
       display: flex;
       padding: 0.5em 1em; }
-      .crawlList .crawl .crawl_information .crawl_details {
-        display: flex;
-        flex: 3;
-        flex-direction: column; }
-        .crawlList .crawl .crawl_information .crawl_details .details_id {
-          display: none; }
-        .crawlList .crawl .crawl_information .crawl_details .details_name {
-          font-weight: bold;
-          font-size: 1.2em; }
-        .crawlList .crawl .crawl_information .crawl_details .details_startDate {
-          font-weight: normal;
-          font-size: 1em; }
+      .crawlList .crawl .crawl_information a {
+        flex: 1; }
+        .crawlList .crawl .crawl_information a .crawl_details {
+          display: flex;
+          flex-direction: column; }
+          .crawlList .crawl .crawl_information a .crawl_details .details_id {
+            display: none; }
+          .crawlList .crawl .crawl_information a .crawl_details .details_name {
+            font-weight: bold;
+            font-size: 1.2em; }
+          .crawlList .crawl .crawl_information a .crawl_details .details_startDate {
+            font-weight: normal;
+            font-size: 1em; }
       .crawlList .crawl .crawl_information .crawl_buttons {
         display: flex;
-        flex: 1;
+        flex: 0.2;
         flex-direction: column;
         justify-content: space-around;
         align-items: flex-end; }
@@ -624,10 +628,10 @@ main {
   z-index: 0; }
 
 .logo {
-  width: 5em; }
+  width: 4em; }
 
 .logo--small {
-  width: 1.25em; }
+  width: 1.4em; }
 
 .logo--mobile {
   display: none;

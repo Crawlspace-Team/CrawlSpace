@@ -15,7 +15,7 @@ $button-size: 1em;
 $input-padding: 0.7em 0;
 $form-width: 17em;
 
-$logo-size: 5em;
+$logo-size: 4em;
 
 @import 'partials/mixins';
 @import 'partials/media-queries';
@@ -251,25 +251,27 @@ main {
       .crawl_information {
         display: flex;
         padding: 0.5em 1em;
-        .crawl_details {
-          display: flex;
-          flex: 3;
-          flex-direction: column;
-          .details_id {
-            display: none;
-          }
-          .details_name {
-            font-weight: bold;
-            font-size: $h2-size;
-          }
-          .details_startDate {
-            font-weight: normal;
-            font-size: $p-size;
+        a {
+          flex: 1;
+          .crawl_details {
+            display: flex;
+            flex-direction: column;
+            .details_id {
+              display: none;
+            }
+            .details_name {
+              font-weight: bold;
+              font-size: $h2-size;
+            }
+            .details_startDate {
+              font-weight: normal;
+              font-size: $p-size;
+            }
           }
         }
         .crawl_buttons {
           display: flex;
-          flex: 1;
+          flex: 0.2;
           flex-direction: column;
           justify-content: space-around;
           align-items: flex-end;
@@ -378,7 +380,7 @@ main {
 }
 
 .logo--small {
-    width: $logo-size*0.25;
+    width: $logo-size*0.35;
 }
 
 .logo--mobile {
