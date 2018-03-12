@@ -382,10 +382,9 @@ def order_by_start_date(request):
         Renders the home.html page with the ordered crawls
 
     """
-    crawls = Crawl.objects.filter(user=request.user)
-    ordered_crawls = crawls.order_by('start_date')
+    crawls = Crawl.objects.filter(user=request.user).order_by('crawl_name')
     if crawls.exists():
-        ordered_crawls = crawls.order_by('crawl_name')
+        ordered_crawls = crawls.order_by('start_date')
         ordered_crawls = format_crawls(ordered_crawls)
         return render(request, 'home.html', {'crawls': ordered_crawls, 'status': ''})
     else:
