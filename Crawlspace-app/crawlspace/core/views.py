@@ -41,7 +41,7 @@ def home(request):
         number_of_pubs = len(pubs_on_crawl)
         if number_of_pubs >= 1:
             first_pub = pubs_on_crawl[0]
-            place_id = str(first_pub.pub.places_id)
+            place_id = str(first_pub.pub.place_id)
             raw_pub_data = requests.get(get_places_details(place_id))
             pub_data = json.loads(raw_pub_data.content)
             pub_details = pub_data['result']
@@ -103,7 +103,7 @@ def new_crawl(request):
         form = NewCrawlForm(request.POST)
         if form.is_valid():
             crawl_name = form.cleaned_data.get('name')
-            crawl_start_date = form.cleaned_data.get('crawlstartdate')
+            crawl_start_date = form.cleaned_data.get('crawl_start_date')
             crawl = Crawl.objects.create(user=request.user, crawl_name=crawl_name, start_date=crawl_start_date)
             crawl.save()
     return redirect('/')
@@ -128,11 +128,11 @@ def edit_crawl(request):
     if request.method == 'POST':
         form = EditCrawlForm(request.POST)
         if form.is_valid():
-            crawl_id = form.cleaned_data.get('crawlid')
+            crawl_id = form.cleaned_data.get('crawl_id')
             crawl = Crawl.objects.get(id=crawl_id)
             if crawl.user == request.user:
                 crawl.crawl_name = form.cleaned_data.get('name')
-                crawl.start_date = form.cleaned_data.get('crawlstartdate')
+                crawl.start_date = form.cleaned_data.get('crawl_start_date')
                 crawl.save()
     return redirect('/')
 
@@ -186,7 +186,7 @@ def view_crawl(request, crawl_id):
         pubs_on_crawl = PubOnCrawl.objects.filter(crawl=crawl).order_by('position')
         for pub in pubs_on_crawl:
             pub.name = pub.pub.pub_name
-            pub.place_id = pub.pub.places_id
+            pub.place_id = pub.pub.place_id
             raw_pub_data = requests.get(get_places_details(pub.place_id))
             if json.loads(raw_pub_data.content)['status'] == 'OVER_QUERY_LIMIT':
                 status = 'Over api query limit'
@@ -241,9 +241,9 @@ def add_pub(request, crawl_id):
             if crawl.user == request.user:
                 pubs_on_crawl = PubOnCrawl.objects.filter(crawl=crawl).order_by('position')
                 num_of_pubs = len(pubs_on_crawl) + 1
-                pub_name = form.cleaned_data.get('pubname')
-                pub_place_id = form.cleaned_data.get('place_ID')
-                pub = Pub.objects.create(pub_name=pub_name, places_id=pub_place_id)
+                pub_name = form.cleaned_data.get('pub_name')
+                pub_place_id = form.cleaned_data.get('place_id')
+                pub = Pub.objects.create(pub_name=pub_name, place_id=pub_place_id)
                 pub.save()
                 pub_on_crawl = PubOnCrawl.objects.create(pub=pub, crawl=crawl, position=num_of_pubs)
                 pub_on_crawl.save()
@@ -305,8 +305,8 @@ def reorder_pub(request, crawl_id):
             crawl = Crawl.objects.get(id=crawl_id)
             if crawl.user == request.user:
                 pubs_on_crawl = PubOnCrawl.objects.filter(crawl=crawl).order_by('position')
-                old_pub_position = form.cleaned_data.get('pubposition')
-                new_pub_position = form.cleaned_data.get('newposition')
+                old_pub_position = form.cleaned_data.get('pub_position')
+                new_pub_position = form.cleaned_data.get('new_position')
                 first_pub = pubs_on_crawl[old_pub_position - 1]
                 second_pub = pubs_on_crawl[new_pub_position - 1]
                 first_pub.position = new_pub_position
@@ -340,7 +340,7 @@ def delete_pub(request, crawl_id):
         if form.is_valid():
             crawl = Crawl.objects.get(id=crawl_id)
             if crawl.user == request.user:
-                pub_position = form.cleaned_data.get('pubposition')
+                pub_position = form.cleaned_data.get('pub_position')
                 pub = PubOnCrawl.objects.filter(crawl=crawl, position=pub_position)
                 pub.delete()
                 pubs_on_crawl = PubOnCrawl.objects.filter(crawl=crawl).order_by('position')
@@ -498,7 +498,7 @@ def get_pubs(request, crawl_id):
     pubs_json_list = []
     pubs_on_crawl = PubOnCrawl.objects.filter(crawl=crawl).order_by('position')
     for pub in pubs_on_crawl:
-        place_id = pub.pub.places_id
+        place_id = pub.pub.place_id
         pub_json = get_pub_location_json(place_id)
         pubs_json_list.append(pub_json)
     return JsonResponse(pubs_json_list, safe=False)

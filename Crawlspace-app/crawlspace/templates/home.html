@@ -64,8 +64,8 @@
           <form class="newCrawlForm" action="/newcrawl/" method="post">
             {% csrf_token %}
             <h2>New Crawl</h2>
-            <input class="input--blue" type="text" name="name" placeholder="Crawl name" value="" required>
-            <input class="input--blue newCrawlDate" class="newCrawlDate inputDate" type="date" name="crawlstartdate" value="" required>
+            <input class="input--blue" type="text" placeholder="Crawl name" value=""  name="name" required>
+            <input class="input--blue newCrawlDate" class="newCrawlDate inputDate" type="date" name="crawl_start_date" value="" required>
             <button class="button--blue" type="submit" name="addCrawl">Add Crawl</button>
           </form>
           <div class="overlay"></div>
@@ -74,9 +74,9 @@
           <form class="editCrawlForm" action="/editcrawl/" method="post">
             {% csrf_token %}
             <h2>Edit Crawl</h2>
-            <input class="input--blue editCrawlID" type="text" name="crawlid">
+            <input class="input--blue editCrawlID" type="text" name="crawl_id">
             <input class="input--blue editCrawlName" type="text" name="name" placeholder="Crawl name" value="" required>
-            <input class="input--blue editCrawlDate inputDate" type="date" name="crawlstartdate" value="" required>
+            <input class="input--blue editCrawlDate inputDate" type="date" name="crawl_start_date" value="" required>
             <button class="button--blue" type="submit" name="editCrawl">Update Crawl</button>
           </form>
           <div class="overlay"></div>

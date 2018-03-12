@@ -35,11 +35,11 @@ class Pub(models.Model):
      -------
      pub_name
          Name of the pub
-     places_id
+     place_id
          Google places ID of the pub
      """
     pub_name = models.CharField(max_length=255)
-    places_id = models.TextField(default=1, max_length=100)
+    place_id = models.TextField(default=1, max_length=100)
 
 
 class PubOnCrawl(models.Model):

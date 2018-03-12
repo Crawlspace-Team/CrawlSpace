@@ -36,7 +36,7 @@
         <p class="status">{{ status }}</p>
         <ul class="pubList">
         {% for pub in pubs %}
-          <a class="pubDetailsButton" data-id="{{ pub.pub.places_id }}">
+          <a class="pubDetailsButton" data-id="{{ pub.pub.place_id }}">
             <li class="pub">
               <img class="pub_image" src="{{ pub.thumbnail }}" alt="">
               <section class="pub_description">
@@ -47,19 +47,19 @@
                   {% csrf_token %}
                   <p>Reorder Pub: </p>
                   <div class="reorderPubForm_select">
-                    <select class="reorderPubSelect" name="newposition" data-position="{{ pub.position }}" onchange="submit()">
+                    <select class="reorderPubSelect" name="new_position" data-position="{{ pub.position }}" onchange="submit()">
                       {% for pub in pubs %}
                       <option value="{{ pub.position }}">{{ pub.position }}</option>
                       {% endfor %}
                     </select>
                     <div class="select_arrow"></div>
                   </div>
-                  <input type="hidden" value="{{ pub.position }}" name="pubposition">
+                  <input type="hidden" value="{{ pub.position }}" name="pub_position">
                 </form>
               </section>
               <form class="deletePubForm" action="/crawl/{{ crawl_id }}/deletepub/" method="POST">
                 {% csrf_token %}
-                <input type="hidden" value="{{ pub.position }}" name="pubposition">
+                <input type="hidden" value="{{ pub.position }}" name="pub_position">
                 <button class="pub_button" type="submit" name="deletePub">
                   <img class="icon" src="/static/images/close_icon.svg">
                 </button>
@@ -111,7 +111,7 @@
             <div class="slider__nav"></div>
           </section>
           <section class="pubDetailsGrid">
-            <span> <img class="icon" src="{% static 'images/calendar_icon_blue.svg' %}" alt="Edit Icon"><p class="pubDetails_address"></p></span>
+            <span> <img class="icon" src="{% static 'images/address_icon.svg' %}" alt="Edit Icon"><p class="pubDetails_address"></p></span>
             <span> <img class="icon" src="{% static 'images/web_icon.svg' %}" alt="Edit Icon"><a target="_blank" class="pubDetails_url">Pub Website</a></span>
             <span> <img class="icon" src="{% static 'images/phone_icon.svg' %}" alt="Edit Icon"><p class="pubDetails_phone"></p></span>
             <span> <img class="icon" src="{% static 'images/calendar_icon_blue.svg' %}" alt="Edit Icon"><p class="pubDetails_open"></p></span>

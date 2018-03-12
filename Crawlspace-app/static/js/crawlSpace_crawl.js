@@ -201,7 +201,7 @@ function displayPubResult(pub) {
     const pubText = document.createElement('input')
     pubText.value = pubName
     pubText.type = 'hidden'
-    pubText.name = 'pubname'
+    pubText.name = 'pub_name'
     return pubText
   }
 
@@ -209,7 +209,7 @@ function displayPubResult(pub) {
     const pubID = document.createElement('input')
     pubID.type = 'hidden'
     pubID.value = pubPlaceID
-    pubID.name = 'placeid'
+    pubID.name = 'place_id'
     return pubID
   }
 
