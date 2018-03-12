@@ -35,21 +35,8 @@ def home(request):
 
     """
     crawls = Crawl.objects.filter(user=request.user) # Retrieve all crawls created by the current user
-    for crawl in crawls:
-        crawl.start_date = format_crawl_date(crawl)
-        pubs_on_crawl = PubOnCrawl.objects.filter(crawl=crawl).order_by('position') # Retrieve all pubs in the crawl
-        number_of_pubs = len(pubs_on_crawl)
-        if number_of_pubs >= 1:
-            first_pub = pubs_on_crawl[0]
-            place_id = str(first_pub.pub.place_id)
-            raw_pub_data = requests.get(get_places_details(place_id))
-            pub_data = json.loads(raw_pub_data.content)
-            pub_details = pub_data['result']
-            pub_photos = pub_details['photos']
-            if 'photos' in pub_details:
-                if len(pub_photos) >= 1:
-                    pub_photo_ref = pub_photos[0]['photo_reference']
-                    crawl.thumbnail = get_places_photo_url(pub_photo_ref)
+    if len(crawls) > 0:
+        format_crawls(crawls)
         return render(request, 'home.html', {'crawls': crawls, 'status': ''})
     return render(request, 'home.html', {'crawls': [], 'status': 'No crawls'})
 
@@ -188,10 +175,10 @@ def view_crawl(request, crawl_id):
             pub.name = pub.pub.pub_name
             pub.place_id = pub.pub.place_id
             raw_pub_data = requests.get(get_places_details(pub.place_id))
-            if json.loads(raw_pub_data.content)['status'] == 'OVER_QUERY_LIMIT':
+            if json.loads(raw_pub_data.content.decode('utf-8'))['status'] == 'OVER_QUERY_LIMIT':
                 status = 'Over api query limit'
             else:
-                pub_data = json.loads(raw_pub_data.content)
+                pub_data = json.loads(raw_pub_data.content.decode('utf-8'))
                 pub_data = pub_data['result']
                 if 'formatted_phone_number' in pub_data:
                     pub.phone_number = pub_data['formatted_phone_number']
@@ -301,7 +288,6 @@ def reorder_pub(request, crawl_id):
     if request.method == 'POST':
         form = ReorderPubForm(request.POST)
         if form.is_valid():
-            print("valid")
             crawl = Crawl.objects.get(id=crawl_id)
             if crawl.user == request.user:
                 pubs_on_crawl = PubOnCrawl.objects.filter(crawl=crawl).order_by('position')
@@ -399,6 +385,8 @@ def order_by_start_date(request):
     crawls = Crawl.objects.filter(user=request.user)
     ordered_crawls = crawls.order_by('start_date')
     if crawls.exists():
+        ordered_crawls = crawls.order_by('crawl_name')
+        ordered_crawls = format_crawls(ordered_crawls)
         return render(request, 'home.html', {'crawls': ordered_crawls, 'status': ''})
     else:
         return render(request, 'home.html', {'crawls': [], 'status': 'No crawls'})
@@ -421,8 +409,9 @@ def order_by_crawl_name(request):
 
     """
     crawls = Crawl.objects.filter(user=request.user)
-    ordered_crawls = crawls.order_by('crawl_name')
     if crawls.exists():
+        ordered_crawls = crawls.order_by('crawl_name')
+        ordered_crawls = format_crawls(ordered_crawls)
         return render(request, 'home.html', {'crawls': ordered_crawls, 'status': ''})
     else:
         return render(request, 'home.html', {'crawls': [], 'status': 'No crawls'})
@@ -452,7 +441,7 @@ def search_pubs(request, lat, lon):
     search_type = 'Pub'
     search_result = requests.get(
         'https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' + lat + ',' + lon + '&radius=' + search_radius + '&type=' + search_type + '&keyword=pub&key=' + GOOGLE_API_KEY)
-    search_details = json.loads(search_result.content)
+    search_details = json.loads(search_result.content.decode('utf-8'))
     return JsonResponse(search_details, safe=False)
 
 
@@ -474,7 +463,7 @@ def get_pub_details(request, pub_id):
     """
     pub_details_url = get_places_details(pub_id)
     pub_details = requests.get(pub_details_url)
-    pub_details = json.loads(pub_details.content)
+    pub_details = json.loads(pub_details.content.decode('utf-8'))
     return JsonResponse(pub_details, safe=False)
 
 

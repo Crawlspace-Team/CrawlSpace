@@ -181,6 +181,7 @@ function displayPubResult(pub) {
   pubLinkContainer.addEventListener('click', showPubDetails)
   return pubLinkContainer
 
+  /* Creates the add pub form within */
   function createAddPubForm() {
     const addPubForm = document.createElement('form')
     addPubForm.classList.add('addPubForm')
@@ -316,11 +317,14 @@ function showPubDetailsInterface(pub) {
     pubPhoneElement.parentNode.style.display = 'none'
   }
   if (pubOpeningHours != null) {
+    pubOpenElement.parentNode.style.display = 'flex'
     if (pubOpeningHours.open_now == true) {
       pubOpenElement.innerHTML = 'Open Now'
     } else {
       pubOpenElement.innerHTML = 'Closed'
     }
+  } else {
+    pubOpenElement.parentNode.style.display = 'none'
   }
   openDetailsMenu()
   initSlider()

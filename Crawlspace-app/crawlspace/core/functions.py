@@ -28,7 +28,6 @@ def get_places_photo_url(photo_ref):
 
     """
     photo_url = GOOGLE_PLACES_PHOTO_URL + photo_ref + '&key=' + GOOGLE_API_KEY
-    print(photo_url)
     return photo_url
 
 
@@ -90,7 +89,7 @@ def get_pub_location_json(pub_id):
 
     """
     raw_pub_data = requests.get(get_places_details(pub_id))
-    pub_data = json.loads(raw_pub_data.content)
+    pub_data = json.loads(raw_pub_data.content.decode('utf-8'))
     pub_data = pub_data['result']
     pub_name = pub_data['name']
     pub_address = pub_data['formatted_address']
@@ -101,3 +100,35 @@ def get_pub_location_json(pub_id):
     pub_json = {'name': pub_name, 'address': pub_address,
                 'lat': pub_lat, 'lng': pub_long}
     return pub_json
+
+def format_crawls(crawls):
+    """
+    Format the input crawls with its formatted date and thumbnail image based on the first pub in the crawl
+
+    Parameters
+    ----------
+    crawls : QuerySet
+        Crawls that will be formatted
+
+    Returns
+    -------
+    crawls
+        Formatted crawls with the formatted date and thumbnail
+
+    """
+    for crawl in crawls:
+        crawl.start_date = format_crawl_date(crawl)
+        pubs_on_crawl = PubOnCrawl.objects.filter(crawl=crawl).order_by('position') # Retrieve all pubs in the crawl
+        number_of_pubs = len(pubs_on_crawl)
+        if number_of_pubs >= 1:
+            first_pub = pubs_on_crawl[0]
+            place_id = str(first_pub.pub.place_id)
+            raw_pub_data = requests.get(get_places_details(place_id))
+            pub_data = json.loads(raw_pub_data.content.decode('utf-8'))
+            pub_details = pub_data['result']
+            pub_photos = pub_details['photos']
+            if 'photos' in pub_details:
+                if len(pub_photos) >= 1:
+                    pub_photo_ref = pub_photos[0]['photo_reference']
+                    crawl.thumbnail = get_places_photo_url(pub_photo_ref)
+    return crawls
