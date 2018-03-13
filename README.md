@@ -11,3 +11,18 @@ Built with Django for backend functionality, JavaScript for frontend functionali
 5. Run 'pip install Django==2.0.2' in the Command Prompt
 6. Run 'pip install requests' in the Command Prompt
 7. Run runserver.cmd in the CrawlSpace Folder (User\Name\Documents\GitHub\CrawlSpace)
+
+
+## Tests created and run with helium
+
+Sign Up
+Login
+Create crawl
+Edit Crawl
+Open Crawl
+Search pub
+Add pub - from search
+Add pub - from geolocation
+Reorder pubs
+Delete pub
+View map - check if the button says next pub
