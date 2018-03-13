@@ -1,3 +1,9 @@
+/**
+ * Represents a book.
+ * @constructor
+ * @param {string} title - The title of the book.
+ * @param {string} author - The author of the book.
+ */
 function initSlider(){
   const track = document.querySelector('.slider__track ')
   const slides = Array.from(track.children)
