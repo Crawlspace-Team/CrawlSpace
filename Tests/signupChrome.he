@@ -1,0 +1,12 @@
+start_chrome("localhost:8000")
+click("Sign Up")
+write("ChromeSignUp", into="Username")
+write("ChromeSignUp@gmail.com", into="Email")
+write("password", into="Password")
+write("password", into="Password Confirmation")
+click("Sign Up")
+if Text("No crawls").exists():
+	print ('Test passed!');
+else:
+	print 'Test failed :('
+kill_browser()

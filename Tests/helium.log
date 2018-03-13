@@ -1,0 +1,9 @@
+2018-03-13 14:34:03,351 [helium.api] [INFO] - start_ie('localhost:8000')
+2018-03-13 14:34:03,361 [helium.bfs11247] [INFO] - Using IE driver located at C:\Users\Marcus\Documents\GitHub\CrawlSpace\Tests\impl\helium\data\win\webdrivers\IEDriverServer.exe.
+2018-03-13 14:34:12,430 [helium.api] [INFO] - click('Sign Up')
+2018-03-13 14:34:14,609 [helium.api] [INFO] - write('FirefoxSignUp', into='Username')
+2018-03-13 14:34:18,292 [helium.api] [INFO] - write('FirefoxSignUp@gmail.com', into='Email')
+2018-03-13 14:34:21,822 [helium.api] [INFO] - write('password', into='Password')
+2018-03-13 14:34:26,213 [helium.api] [INFO] - write('password', into='Password Confirmation')
+2018-03-13 14:34:29,588 [helium.api] [INFO] - click('Sign Up')
+2018-03-13 14:34:31,321 [helium.api] [INFO] - kill_browser()
