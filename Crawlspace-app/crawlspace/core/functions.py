@@ -126,8 +126,8 @@ def format_crawls(crawls):
             raw_pub_data = requests.get(get_places_details(place_id))
             pub_data = json.loads(raw_pub_data.content.decode('utf-8'))
             pub_details = pub_data['result']
-            pub_photos = pub_details['photos']
             if 'photos' in pub_details:
+                pub_photos = pub_details['photos']
                 if len(pub_photos) >= 1:
                     pub_photo_ref = pub_photos[0]['photo_reference']
                     crawl.thumbnail = get_places_photo_url(pub_photo_ref)
