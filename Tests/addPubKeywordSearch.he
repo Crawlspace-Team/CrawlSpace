@@ -1,0 +1,20 @@
+from helium.api import *
+
+start_chrome("localhost:8000")
+write("ChromeSignUp", into="Username")
+write("password", into="Password")
+click("Login")
+click("Edited Name")
+click("plus icon")
+write("Hedge End", into="Location")
+click("search pubs")
+wait_until(Text("Found").exists)
+press(TAB)
+press(TAB)
+press(TAB)
+press(ENTER)
+if Text("No Pubs in crawl").exists():
+	print ('Test failed');
+else:
+	print 'Test passed!'
+kill_browser()

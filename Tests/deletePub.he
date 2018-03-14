@@ -1,0 +1,18 @@
+start_chrome("localhost:8000")
+write("ChromeSignUp", into="Username")
+write("password", into="Password")
+click("Login")
+click("Edited Name")
+press(TAB)
+press(TAB)
+press(TAB)
+press(TAB)
+press(TAB)
+press(TAB)
+press(TAB)
+press(TAB)
+press(ENTER)
+if Text("1: Shamblehurst").exists():
+	print ('Test passed!');
+else:
+	print 'Test failed :('
