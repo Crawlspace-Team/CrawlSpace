@@ -1,5 +1,19 @@
-2018-03-13 19:12:07,398 [helium.api] [INFO] - start_chrome('localhost:8000')
-2018-03-13 19:12:11,921 [helium.api] [INFO] - write('ChromeSignUp', into='Username')
-2018-03-13 19:12:13,451 [helium.api] [INFO] - write('password', into='Password')
-2018-03-13 19:12:14,250 [helium.api] [INFO] - click('Login')
-2018-03-13 19:12:16,605 [helium.api] [INFO] - kill_browser()
+2018-03-14 01:31:28,841 [helium.api] [INFO] - start_chrome('localhost:8000')
+2018-03-14 01:31:33,423 [helium.api] [INFO] - write('ChromeSignUp', into='Username')
+2018-03-14 01:31:35,003 [helium.api] [INFO] - write('password', into='Password')
+2018-03-14 01:31:35,861 [helium.api] [INFO] - click('Login')
+2018-03-14 01:31:37,694 [helium.api] [INFO] - click('Edited Name')
+2018-03-14 01:31:38,986 [helium.api] [INFO] - click('View Crawl Map')
+2018-03-14 01:31:40,104 [helium.api] [INFO] - wait_until(<function <lambda> at 0x055414B0>)
+2018-03-14 01:31:50,571 [bfs_console] [ERROR] - Error occurred evaluating expression.
+Traceback (most recent call last):
+  File "bfs_console\__init__.pyc", line 116, in main
+  File "<string>", line 2, in playback
+  File "bfs_console\bfs10076\bfs10123.pyc", line 35, in bfs10134
+  File "bfs_console\__init__.pyc", line 381, in playback
+  File "viewMap.he", line 9, in <module>
+  File "helium\api.pyc", line 412, in wait_until
+  File "helium\bfs11247\__init__.pyc", line 412, in bfs11672
+  File "selenium\webdriver\support\wait.pyc", line 80, in until
+TimeoutException: Message: 
+
