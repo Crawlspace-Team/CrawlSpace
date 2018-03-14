@@ -1,0 +1,14 @@
+start_chrome("localhost:8000")
+write("ChromeSignUp", into="Username")
+write("password", into="Password")
+click("Login")
+click("Edit Icon")
+write("Edited Name", into="Crawl Name")
+press(TAB)
+press("08042018")
+click("Update Crawl")
+if Text("Edited Name").exists():
+	print ('Test passed!');
+else:
+	print 'Test failed :('
+kill_browser()

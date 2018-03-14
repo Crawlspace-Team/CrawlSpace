@@ -1,0 +1,19 @@
+from helium.api import *
+
+
+start_chrome("localhost:8000")
+write("ChromeSignUp", into="Username")
+write("password", into="Password")
+click("Login")
+click("Edited Name")
+click("plus icon")
+click("geolocation search")
+wait_until(Text("Found").exists)
+press(TAB)
+press(TAB)
+press(ENTER)
+if Text("2").exists():
+	print ('Test passed!');
+else:
+	print 'Test failed :('
+kill_browser()

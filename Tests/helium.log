@@ -1,9 +1,19 @@
-2018-03-13 14:34:03,351 [helium.api] [INFO] - start_ie('localhost:8000')
-2018-03-13 14:34:03,361 [helium.bfs11247] [INFO] - Using IE driver located at C:\Users\Marcus\Documents\GitHub\CrawlSpace\Tests\impl\helium\data\win\webdrivers\IEDriverServer.exe.
-2018-03-13 14:34:12,430 [helium.api] [INFO] - click('Sign Up')
-2018-03-13 14:34:14,609 [helium.api] [INFO] - write('FirefoxSignUp', into='Username')
-2018-03-13 14:34:18,292 [helium.api] [INFO] - write('FirefoxSignUp@gmail.com', into='Email')
-2018-03-13 14:34:21,822 [helium.api] [INFO] - write('password', into='Password')
-2018-03-13 14:34:26,213 [helium.api] [INFO] - write('password', into='Password Confirmation')
-2018-03-13 14:34:29,588 [helium.api] [INFO] - click('Sign Up')
-2018-03-13 14:34:31,321 [helium.api] [INFO] - kill_browser()
+2018-03-14 00:54:19,039 [helium.api] [INFO] - start_chrome('localhost:8000')
+2018-03-14 00:54:23,128 [helium.api] [INFO] - write('ChromeSignUp', into='Username')
+2018-03-14 00:54:23,289 [helium.api] [INFO] - write('password', into='Password')
+2018-03-14 00:54:23,421 [helium.api] [INFO] - click('Login')
+2018-03-14 00:54:24,588 [helium.api] [INFO] - click('Edited Name')
+2018-03-14 00:54:25,118 [helium.api] [INFO] - click('View Crawl Map')
+2018-03-14 00:54:25,772 [helium.api] [INFO] - wait_until(<function <lambda> at 0x053563B0>)
+2018-03-14 00:54:36,023 [bfs_console] [ERROR] - Error occurred evaluating expression.
+Traceback (most recent call last):
+  File "bfs_console\__init__.pyc", line 116, in main
+  File "<string>", line 2, in playback
+  File "bfs_console\bfs10076\bfs10123.pyc", line 35, in bfs10134
+  File "bfs_console\__init__.pyc", line 381, in playback
+  File "viewMap.he", line 9, in <module>
+  File "helium\api.pyc", line 412, in wait_until
+  File "helium\bfs11247\__init__.pyc", line 412, in bfs11672
+  File "selenium\webdriver\support\wait.pyc", line 80, in until
+TimeoutException: Message: 
+

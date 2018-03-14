@@ -1,0 +1,13 @@
+from helium.api import *
+
+start_chrome("localhost:8000")
+write("ChromeSignUp", into="Username")
+write("password", into="Password")
+click("Login")
+click("Edited Name")
+click("View Crawl Map")
+wait_until(lambda: not Text("Next Pub").exists())
+if Text("Shamblehurst Barn").exists():
+	print ('Test passed!');
+else:
+	print 'Test failed :('
