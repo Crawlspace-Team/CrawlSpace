@@ -13,16 +13,14 @@ Built with Django for backend functionality, JavaScript for frontend functionali
 7. Run runserver.cmd in the CrawlSpace Folder (User\Name\Documents\GitHub\CrawlSpace)
 
 
-## Tests created and run with helium
-
-Sign Up
-Login
-Create crawl
-Edit Crawl
-Open Crawl
-Search pub
-Add pub - from search
-Add pub - from geolocation
-Reorder pubs
-Delete pub
-View map - check if the button says next pub
+## Tests created and run with helium via the .bat files within the Tests folder
+### Test .bat files should be run in the order specified below
+1. 1_signupChrome
+2. 2_loginChrome
+3. 3_createCrawl
+4. 4_editCrawl
+5. 5_AddPubKeywordSearch
+6. 6_addPubGeolocationSearch
+7. 7_reorderPubs
+8. 8_deletePub
+9. 9_viewMap
