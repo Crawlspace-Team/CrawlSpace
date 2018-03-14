@@ -12,7 +12,8 @@ press(TAB)
 press(TAB)
 press(TAB)
 press(ENTER)
-if Text("1: Shamblehurst").exists():
+if Text("1: Shamblehurst").exists() or Text("1: Barleycorn").exists():
 	print ('Test passed!');
 else:
 	print 'Test failed :('
+kill_browser()

@@ -13,7 +13,7 @@ press(TAB)
 press(ENTER)
 press(DOWN)
 press(ENTER)
-if Text("2: Shamblehurst").exists():
+if Text("2: Shamblehurst").exists() or Text("2: Barleycorn").exists():
 	print ('Test passed!');
 else:
 	print 'Test failed :('

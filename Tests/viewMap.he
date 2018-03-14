@@ -6,8 +6,8 @@ write("password", into="Password")
 click("Login")
 click("Edited Name")
 click("View Crawl Map")
-wait_until(lambda: not Text("Next Pub").exists())
-if Text("Shamblehurst Barn").exists():
+wait_until(lambda: Text("Next Pub: A").exists())
+if Text("Next Pub: A").exists():
 	print ('Test passed!');
 else:
 	print 'Test failed :('
