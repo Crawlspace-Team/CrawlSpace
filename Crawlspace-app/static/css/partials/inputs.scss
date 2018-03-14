@@ -1,16 +1,16 @@
 button {
   @include smooth-transition;
-  cursor: pointer;
+  cursor: pointer; // Show the hand cursor when the user hovers over the button
 }
 
 .button--hover {
   @include button-circle;
   @include box-shadow;
   position: fixed;
-  right: 15vw;
+  right: 15vw; // Align the button to be fixed near the bottom right of the page
   bottom: 10vw;
-  cursor: pointer;
-  z-index: 5;
+  cursor: pointer; // Show the hand cursor when the user hovers over the button
+  z-index: 5; // Show the button above the overlay layers
   &:hover {
     background: $accent-dark;
   }
@@ -19,26 +19,25 @@ button {
 .button--orderCrawl {
   @include button-circle;
   @include box-shadow;
-  z-index: 5;
-  clear: both;
+  z-index: 5; // Show the button above the overlay layers
+  clear: both; // Stop any nearby elements from appearing on the same line as the button
   display: inline-block;
 }
 
 .button--large {
-  -webkit-appearance: none;
-  border: none;
+  -webkit-appearance: none; // Remove the default browser appearance from the button
   border: 2px solid $accent;
   background: none;
   border-radius: 5em;
   padding: $input-padding;
-  text-decoration: none;
+  text-decoration: none; // Remove default link text for the element
   font-size: $button-size;
-  text-transform: uppercase;
+  text-transform: uppercase; // Transform the text within the button to full capitals
   font-weight: bold;
   text-align: center;
   margin-top: 1em;
   &:hover {
-    cursor: pointer;
+    cursor: pointer; // Show the hand cursor when the user hovers over the button
   }
 }
 
@@ -72,13 +71,13 @@ button {
   }
   input {
     font-family: 'Open Sans', sans-serif;
-    box-sizing: border-box;
+    box-sizing: border-box; // Include the padding and border within the element's size
     border: 2px solid $accent-light;
     border-radius: 0.75em;
     background: $accent-lighter;
     padding: 0.5em 0;
     margin-top: 0.3em;
-    text-decoration: none;
+    text-decoration: none; // Remove default link text for the element
     color: $accent;
     font-size: 1em;
     font-weight: 500;
@@ -94,7 +93,7 @@ button {
 .nav_button {
     display: flex;
     align-self: center;
-    text-decoration: none;
+    text-decoration: none;  // Remove default link text for the element
     color: $white;
     margin: 0.3em;
 }
@@ -103,7 +102,7 @@ button {
   position: absolute;
   right: 1em;
   border: none;
-  -webkit-appearance: none;
+  -webkit-appearance: none; // Remove the default browser appearance from the button
   background: $white;
   border-radius: 50%;
 }
@@ -111,10 +110,10 @@ button {
 .button--blue {
   font-family: 'Open Sans', sans-serif;
   -webkit-appearance: none;
-  background: $accent;
+  background: $accent; // Remove the default browser appearance from the button
   color: white;
   border: none;
-  text-decoration: none;
+  text-decoration: none; // Remove default link text for the element
   font-size: 1em;
   font-weight: bold;
   padding: 0.5em;
@@ -126,20 +125,20 @@ button {
 }
 
 .input--blue {
-  font-family: 'Open Sans', sans-serif;
+  -webkit-appearance: none; // Remove the default browser appearance from the button
+  border: solid 1px $accent;
   text-decoration: none;
+  font-family: 'Open Sans', sans-serif;
   font-size: 1em;
   font-weight: 500;
   padding: 0.5em;
-  -webkit-appearance: none;
-  border: solid 1px $accent;
 }
 
 .button--hover.button--active {
   img {
-    -webkit-transform: rotate(45deg);  /* to support Safari and Android browser */
-    -ms-transform: rotate(45deg);      /* to support IE 9 */
-    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg); // Rotate on webkit based browsers
+    -ms-transform: rotate(45deg); // Rotate on edge
+    transform: rotate(45deg); // Rotate the plus icon 45 degrees to create a close icon
   }
 }
 
@@ -166,20 +165,20 @@ select {
   background: $accent;
   color: $white;
   appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
+  -webkit-appearance: none; // Remove the default browser appearance from the button
+  -moz-appearance: none; // Remove the default firefox appearance from the button
 }
 select::-ms-expand {
   display: none;
 }
 select:hover,
 select:focus {
-  color: #ffffff;
+  color: $white;
   background: $accent-dark;
 }
 select:disabled {
   opacity: 0.4;
-  pointer-events: none;
+  pointer-events: none; // Stop any change in the cursor's icon
 }
 .select_arrow {
   position: absolute;
@@ -187,14 +186,14 @@ select:disabled {
   right: 0;
   width: 0;
   height: 0;
-  pointer-events: none;
+  pointer-events: none; // Stop any change in the cursor's icon
   border-style: solid;
-  border-width: 8px 5px 0px 5px;
-  border-color: $white transparent transparent transparent;
+  border-width: 8px 5px 0px 5px; // Create the arrow shape from borders
+  border-color: $white transparent transparent transparent; // Show the arrow by hiding certain borders
 }
 .select select:hover ~ .select_arrow,
 .select select:focus ~ .select_arrow {
-  border-top-color: #000000;
+  border-top-color: $dark;
 }
 .select select:disabled ~ .select_arrow {
   border-top-color: $white;

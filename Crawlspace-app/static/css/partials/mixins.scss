@@ -1,11 +1,11 @@
 @mixin box-shadow {
   -webkit-box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.16);
   -moz-box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.16);
-  box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.16);
+  box-shadow: 5px 5px 10px 0px rgba(0,0,0,0.16); // Create a shadow to the bottom right of the element
 }
 
 @mixin button-circle {
-  -webkit-appearance: none;
+  -webkit-appearance: none; // Remove the default browser appearance from the button
   border: none;
   background: $accent;
   padding: 0.9em 1em;
@@ -18,10 +18,10 @@
   width: 100%;
   height: 100%;
   background: #666;
-  opacity: 0.4;
+  opacity: 0.4; // Set the overlay to fade all elements behind the overlay
   z-index: 0;
 }
 
 @mixin smooth-transition {
-  transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out; // Set the element to have style transistions over 0.2 seconds
 }

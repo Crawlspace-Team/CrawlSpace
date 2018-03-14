@@ -1,3 +1,5 @@
+// Scss Variables
+// Colour Variables
 $white: white;
 $grey: #efefef;
 $off-white: #F5F5F5;
@@ -7,16 +9,18 @@ $accent-dark: #0e82e4;
 $accent-light: #BCE0FD;
 $accent-lighter: #F1F9FF;
 
+// Text-size Variables
 $h1-size: 1.6em;
 $h2-size: 1.2em;
 $p-size: 1em;
 $button-size: 1em;
 
+// Size Variables
 $input-padding: 0.7em 0;
 $form-width: 17em;
-
 $logo-size: 4em;
 
+// Scss partial imports
 @import 'partials/mixins';
 @import 'partials/media-queries';
 @import 'partials/inputs';
@@ -28,62 +32,62 @@ html {
 }
 
 body {
-    display: flex;
-    flex-direction: column;
-    font-family: 'Open Sans', sans-serif;
-    min-width: 100vw;
-    min-height: 100vh;
-    margin: 0;
-    overflow-y: scroll;
-    overflow-x: hidden;
+  display: flex;
+  flex-direction: column; // Display all child elements on new lines
+  font-family: 'Open Sans', sans-serif;
+  min-width: 100vw;
+  min-height: 100vh;
+  margin: 0;
+  overflow-y: scroll; // Make the page to always have the scrollbar if the page's height is larger than the window
+  overflow-x: hidden; // Hide the horizontal scrollbar
 }
 
 header {
-    display: flex;
-    position: fixed;
-    z-index: 5;
-    background: $accent;
-    width: 100%;
-    color: $white;
-    justify-content: center;
-    font-family: 'Hind', sans-serif;
-    h1 {
-        margin: 0.2em 0;
-        font-size: $h1-size;
-        flex-grow: 1;
-        text-align: center;
-        font-weight: 600;
-    }
+  display: flex;
+  position: fixed; // Keep the header at the top of the page at all times
+  z-index: 5;
+  background: $accent;
+  width: 100%;
+  color: $white;
+  justify-content: center;
+  font-family: 'Hind', sans-serif;
+  h1 {
+      margin: 0.2em 0;
+      font-size: $h1-size;
+      flex-grow: 1;
+      text-align: center;
+      font-weight: 600;
+  }
 }
 
 main {
-    min-width: 100%;
-    min-height: 100%;
-    background: $off-white;
-    display: flex;
-    flex: auto;
-    align-items: center;
-    justify-content: center;
+  min-width: 100%;
+  min-height: 100%;
+  background: $off-white;
+  display: flex;
+  flex: auto; // Set the main element to always fill the parent element
+  align-items: center; // Centre all child elements to the true centre of this element
+  justify-content: center;
 }
 
 #content {
-    margin: 1em;
-    width: 40em;
-    padding-top: 5em;
+  margin: 1em;
+  width: 40em;
+  padding-top: 5em;
 }
 
 #content--flex {
-    width: auto;
+  width: auto; // Base the width of the content element on the parent element's width
 }
 
 .container--form  {
-    display: flex;
-    flex-direction: column;
-    width: $form-width;
-    align-items: center;
-    h2 {
-        color: $dark;
-    }
+  display: flex;
+  flex-direction: column;
+  width: $form-width;
+  align-items: center;
+  h2 {
+      color: $dark;
+  }
 }
 
 .editCrawlMenu, .newCrawlMenu, .searchPubsContainer, .pubDetailsContainer {
@@ -102,6 +106,7 @@ main {
   }
 }
 
+//Stop the user from scolling vertically on the page
 .fixedScroll {
   overflow: hidden;
 }
@@ -138,7 +143,7 @@ main {
         display: block;
         top: 0;
         left: 0;
-        overflow: hidden;
+        overflow: hidden; // Hide the heart icons if they go over the elements width
       }
       .pubDetails_rating--bottom {
         padding: 0;
@@ -160,25 +165,26 @@ main {
         }
       }
       .pubDetails_url {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        white-space: nowrap; // Stop the text from going over the parent element's width
+        overflow: hidden; // Hide the text that goes over the width of the parent element
+        text-overflow: ellipsis; // Show ellipsis if the text goes over the parent element's width
         text-decoration: underline;
         color: $accent;
       }
     }
   }
   .overlay {
-    z-index: 6;
+    z-index: 6; // Show the overlay above the fixed buttons and other overlays
   }
 }
 
+// Menu container that fits below the header
 .menu--open {
   display: flex;
   top: 6.4%;
   left: 0;
   position: fixed;
-  height: calc(100vh - 6.4%);
+  height: calc(100vh - 6.4%); //Set the height to fill the height except from the header
   width: 100vw;
   overflow-y: scroll;
   .overlay {
@@ -189,179 +195,181 @@ main {
 }
 
 .title--left {
-    display: flex;
-    flex: 1;
-    align-items: center;
-    margin: 0 0.5em;
-    position: absolute;
-    left: .5em;
-    top: 0.75em;
-    h1 {
-        margin: 0;
-        margin-left: 5%;
-        flex: 0;
-    }
-    .logo--small {
-        margin: 0 0.5em;
-    }
+  display: flex;
+  flex: 1;
+  align-items: center;
+  margin: 0 0.5em;
+  position: absolute;
+  left: .5em;
+  top: 0.75em;
+  h1 {
+      margin: 0;
+      margin-left: 5%;
+      flex: 0;
+  }
+  .logo--small {
+      margin: 0 0.5em;
+  }
 }
 
 .title--page {
-    font-size: $h2-size;
+  font-size: $h2-size;
 }
 
 .nav {
-    display: flex;
-    flex: 3;
-    justify-content: space-around;
-    margin: 0 9em;
+  display: flex;
+  flex: 3;
+  justify-content: space-around;
+  margin: 0 9em;
 }
 
 .status {
   font-weight: bold;
   color: $accent;
   padding: 1.25em;
+  text-align: center;
 }
 
 .crawlList {
-    grid-template-columns: 1fr 1fr;
-    padding: 0;
-    list-style: none;
-    display: grid;
-    .crawl {
-      @include smooth-transition;
-      background: $white;
-      color: $accent;
-      display: flex;
-      margin: 0.5em;
-      flex-direction: column;
-      &:hover {
-        background: $grey;
-      }
-      .crawl_image {
+  display: grid;
+  grid-template-columns: 1fr 1fr; // Create a grid of two side by side elements
+  padding: 0;
+  list-style: none;
+  .crawl {
+    @include smooth-transition;
+    background: $white;
+    color: $accent;
+    display: flex;
+    margin: 0.5em;
+    flex-direction: column;
+    &:hover {
+      background: $grey;
+    }
+    .crawl_image {
+      width: 100%;
+      height: 10em;
+      background: $dark;
+      img {
         width: 100%;
-        height: 10em;
-        background: $dark;
-        img {
-          width: 100%;
-          height: 100%;
-          filter: opacity(0.4);
-        }
-      }
-      .crawl_information {
-        display: flex;
-        padding: 0.5em 1em;
-        a {
-          flex: 1;
-          .crawl_details {
-            display: flex;
-            flex-direction: column;
-            .details_id {
-              display: none;
-            }
-            .details_name {
-              font-weight: bold;
-              font-size: $h2-size;
-            }
-            .details_startDate {
-              font-weight: normal;
-              font-size: $p-size;
-            }
-          }
-        }
-        .crawl_buttons {
-          display: flex;
-          flex: 0.2;
-          flex-direction: column;
-          justify-content: space-around;
-          align-items: flex-end;
-        }
-        p, a {
-          text-decoration: none;
-          color: $accent;
-        }
+        height: 100%;
+        filter: opacity(0.4); // Fade the image
+        object-fit: cover; // Set the image to maintain its aspect ratio
       }
     }
+    .crawl_information {
+      display: flex;
+      padding: 0.5em 1em;
+      a {
+        flex: 1;
+        .crawl_details {
+          display: flex;
+          flex-direction: column;
+          .details_id {
+            display: none;
+          }
+          .details_name {
+            font-weight: bold;
+            font-size: $h2-size;
+          }
+          .details_startDate {
+            font-weight: normal;
+            font-size: $p-size;
+          }
+        }
+      }
+      .crawl_buttons {
+        display: flex;
+        flex: 0.2;
+        flex-direction: column;
+        justify-content: space-around; // Set the buttons to keep equal distance between siblings and the container sides
+        align-items: flex-end; // Set the buttons to move to the far right of the parent element
+      }
+      p, a {
+        text-decoration: none; // Remove default link text for the element
+        color: $accent;
+      }
+    }
+  }
 }
 
 
 .pubList {
-    grid-template-columns: 1fr;
-    padding: 0;
-    list-style: none;
-    display: grid;
-    .pub {
-      color: $accent;
+  display: grid;
+  grid-template-columns: 1fr; // Create a grid to consist of one element on width
+  padding: 0;
+  list-style: none;
+  .pub {
+    color: $accent;
+    display: flex;
+    position: relative;
+    margin: 1em 0.5em;
+    height: 17em;
+    flex-direction: row;
+    background: $dark;
+    background-size: cover; // Set the background to completely fill the element
+    .pub_image {
       display: flex;
-      position: relative;
-      margin: 1em 0.5em;
-      height: 17em;
-      flex-direction: row;
-      background: $dark;
-      background-size: cover;
-      .pub_image {
+      height: 100%;
+      width: 100%;
+      object-fit: cover; // Set the image to maintain its aspect ratio
+      color: $white;
+      justify-content: center;
+      align-items: center;
+      filter: opacity(0.4); //Fade the image
+      p {
+        font-weight: bold;
+        font-size: 1.5em;
+      }
+    }
+    .pub_description {
+      box-sizing: border-box;
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      padding: 1em;
+      color: $white;
+      .pub_name {
+        font-weight: bold;
+      }
+      .pub_address {
+        margin: 0.5em 0;
+      }
+      .button--blue {
+        max-width: 10em;
+        margin-bottom: 3em;
+      }
+      .reorderPubForm {
         display: flex;
-        height: 100%;
-        width: 100%;
-        object-fit: cover;
-        color: $white;
-        justify-content: center;
-        align-items: center;
-        filter: opacity(0.4);
+        flex-direction: row;
+        margin: 0.5em 0;
         p {
-          font-weight: bold;
-          font-size: 1.5em;
-        }
-      }
-      .pub_description {
-        box-sizing: border-box;
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        padding: 1em;
-        color: $white;
-        .pub_name {
-          font-weight: bold;
-        }
-        .pub_address {
           margin: 0.5em 0;
         }
-        .button--blue {
-          max-width: 10em;
-          margin-bottom: 3em;
-        }
-        .reorderPubForm {
-          display: flex;
-          flex-direction: row;
-          margin: 0.5em 0;
-          p {
-            margin: 0.5em 0;
-          }
-          select {
-            margin-left: 1em;
-          }
-        }
-      }
-      .deletePubForm, .addPubForm {
-        align-self: center;
-        margin-right: 1em;
-        margin-bottom: 2em;
-        .pub_button {
-          @include smooth-transition;
-          -webkit-appearance: none;
-          background: white;
-          border: none;
-          border-radius: 50%;
-          padding: 0.9em 1em 0.8em 1em;
-          cursor: pointer;
-          &:hover {
-            background: $grey;
-          }
+        select {
+          margin-left: 1em;
         }
       }
     }
+    .deletePubForm, .addPubForm {
+      align-self: center;
+      margin-right: 1em;
+      margin-bottom: 2em;
+      .pub_button {
+        @include smooth-transition;
+        -webkit-appearance: none;
+        background: white;
+        border: none;
+        border-radius: 50%;
+        padding: 0.9em 1em 0.8em 1em;
+        cursor: pointer;
+        &:hover {
+          background: $grey;
+        }
+      }
+    }
+  }
 }
 
 .pubDetailsButton {
@@ -376,18 +384,18 @@ main {
 
 
 .logo {
-    width: $logo-size;
+  width: $logo-size;
 }
 
 .logo--small {
-    width: $logo-size*0.35;
+  width: $logo-size*0.35; // Scale the logo based on the base logo size
 }
 
 .logo--mobile {
-    display: none;
-    width: 3.5em;
-    margin-top: 0.2em;
-    align-self: center;
+  display: none;
+  width: 3.5em;
+  margin-top: 0.2em;
+  align-self: center;
 }
 
 .icon {
@@ -395,14 +403,6 @@ main {
   height: 1.5em;
 }
 
-.editCrawlID {
-  display: none;
-}
-
-.status {
-  text-align: center;
-}
-
-.hidden {
+.hidden, .editCrawlID {
   display: none;
 }

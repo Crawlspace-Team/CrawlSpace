@@ -79,7 +79,6 @@ button {
 
 .button--large {
   -webkit-appearance: none;
-  border: none;
   border: 2px solid #2699FB;
   background: none;
   border-radius: 5em;
@@ -164,19 +163,17 @@ button {
     background: #0e82e4; }
 
 .input--blue {
-  font-family: 'Open Sans', sans-serif;
+  -webkit-appearance: none;
+  border: solid 1px #2699FB;
   text-decoration: none;
+  font-family: 'Open Sans', sans-serif;
   font-size: 1em;
   font-weight: 500;
-  padding: 0.5em;
-  -webkit-appearance: none;
-  border: solid 1px #2699FB; }
+  padding: 0.5em; }
 
 .button--hover.button--active img {
   -webkit-transform: rotate(45deg);
-  /* to support Safari and Android browser */
   -ms-transform: rotate(45deg);
-  /* to support IE 9 */
   transform: rotate(45deg); }
 
 .pubDetails_close {
@@ -208,7 +205,7 @@ select::-ms-expand {
 
 select:hover,
 select:focus {
-  color: #ffffff;
+  color: white;
   background: #0e82e4; }
 
 select:disabled {
@@ -228,7 +225,7 @@ select:disabled {
 
 .select select:hover ~ .select_arrow,
 .select select:focus ~ .select_arrow {
-  border-top-color: #000000; }
+  border-top-color: #222222; }
 
 .select select:disabled ~ .select_arrow {
   border-top-color: white; }
@@ -245,8 +242,8 @@ select:disabled {
 
 #nextLocation__details {
   display: flex;
-  flex-direction: column;
   flex: 1;
+  flex-direction: column;
   align-items: flex-start;
   justify-content: center;
   color: #2699FB;
@@ -272,11 +269,10 @@ select:disabled {
   align-items: center;
   grid-gap: 1em;
   width: 100%; }
-
-.slider__track-container {
-  grid-column: 2;
-  align-self: stretch;
-  overflow: hidden; }
+  .slider .slider__track-container {
+    grid-column: 2;
+    align-self: stretch;
+    overflow: hidden; }
 
 .slider__track {
   position: relative;
@@ -299,6 +295,22 @@ select:disabled {
       background-repeat: no-repeat;
       background-position: center center; }
 
+.slider__nav {
+  grid-column: 1 / -1;
+  justify-self: center; }
+  .slider__nav .slider__dot {
+    width: 1em;
+    height: 1em;
+    border-radius: 100%;
+    border: 0;
+    background-color: #efefef; }
+    .slider__nav .slider__dot:hover {
+      background-color: #2699FB; }
+  .slider__nav .slider__dot + .slider__dot {
+    margin-left: 1em; }
+  .slider__nav .slider__dot.selected {
+    background-color: #222222; }
+
 .slider__button {
   transition: all 0.2s ease-in-out;
   -webkit-appearance: none;
@@ -314,24 +326,6 @@ select:disabled {
 
 .slider__button.hidden {
   display: none; }
-
-.slider__nav {
-  grid-column: 1 / -1;
-  justify-self: center; }
-  .slider__nav .slider__dot {
-    width: 1em;
-    height: 1em;
-    border-radius: 100%;
-    border: 0;
-    background-color: grey; }
-    .slider__nav .slider__dot:hover {
-      background-color: #2699FB; }
-  .slider__nav .slider__dot + .slider__dot {
-    margin-left: 1em; }
-  .slider__nav .slider__dot.selected {
-    background-color: #222222; }
-  .slider__nav .slider__dot > * {
-    pointer-events: none; }
 
 html {
   margin: 0; }
@@ -504,13 +498,14 @@ main {
 .status {
   font-weight: bold;
   color: #2699FB;
-  padding: 1.25em; }
+  padding: 1.25em;
+  text-align: center; }
 
 .crawlList {
+  display: grid;
   grid-template-columns: 1fr 1fr;
   padding: 0;
-  list-style: none;
-  display: grid; }
+  list-style: none; }
   .crawlList .crawl {
     transition: all 0.2s ease-in-out;
     background: white;
@@ -527,7 +522,8 @@ main {
       .crawlList .crawl .crawl_image img {
         width: 100%;
         height: 100%;
-        filter: opacity(0.4); }
+        filter: opacity(0.4);
+        object-fit: cover; }
     .crawlList .crawl .crawl_information {
       display: flex;
       padding: 0.5em 1em; }
@@ -555,10 +551,10 @@ main {
         color: #2699FB; }
 
 .pubList {
+  display: grid;
   grid-template-columns: 1fr;
   padding: 0;
-  list-style: none;
-  display: grid; }
+  list-style: none; }
   .pubList .pub {
     color: #2699FB;
     display: flex;
@@ -643,13 +639,7 @@ main {
   width: 1.5em;
   height: 1.5em; }
 
-.editCrawlID {
-  display: none; }
-
-.status {
-  text-align: center; }
-
-.hidden {
+.hidden, .editCrawlID {
   display: none; }
 
 /*# sourceMappingURL=main.css.map */

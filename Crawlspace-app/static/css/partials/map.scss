@@ -1,4 +1,3 @@
-
 #map {
   height: 80vh;
   position: relative;
@@ -13,9 +12,9 @@
 
 #nextLocation__details {
   display: flex;
-  flex-direction: column;
   flex: 1;
-  align-items: flex-start;
+  flex-direction: column;
+  align-items: flex-start; // Set the details to align to the far left of the next location container
   justify-content: center;
   color: $accent;
   padding: 1em;
@@ -31,7 +30,7 @@
   margin: 0.2em;
   button {
     display: flex;
-    align-self: flex-end;
+    align-self: flex-end; // Set the button to align to the far right of the next location container
     margin: 0.5em 0.75em;
     padding: 0.5em 1.5em;
   }

@@ -1,16 +1,18 @@
 .slider {
   display: grid;
+  // Create a grid with one flexible element in the middle with grid elements
+  // of 3em to the left and right of the center element
   grid-template-columns: 3em 1fr 3em;
+  // Set the first grid row to 50vh with a 3em row below it
   grid-template-rows: 50vh 3em;
   align-items: center;
   grid-gap: 1em;
   width: 100%;
-}
-
-.slider__track-container {
-  grid-column: 2;
-  align-self: stretch;
-  overflow: hidden;
+  .slider__track-container {
+    grid-column: 2;
+    align-self: stretch; // Set the container to stretch to the parent elements size
+    overflow: hidden;
+  }
 }
 
 .slider__track {
@@ -25,48 +27,27 @@
     right: 0;
     width: 100%;
     height: 100%;
-    list-style: none;
+    list-style: none; // Remove the dots from the list element
     & > a {
       display: block;
       width: inherit;
       height: inherit;
-      background-size: cover;
+      background-size: cover; // Set the slider image to fit the parent elements size while keeping the image's aspect ratio
       background-repeat: no-repeat;
-      background-position: center center;
+      background-position: center center; // Completely centre the slider image to the true centre of the parent's element
     }
   }
 }
 
-.slider__button {
-  @include smooth-transition;
-  -webkit-appearance: none;
-  border: none;
-  background: $accent;
-  border-radius: 50%;
-  padding: 0.25em 0.4em;
-  &:hover {
-    background: $accent-dark;
-  }
-  img {
-    width: 100%;
-    user-select: none;
-  }
-}
-
-.slider__button.hidden {
-  display: none;
-}
-
-
 .slider__nav {
-  grid-column: 1 / -1;
-  justify-self: center;
+  grid-column: 1 / -1; // Set the slider nav to position the nav buttons horizontally
+  justify-self: center; // Centre the nav to the centre of the parent grid element
   .slider__dot {
     width: 1em;
     height: 1em;
     border-radius: 100%;
     border: 0;
-    background-color: grey;
+    background-color: $grey;
     &:hover {
       background-color: $accent;
     }
@@ -77,7 +58,24 @@
   .slider__dot.selected {
     background-color: $dark;
   }
-  .slider__dot > * {
-    pointer-events: none;
+}
+
+.slider__button {
+  @include smooth-transition;
+  -webkit-appearance: none; // Remove the default browser appearance from the button
+  border: none;
+  background: $accent;
+  border-radius: 50%;
+  padding: 0.25em 0.4em;
+  &:hover {
+    background: $accent-dark;
   }
+  img {
+    width: 100%;
+    user-select: none; // Stop the user from selecting the element when selecting text
+  }
+}
+
+.slider__button.hidden {
+  display: none;
 }
